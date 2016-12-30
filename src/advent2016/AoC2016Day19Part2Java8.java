@@ -1,6 +1,6 @@
 package advent2016;
 
-public class AoC2016Day19Part2 {
+public class AoC2016Day19Part2Java8 {
     public static void main(String[] args) {
         int result;
 

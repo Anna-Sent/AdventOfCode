@@ -6,17 +6,17 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AoC2016Day20Part2 {
+public class AoC2016Day20Part1Java8 {
     public static void main(String[] args) {
         long result;
 
-        result = solve(9, "5-8\n" +
+        result = solve("5-8\n" +
                 "0-2\n" +
                 "4-7");
-        assert result == 2;
+        assert result == 3;
         System.out.println(result);
 
-        result = solve(4294967295L, "1397985562-1399927095\n" +
+        result = solve("1397985562-1399927095\n" +
                 "3833336583-3842601761\n" +
                 "155087348-169525214\n" +
                 "980790001-1002844256\n" +
@@ -1045,7 +1045,7 @@ public class AoC2016Day20Part2 {
                 "2065382936-2066893485\n" +
                 "3298704119-3299564801\n" +
                 "2194534845-2218883408");
-        assert result == 117;
+        assert result == 31053880;
         System.out.println(result);
     }
 
@@ -1063,7 +1063,7 @@ public class AoC2016Day20Part2 {
         }
     }
 
-    private static long solve(long high, String s) {
+    private static long solve(String s) {
         List<Value> values = new ArrayList<>();
         String[] parts = s.split("\n");
         for (String part : parts) {
@@ -1082,8 +1082,7 @@ public class AoC2016Day20Part2 {
         values.sort(Comparator.comparingLong(Value::getValue));
         values.stream().forEach(x -> System.out.format("%d-%s ", x.value, x.start ? "s" : "e"));
         System.out.println();
-        int counter = 0;
-        long count = 0;
+        long counter = 0;
         for (int i = 0; i < values.size(); ++i) {
             Value value = values.get(i);
             if (value.start) {
@@ -1092,17 +1091,11 @@ public class AoC2016Day20Part2 {
                 --counter;
             }
             if (counter == 0) {
-                if (i + 1 < values.size()) {
-                    long diff = values.get(i + 1).value - value.value;
-                    if (diff > 1) {
-                        count += diff - 1;
-                    }
+                if (i + 1 < values.size() && values.get(i + 1).value - value.value > 1) {
+                    return value.value + 1;
                 }
             }
         }
-        if (values.get(values.size() - 1).value < high) {
-            count += high - values.get(values.size() - 1).value;
-        }
-        return count;
+        return values.get(values.size() - 1).value + 1;
     }
 }
