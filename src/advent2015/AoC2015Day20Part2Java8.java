@@ -8,7 +8,7 @@ public class AoC2015Day20Part2Java8 {
 
         result = solve(36000000);
         System.out.println(result);
-        //assert result == 831600;
+        assert result == 884520;
     }
 
     private static int solve(int presents) {
