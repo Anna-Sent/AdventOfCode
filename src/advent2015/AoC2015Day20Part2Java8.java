@@ -12,7 +12,7 @@ public class AoC2015Day20Part2Java8 {
     }
 
     private static int solve(int presents) {
-        return Stream.iterate(1, n -> n + 1).filter(n -> presents(n) >= presents).findFirst().orElse(-1);
+        return Stream.iterate(1, n -> n + 1).limit(presents / 20).filter(n -> presents(n) >= presents).findFirst().orElse(-1);
     }
 
     private static int presents(int house) {
