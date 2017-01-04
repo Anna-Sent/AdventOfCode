@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AoC2016Day21Part2Java8 {
-    private static final String input = "reverse positions 1 through 6\n" +
+    private static final String INPUT = "reverse positions 1 through 6\n" +
             "rotate based on position of letter a\n" +
             "swap position 4 with position 1\n" +
             "reverse positions 1 through 5\n" +
@@ -115,7 +115,7 @@ public class AoC2016Day21Part2Java8 {
         permutate(scrambledPassword.toCharArray(), 0, variants);
         for (String unscrambledPassword : variants) {
             String expected = scrambledPassword;
-            String actual = solve(unscrambledPassword, input);
+            String actual = solve(unscrambledPassword, INPUT);
             if (expected.equals(actual)) {
                 result = unscrambledPassword;
                 break;
@@ -222,7 +222,7 @@ public class AoC2016Day21Part2Java8 {
                 continue;
             }
 
-            throw new RuntimeException("invalid input: " + command);
+            throw new RuntimeException("invalid INPUT: " + command);
         }
 
         return word;
