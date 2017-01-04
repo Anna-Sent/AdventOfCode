@@ -57,14 +57,6 @@ public class AoC2016Day23Part1Java8 {
         result = test(INPUT);
         System.out.println(result);
         assert result == 13958;
-
-        registers.put("a", 12);
-        registers.put("b", 0);
-        registers.put("c", 0);
-        registers.put("d", 0);
-        result = test(INPUT);
-        System.out.println(result);
-        //assert result == ;
     }
 
     private static Map<String, Integer> registers = new HashMap<>();
