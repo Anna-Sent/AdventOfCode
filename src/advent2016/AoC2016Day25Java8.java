@@ -38,6 +38,7 @@ public class AoC2016Day25Java8 {
             "jnz 1 -21";
 
     public static void main(String[] args) {
+        // asnwer is 158
         for (int a = 1; ; ++a) {
             registers.put("a", a);
             registers.put("b", 0);
