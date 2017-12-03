@@ -5,7 +5,7 @@ public class AoC2017Day3Part2 {
         int result;
 
         result = test("");
-        assert result == 0;
+        assert result == 0 : "unexpected result is " + result;
         System.out.println(result);
 
         result = test("");

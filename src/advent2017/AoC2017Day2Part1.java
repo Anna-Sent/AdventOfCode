@@ -7,7 +7,7 @@ public class AoC2017Day2Part1 {
         result = test("5 1 9 5\n" +
                 "7 5 3\n" +
                 "2 4 6 8");
-        assert result == 18;
+        assert result == 18 : "unexpected result is " + result;
         System.out.println(result);
 
         result = test("116\t1470\t2610\t179\t2161\t2690\t831\t1824\t2361\t1050\t2201\t118\t145\t2275\t2625\t2333\n" +
