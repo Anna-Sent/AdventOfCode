@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AoC2017Day7Part1 {
+public class AoC2017Day7Part2 {
     public static void main(String[] args) {
-        String result;
+        int result;
 
         result = test("pbga (66)\n" +
                 "xhth (57)\n" +
@@ -21,9 +21,9 @@ public class AoC2017Day7Part1 {
                 "jptl (61)\n" +
                 "ugml (68) -> gyxo, ebii, jptl\n" +
                 "gyxo (61)\n" +
-                "cntj (57)");
-        assert "tknk".equals(result) : "unexpected result is " + result;
+                "cntj (57)", "tknk");
         System.out.println(result);
+        // 60
 
         result = test("xsddbi (61)\n" +
                 "nqtowev (11)\n" +
@@ -1444,12 +1444,12 @@ public class AoC2017Day7Part1 {
                 "mbkbmql (56)\n" +
                 "dbpkf (169) -> zzcqptv, vfykuuv\n" +
                 "wqokqz (50)\n" +
-                "xufneyr (153)");
-        assert "fbgguv".equals(result) : "unexpected result is " + result;
+                "xufneyr (153)", "jdxfsa");
+        // 1864
         System.out.println(result);
     }
 
-    public static String test(String s) {
+    public static int test(String s, String root) {
         Pattern pattern = Pattern.compile("([a-z]+) \\((\\d+)\\)( -> ([[a-z]+| |,]+))?");
         String[] parts = s.split("\n");
         Map<String, Node> nodes = new HashMap<>();
@@ -1468,27 +1468,22 @@ public class AoC2017Day7Part1 {
             assert !nodes.containsKey(node.name);
             nodes.put(node.name, node);
         }
-        for (String nodeName : nodes.keySet()) {
-            boolean found = findInChildren(nodes.get(nodeName), nodes);
-            if (!found) {
-                return nodeName;
-            }
+        System.out.println(root + ": " + nodes.get(root).number);
+        for (String child : nodes.get(root).children) {
+            System.out.println(child + ": " + weight(nodes.get(child), nodes));
         }
-        return null;
+        return 0;
     }
 
-    private static boolean findInChildren(Node node, Map<String, Node> nodes) {
-        for (String nodeName : nodes.keySet()) {
-            Node parentNode = nodes.get(nodeName);
-            if (parentNode.children != null) {
-                for (String child : parentNode.children) {
-                    if (child.equals(node.name)) {
-                        return true;
-                    }
-                }
-            }
+    private static int weight(Node node, Map<String, Node> nodes) {
+        if (node.children == null) {
+            return node.number;
         }
-        return false;
+        int sum = 0;
+        for (String child : node.children) {
+            sum += weight(nodes.get(child), nodes);
+        }
+        return sum + node.number;
     }
 
     private static class Node {
