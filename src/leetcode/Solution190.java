@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution190 {
+class Solution190 {
     static class Solution {
         public int reverseBits(int n) {
             int reversed = 0, i = 1;

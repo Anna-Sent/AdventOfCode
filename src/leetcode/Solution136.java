@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution136 {
+class Solution136 {
     class Solution {
         public int singleNumber(int[] nums) {
             int missing = 0;

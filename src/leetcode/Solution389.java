@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution389 {
+class Solution389 {
     class Solution {
         public char findTheDifference(String s, String t) {
             char[] schars = s.toCharArray();

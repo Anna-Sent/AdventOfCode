@@ -3,7 +3,7 @@ package leetcode;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Solution500 {
+class Solution500 {
     class Solution {
         private final Set<Character> firstRow = new HashSet<Character>() {{
             add(Character.valueOf('q'));
