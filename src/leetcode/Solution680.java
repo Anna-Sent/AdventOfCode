@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution680 {
+class Solution680 {
     static class Solution {
         public boolean validPalindrome(String s) {
             if (s.length() <= 2) {
