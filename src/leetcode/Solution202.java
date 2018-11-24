@@ -3,7 +3,7 @@ package leetcode;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Solution202 {
+class Solution202 {
     class Solution {
         public boolean isHappy(int n) {
             if (n <= 0) {

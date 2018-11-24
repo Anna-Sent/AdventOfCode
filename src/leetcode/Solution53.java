@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution53 {
+class Solution53 {
     class Solution {
         public int maxSubArray(int[] nums) {
             int max = nums[0], currMax = max;

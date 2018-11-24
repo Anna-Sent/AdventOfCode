@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution152 {
+class Solution152 {
     class Solution {
         public int maxProduct(int[] nums) {
             int localMax = nums[0];

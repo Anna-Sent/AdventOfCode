@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution342 {
+class Solution342 {
     class Solution {
         public boolean isPowerOfFour(int num) {
             if (num <= 0) {

@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution766 {
+class Solution766 {
     class Solution {
         public boolean isToeplitzMatrix(int[][] matrix) {
             for (int i = 0; i < matrix.length - 1; ++i) {

@@ -3,7 +3,7 @@ package leetcode;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Solution695 {
+class Solution695 {
     static class Solution {
         public int maxAreaOfIsland(int[][] grid) {
             int count = 0, maxArea = 0;

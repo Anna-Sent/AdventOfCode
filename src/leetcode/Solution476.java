@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution476 {
+class Solution476 {
     class Solution {
         public int findComplement(int num) {
             if (num < 0) {

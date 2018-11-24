@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution338 {
+class Solution338 {
     class Solution {
         public int[] countBits(int num) {
             if (num < 0) {

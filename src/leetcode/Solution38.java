@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution38 {
+class Solution38 {
     class Solution {
         public String countAndSay(int n) {
             char[] s = new char[]{'1'};

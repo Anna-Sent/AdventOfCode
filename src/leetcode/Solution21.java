@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution21 {
+class Solution21 {
     class Solution {
         public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
             ListNode c1 = l1, c2 = l2;

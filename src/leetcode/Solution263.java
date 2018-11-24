@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution263 {
+class Solution263 {
     class Solution {
         public boolean isUgly(int num) {
             if (num <= 0) {

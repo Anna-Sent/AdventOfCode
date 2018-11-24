@@ -3,7 +3,7 @@ package leetcode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Solution438 {
+class Solution438 {
     class Solution {
         private static final int CHAR_COUNT = 'z' - 'a' + 1;
 

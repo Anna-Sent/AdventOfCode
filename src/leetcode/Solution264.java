@@ -2,7 +2,7 @@ package leetcode;
 
 import java.util.TreeSet;
 
-public class Solution264 {
+class Solution264 {
     class Solution {
         public int nthUglyNumber(int n) {
             if (n <= 0) {

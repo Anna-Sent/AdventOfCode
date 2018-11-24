@@ -3,7 +3,7 @@ package leetcode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Solution729 {
+class Solution729 {
     static class MyCalendar {
         private static class Pair {
             private int min, max;
@@ -17,7 +17,6 @@ public class Solution729 {
         private final List<Pair> pairs = new ArrayList<>();
 
         public MyCalendar() {
-
         }
 
         public boolean book(int start, int end) {

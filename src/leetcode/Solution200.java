@@ -3,7 +3,7 @@ package leetcode;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Solution200 {
+class Solution200 {
     static class Solution {
         public int numIslands(char[][] grid) {
             int count = 0;

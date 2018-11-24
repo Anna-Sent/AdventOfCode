@@ -4,7 +4,7 @@ import utils.FileUtils;
 
 import java.util.Arrays;
 
-public class Solution477 {
+class Solution477 {
     private interface Solution {
         int totalHammingDistance(int[] nums);
     }

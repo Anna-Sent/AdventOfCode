@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution213 {
+class Solution213 {
     static class Solution {
         public int rob(int[] nums) {
             if (nums == null || nums.length == 0) {

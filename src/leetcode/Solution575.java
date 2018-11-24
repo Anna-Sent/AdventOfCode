@@ -2,7 +2,7 @@ package leetcode;
 
 import java.util.Arrays;
 
-public class Solution575 {
+class Solution575 {
     class Solution {
         public int distributeCandies(int[] candies) {
             Arrays.sort(candies);

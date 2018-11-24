@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution233 {
+class Solution233 {
     interface Solution {
         int countDigitOne(int n);
     }

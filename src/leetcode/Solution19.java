@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution19 {
+class Solution19 {
     class Solution {
         public ListNode removeNthFromEnd(ListNode head, int n) {
             ListNode slow = head, fast = null, current = head;

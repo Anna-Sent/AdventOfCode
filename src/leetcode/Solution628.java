@@ -2,7 +2,7 @@ package leetcode;
 
 import java.util.Arrays;
 
-public class Solution628 {
+class Solution628 {
     class Solution {
         public int maximumProduct(int[] nums) {
             Arrays.sort(nums);

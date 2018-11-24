@@ -1,6 +1,6 @@
 package leetcode;
 
-public class Solution242 {
+class Solution242 {
     class Solution {
         private static final int CHAR_COUNT = 'z' - 'a' + 1;
 

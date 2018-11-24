@@ -2,7 +2,7 @@ package leetcode;
 
 import java.util.Arrays;
 
-public class Solution204 {
+class Solution204 {
     class Solution {
         public int countPrimes(int n) {
             if (n <= 0) {
