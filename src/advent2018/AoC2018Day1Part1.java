@@ -997,7 +997,7 @@ public class AoC2018Day1Part1 {
                 "-28\n" +
                 "-33\n" +
                 "-71491", "\n");
-        assert result == 502 : "unexpected result is" + result;
+        assert result == 502 : "unexpected result is " + result;
         System.out.println(result);
     }
 
