@@ -1120,8 +1120,7 @@ public class AoC2018Day4Part1 {
             if (startRecord.event == Event.falls_asleep) {
                 for (int j = i + 1; j < records.size(); ++j) {
                     Record endRecord = records.get(j);
-                    if (startRecord.id == endRecord.id
-                            && endRecord.event == Event.wakes_up) {
+                    if (endRecord.event == Event.wakes_up) {
                         // inside the one hour
                         time = endRecord.min - startRecord.min;
                         break;
