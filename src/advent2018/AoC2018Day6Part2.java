@@ -1,7 +1,9 @@
 package advent2018;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,8 +16,8 @@ public class AoC2018Day6Part2 {
                 "8, 3\n" +
                 "3, 4\n" +
                 "5, 5\n" +
-                "8, 9");
-        assert result == 17 : "unexpected result is " + result;
+                "8, 9", 32);
+        assert result == 16 : "unexpected result is " + result;
         System.out.println(result);
 
         result = test("181, 47\n" +
@@ -67,29 +69,98 @@ public class AoC2018Day6Part2 {
                 "302, 167\n" +
                 "185, 158\n" +
                 "72, 91\n" +
-                "264, 67");
-        // assert result ==  : "unexpected result is " + result;
+                "264, 67", 10000);
+        assert result == 45290 : "unexpected result is " + result;
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    public static int test(String s, int delta) {
         Pattern pattern = Pattern.compile("(\\d+), (\\d+)");
         String[] parts = s.split("\n");
         List<Point> points = new ArrayList<>();
+        Map<Character, Point> pointsMap = new HashMap<>();
+        int maxX = 0, maxY = 0;
+        char name = 'a';
         for (String part : parts) {
             Matcher matcher = pattern.matcher(part);
             assert matcher.matches() : "not matches " + part;
             Point point = new Point();
             point.x = Integer.parseInt(matcher.group(1));
             point.y = Integer.parseInt(matcher.group(2));
+            point.name = name;
             points.add(point);
+            pointsMap.put(name, point);
+            if (point.x > maxX) {
+                maxX = point.x;
+            }
+            if (point.y > maxY) {
+                maxY = point.y;
+            }
+            ++name;
+            if (name > 'z') {
+                name = 'A';
+            }
         }
-        int sum = 0;
-        return sum;
+
+        System.out.println("last name is " + (char) (name - 1));
+
+        ++maxX;
+        ++maxY;
+
+        Point[][] table = new Point[maxY][maxX];
+
+        for (int i = 0; i < maxY; ++i) {
+            for (int j = 0; j < maxX; ++j) {
+                Point point = new Point();
+                point.x = j;
+                point.y = i;
+                table[i][j] = point;
+            }
+        }
+
+        printTable(table);
+
+        for (int i = 0; i < maxY; ++i) {
+            for (int j = 0; j < maxX; ++j) {
+                if (table[i][j].name == '0') {
+                    int sum = 0;
+                    for (Point point : points) {
+                        int d = Math.abs(point.x - j) + Math.abs(point.y - i);
+                        sum += d;
+                    }
+                    table[i][j].name = sum < delta ? '#' : '.';
+                }
+            }
+        }
+
+        printTable(table);
+
+        int area = 0;
+        for (int i = 0; i < maxY; ++i) {
+            for (int j = 0; j < maxX; ++j) {
+                if (table[i][j].name == '#') {
+                    ++area;
+                }
+            }
+        }
+
+        return area;
+    }
+
+    private static void printTable(Point[][] table) {
+        System.out.println();
+        for (int i = 0; i < table.length; ++i) {
+            for (int j = 0; j < table[i].length; ++j) {
+                System.out.print(table[i][j].name);
+            }
+            System.out.println();
+        }
     }
 
     private static class Point {
+        char name = '0';
         int x, y;
+        boolean infinite;
 
         @Override
         public boolean equals(Object obj) {
@@ -100,7 +171,7 @@ public class AoC2018Day6Part2 {
                 return false;
             }
             Point other = (Point) obj;
-            return x == other.x && y == other.y;
+            return x == other.x && y == other.y && name == other.name;
         }
 
         @Override
@@ -108,12 +179,13 @@ public class AoC2018Day6Part2 {
             int hash = 7;
             hash = 31 * hash + x;
             hash = 31 * hash + y;
+            hash = 31 * hash + name;
             return hash;
         }
 
         @Override
         public String toString() {
-            return x + ", " + y;
+            return name + " (" + x + ", " + y + ")";
         }
     }
 }
