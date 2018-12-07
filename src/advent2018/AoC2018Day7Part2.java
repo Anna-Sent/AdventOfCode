@@ -119,7 +119,7 @@ public class AoC2018Day7Part2 {
                 "Step U must be finished before step D can begin.\n" +
                 "Step N must be finished before step E can begin.\n" +
                 "Step H must be finished before step P can begin.", 5, 60);
-        // assert  : "unexpected result is " + result;
+        assert result == 971 : "unexpected result is " + result;
         System.out.println(result);
     }
 
@@ -153,6 +153,7 @@ public class AoC2018Day7Part2 {
                 System.out.println("root is " + node.name + " " + node.children);
                 roots.add(node);
             }
+            node.count = node.name.charAt(0) - 'A' + 1 + delta;
         }
         assert !roots.isEmpty() : "no roots found";
 
@@ -167,10 +168,23 @@ public class AoC2018Day7Part2 {
         }
         assert finish != null : "no finish node found";
 
-        String result = "";
+        int count = 0;
         List<String> tasks = new ArrayList<>();
         List<Node> opened = new ArrayList<>(nodes.values());
-        while (!opened.isEmpty()) {
+        List<Node> executing = new ArrayList<>();
+        while (!opened.isEmpty() || !executing.isEmpty()) {
+            ++count;
+            List<Node> stillExecuting = new ArrayList<>();
+            for (Node node : executing) {
+                --node.count;
+                if (node.count == 0) {
+                    node.leet = true;
+                } else {
+                    stillExecuting.add(node);
+                }
+            }
+            executing = stillExecuting;
+
             List<Node> available = new ArrayList<>();
             for (Node node : opened) {
                 if (!node.leet && allNodesLeet(node.parents)) {
@@ -178,33 +192,16 @@ public class AoC2018Day7Part2 {
                 }
             }
             Collections.sort(available, (o1, o2) -> o1.name.compareTo(o2.name));
-            if (available.isEmpty()) {
-                break;
-            }
-            Node first = available.remove(0);
-            opened.remove(first);
-            first.leet = true;
-            result += first.name;
-            tasks.add(first.name);
-        }
 
-        assert result.length() == nodes.size() : "invalid answer " + result;
-        for (int i = 0; i < result.length() - 1; ++i) {
-            char ch1 = result.charAt(i);
-            for (int j = i + 1; j < result.length(); ++j) {
-                char ch2 = result.charAt(j);
-                assert ch1 != ch2 : "invalid answer " + result;
+            while (executing.size() < workersCount && !available.isEmpty()) {
+                Node node = available.get(0);
+                executing.add(node);
+                available.remove(node);
+                opened.remove(node);
             }
         }
 
-        Worker[] workers = new Worker[workersCount];
-        for (int i = 0; i < workersCount; ++i) {
-            workers[i] = new Worker();
-        }
-
-        // TODO
-
-        return 0;
+        return count - 1;
     }
 
     private static boolean allNodesLeet(Collection<Node> nodes) {
@@ -216,17 +213,12 @@ public class AoC2018Day7Part2 {
         return true;
     }
 
-    private static class Worker {
-        String task;
-        int current;
-        int total;
-    }
-
     private static class Node {
         String name;
         boolean leet;
         List<Node> children = new ArrayList<>();
         List<Node> parents = new ArrayList<>();
+        int count;
 
         Node(String name) {
             this.name = name;
