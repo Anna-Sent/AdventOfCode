@@ -51,17 +51,18 @@ public class AoC2018Day11Part1 {
     }
 
     private static final int SIZE = 300;
+    private static final int SQR_SIZE = 3;
 
     public static String findLargest(int serialNumber) {
         Result maxResult = null;
-        for (int y = 1; y <= SIZE - 2; ++y) {
-            for (int x = 1; x <= SIZE - 2; ++x) {
+        for (int y = 1; y <= SIZE - SQR_SIZE + 1; ++y) {
+            for (int x = 1; x <= SIZE - SQR_SIZE + 1; ++x) {
                 Result result = new Result();
                 result.x = x;
                 result.y = y;
                 result.totalPowerLevel = 0;
-                for (int dy = y; dy < y + 3; ++dy) {
-                    for (int dx = x; dx < x + 3; ++dx) {
+                for (int dy = y; dy < y + SQR_SIZE; ++dy) {
+                    for (int dx = x; dx < x + SQR_SIZE; ++dx) {
                         result.totalPowerLevel += powerLevel(dx, dy, serialNumber);
                     }
                 }

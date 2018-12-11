@@ -59,8 +59,8 @@ public class AoC2018Day11Part2Threads {
         for (int i = 0; i < SIZE; ++i) {
             int size = i + 1;
             threads[i] = new Thread(() -> {
-                for (int y = 1; y <= SIZE - size; ++y) {
-                    for (int x = 1; x <= SIZE - size; ++x) {
+                for (int y = 1; y <= SIZE - size + 1; ++y) {
+                    for (int x = 1; x <= SIZE - size + 1; ++x) {
                         Result result = new Result();
                         result.x = x;
                         result.y = y;
