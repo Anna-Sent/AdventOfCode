@@ -1,5 +1,7 @@
 package advent2018;
 
+import utils.Point;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -508,29 +510,5 @@ public class AoC2018Day10 {
     private static class Position {
         Point position = new Point();
         Point velocity = new Point();
-    }
-
-    private static class Point {
-        int x, y;
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj == this) {
-                return true;
-            }
-            if (obj == null || obj.getClass() != getClass()) {
-                return false;
-            }
-            Point other = (Point) obj;
-            return x == other.x && y == other.y;
-        }
-
-        @Override
-        public int hashCode() {
-            int hash = 7;
-            hash = 31 * hash + x;
-            hash = 31 * hash + y;
-            return hash;
-        }
     }
 }
