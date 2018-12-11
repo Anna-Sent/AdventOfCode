@@ -34,6 +34,6 @@ class ListNode {
     }
 
     private static ListNode valueOf(int val) {
-        return NODES.computeIfAbsent(val, (key) -> new ListNode(key));
+        return NODES.computeIfAbsent(val, key -> new ListNode(key));
     }
 }
