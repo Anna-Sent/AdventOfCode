@@ -50,10 +50,12 @@ public class AoC2018Day11Part1 {
         return result;
     }
 
+    private static final int SIZE = 300;
+
     public static String findLargest(int serialNumber) {
         Result maxResult = null;
-        for (int y = 1; y <= 300 - 2; ++y) {
-            for (int x = 1; x <= 300 - 2; ++x) {
+        for (int y = 1; y <= SIZE - 2; ++y) {
+            for (int x = 1; x <= SIZE - 2; ++x) {
                 Result result = new Result();
                 result.x = x;
                 result.y = y;
