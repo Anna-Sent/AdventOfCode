@@ -497,9 +497,7 @@ public class AoC2018Day10 {
         for (int y = minY; y <= maxY; ++y) {
             StringBuilder sb = new StringBuilder();
             for (int x = minX; x <= maxX; ++x) {
-                Point point = new Point();
-                point.x = x;
-                point.y = y;
+                Point point = new Point(x, y);
                 System.out.print(points.contains(point) ? "#" : ".");
             }
             System.out.println();
