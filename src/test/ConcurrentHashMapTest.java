@@ -2,7 +2,6 @@ package test;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
@@ -10,7 +9,6 @@ import java.util.stream.IntStream;
 public class ConcurrentHashMapTest {
 
     private static final int THREAD_COUNT = 100;
-    private static final Random random = new Random();
 
     public static void main(String[] args) throws InterruptedException {
         Map<Integer, Integer> map;
