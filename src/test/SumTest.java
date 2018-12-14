@@ -2,7 +2,7 @@ package test;
 
 import java.util.stream.Stream;
 
-public class TestSum {
+public class SumTest {
     public static void main(String[] args) {
         int res1, res2;
 

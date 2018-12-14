@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Permutation {
+public class PermutationTest {
     public static void main(String[] args) {
         permutate(new int[]{}, 0);
         permutate(new int[]{1}, 0);

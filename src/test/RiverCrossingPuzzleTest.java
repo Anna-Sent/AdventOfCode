@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class RiverCrossingPuzzle {
+public class RiverCrossingPuzzleTest {
     public static void main(String[] args) {
         State initial = new State(3, 3, 0, 0, 1, 0, null);
         int count = bfs(initial);

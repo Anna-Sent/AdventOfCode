@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class TestJava8 {
+public class Java8Test {
     private static String[] DIRS = new String[]{
             "C:\\Users\\User\\workspace\\",
             "C:\\Users\\User\\Desktop\\my_android_workspace\\",
