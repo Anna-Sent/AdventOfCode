@@ -1901,11 +1901,11 @@ public class AoC2018Day17Part1 {
                 "y=1228, x=534..542\n" +
                 "x=571, y=831..848\n" +
                 "x=417, y=1133..1143");
-        // assert result ==  : "unexpected result is " + result;
+        assert result == 33362 : "unexpected result is " + result;
         System.out.println(result);
     }
 
-    private static int minX = 500, minY = 0, maxX = 500, maxY = 0;
+    private static int minX = 500, minY = Integer.MAX_VALUE, maxX = 500, maxY = 0;
     private static char[][] map;
 
     public static int test(String s) {
@@ -1914,6 +1914,10 @@ public class AoC2018Day17Part1 {
 
         Set<Point> points = new HashSet<>();
 
+        minX = 500;
+        minY = Integer.MAX_VALUE;
+        maxX = 500;
+        maxY = 0;
         String[] tokens = s.split("\n");
         for (String token : tokens) {
             Matcher matcher = xyPattern.matcher(token);
@@ -1941,7 +1945,7 @@ public class AoC2018Day17Part1 {
                     maxX = Math.max(x1, maxX);
                     maxX = Math.max(x2, maxX);
                     minY = Math.min(y, minY);
-                    maxY = Math.min(y, maxY);
+                    maxY = Math.max(y, maxY);
                     for (int x = x1; x <= x2; ++x) {
                         points.add(new Point(x, y));
                     }
@@ -1950,7 +1954,11 @@ public class AoC2018Day17Part1 {
                 }
             }
         }
+
         System.out.println(String.format("x=%d..%d y=%d..%d", minX, maxX, minY, maxY));
+
+        minX -= 2;
+        maxX += 2;
 
         map = new char[maxY - minY + 1][maxX - minX + 1];
         for (int y = 0; y < map.length; ++y) {
@@ -1960,16 +1968,26 @@ public class AoC2018Day17Part1 {
             }
         }
 
-        int startY = 0;
+        int startY = minY;
         int startX = 500;
-        map[startY - minY][startX - minX] = '+';
+        map[startY - minY][startX - minX] = '|';
 
         startStream(startX, startY + 1);
 
-        print(map);
+        print();
 
-        int sum = 57;
-        return sum;
+        int totalCount = 0;
+        for (int y = 0; y < map.length; ++y) {
+            for (int x = 0; x < map[y].length; ++x) {
+                char ch = map[y][x];
+                if (ch == '|') {
+                    ++totalCount;
+                } else if (ch == '~') {
+                    ++totalCount;
+                }
+            }
+        }
+        return totalCount;
     }
 
     private static void startStream(int startX, int startY) {
@@ -1977,21 +1995,88 @@ public class AoC2018Day17Part1 {
         int currY = startY;
         int currX = startX;
         while (currY <= maxY && (ch = get(currX, currY)) != '#') {
-            fill(currX, currY);
+            fill(currX, currY, '|');
             ++currY;
         }
-        --currY;
-        int leftW = 0, rightW = 0;
-        for (int x = currX; x >= minX; --x, ++leftW) {
-            ch = get(x, currY);
-            if (ch == '#') {
-                break;
+        if (currY > maxY) {
+            return;
+        }
+        boolean overflow = false;
+        while (currY >= minY && !overflow) {
+            --currY;
+            for (int x = currX; x >= minX; --x) {
+                ch = get(x, currY);
+                if (ch == '#') {
+                    break;
+                }
+                if (currY + 1 > maxY) {
+                    break;
+                }
+                ch = get(x, currY + 1);
+                if (ch == '#' || ch == '~') {
+                    fill(x, currY, '~');
+                } else {
+                    overflow = true;
+                    break;
+                }
+            }
+            for (int x = currX; x <= maxX; ++x) {
+                ch = get(x, currY);
+                if (ch == '#') {
+                    break;
+                }
+                if (currY + 1 > maxY) {
+                    break;
+                }
+                ch = get(x, currY + 1);
+                if (ch == '#' || ch == '~') {
+                    fill(x, currY, '~');
+                } else {
+                    overflow = true;
+                    break;
+                }
             }
         }
-        for (int x = currX; x <= maxX; ++x, ++rightW) {
-            ch = get(x, currY);
-            if (ch == '#') {
-                break;
+        if (overflow) {
+            int leftX, rightX;
+            for (leftX = currX; leftX >= minX; --leftX) {
+                ch = get(leftX, currY);
+                if (currY >= maxY) {
+                    break;
+                }
+                char floor = get(leftX, currY + 1);
+                if ((ch == '~' || ch == '|') && (floor == '~' || floor == '#')) {
+                    fill(leftX, currY, '|');
+                } else {
+                    break;
+                }
+            }
+            for (rightX = currX; rightX <= maxX; ++rightX) {
+                ch = get(rightX, currY);
+                if (currY >= maxY) {
+                    break;
+                }
+                char floor = get(rightX, currY + 1);
+                if ((ch == '~' || ch == '|') && (floor == '~' || floor == '#')) {
+                    fill(rightX, currY, '|');
+                } else {
+                    break;
+                }
+            }
+            if (currY > maxY) {
+                return;
+            }
+            if (leftX >= minX) {
+                boolean leftOpen = get(leftX, currY) != '#';
+                if (leftOpen) {
+                    startStream(leftX, currY);
+                }
+            }
+            if (rightX <= maxX) {
+                boolean rightOpen = get(rightX, currY) != '#';
+                if (rightOpen) {
+                    startStream(rightX, currY);
+                }
             }
         }
     }
@@ -2000,19 +2085,27 @@ public class AoC2018Day17Part1 {
         return map[y - minY][x - minX];
     }
 
-    private static void fill(int x, int y) {
+    private static void fill(int x, int y, char ch) {
         assert map[y - minY][x - minX] != '#' : "forbid to fill #";
-        assert map[y - minY][x - minX] != '+' : "forbid to fill +";
-        map[y - minY][x - minX] = '~';
+        map[y - minY][x - minX] = ch;
     }
 
-    private static void print(char[][] map) {
+    private static void print() {
+        int totalCount = 0;
+        int tildaCount = 0;
         for (int y = 0; y < map.length; ++y) {
             for (int x = 0; x < map[y].length; ++x) {
-                System.out.print(map[y][x]);
+                char ch = map[y][x];
+                System.out.print(ch);
+                if (ch == '|') {
+                    ++totalCount;
+                } else if (ch == '~') {
+                    ++tildaCount;
+                    ++totalCount;
+                }
             }
             System.out.println();
         }
-        System.out.println();
+        System.out.println("total count " + totalCount + " tilda count " + tildaCount);
     }
 }
