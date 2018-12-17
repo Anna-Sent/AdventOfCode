@@ -2,9 +2,7 @@ package advent2018;
 
 import utils.Point;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1907,15 +1905,15 @@ public class AoC2018Day17Part1 {
         System.out.println(result);
     }
 
+    private static int minX = 500, minY = 0, maxX = 500, maxY = 0;
+    private static char[][] map;
+
     public static int test(String s) {
         Pattern xyPattern = Pattern.compile("x=(\\d+), y=(\\d+)\\.\\.(\\d+)");
         Pattern yxPattern = Pattern.compile("y=(\\d+), x=(\\d+)\\.\\.(\\d+)");
 
-        Map<Integer, Range> xToYRanges = new HashMap<>();
-        Map<Integer, Range> yToXRanges = new HashMap<>();
         Set<Point> points = new HashSet<>();
 
-        int minX = 500, minY = 0, maxX = 500, maxY = 0;
         String[] tokens = s.split("\n");
         for (String token : tokens) {
             Matcher matcher = xyPattern.matcher(token);
@@ -1923,7 +1921,6 @@ public class AoC2018Day17Part1 {
                 int x = Integer.parseInt(matcher.group(1));
                 int y1 = Integer.parseInt(matcher.group(2));
                 int y2 = Integer.parseInt(matcher.group(3));
-                xToYRanges.put(x, new Range(y1, y2));
                 minX = Math.min(x, minX);
                 maxX = Math.max(x, maxX);
                 minY = Math.min(y1, minY);
@@ -1939,7 +1936,6 @@ public class AoC2018Day17Part1 {
                     int y = Integer.parseInt(matcher.group(1));
                     int x1 = Integer.parseInt(matcher.group(2));
                     int x2 = Integer.parseInt(matcher.group(3));
-                    yToXRanges.put(y, new Range(x1, x2));
                     minX = Math.min(x1, minX);
                     minX = Math.min(x2, minX);
                     maxX = Math.max(x1, maxX);
@@ -1956,7 +1952,7 @@ public class AoC2018Day17Part1 {
         }
         System.out.println(String.format("x=%d..%d y=%d..%d", minX, maxX, minY, maxY));
 
-        char[][] map = new char[maxY - minY + 1][maxX - minX + 1];
+        map = new char[maxY - minY + 1][maxX - minX + 1];
         for (int y = 0; y < map.length; ++y) {
             for (int x = 0; x < map[y].length; ++x) {
                 int rx = minX + x, ry = minY + y;
@@ -1964,34 +1960,50 @@ public class AoC2018Day17Part1 {
             }
         }
 
-        map[0 - minY][500 - minX] = '+';
-        char ch;
-        int currY = minY + 1;
-        int currX = 500;
-        while (currY <= maxY && (ch = map[currY - minY][currX - minX]) != '#') {
-            map[currY - minY][currX - minX] = '|';
-            ++currY;
-        }
-        --currY;
-        for (int x = currX; x >= minX; --x) {
-            ch = map[currY - minY][x - minX];
-            if (ch == '#') {
-                break;
-            }
-            map[currY - minY][x - minX] = '~';
-        }
-        for (int x = currX; x <= maxX; ++x) {
-            ch = map[currY - minY][x - minX];
-            if (ch == '#') {
-                break;
-            }
-            map[currY - minY][x - minX] = '~';
-        }
+        int startY = 0;
+        int startX = 500;
+        map[startY - minY][startX - minX] = '+';
+
+        startStream(startX, startY + 1);
 
         print(map);
 
         int sum = 57;
         return sum;
+    }
+
+    private static void startStream(int startX, int startY) {
+        char ch;
+        int currY = startY;
+        int currX = startX;
+        while (currY <= maxY && (ch = get(currX, currY)) != '#') {
+            fill(currX, currY);
+            ++currY;
+        }
+        --currY;
+        int leftW = 0, rightW = 0;
+        for (int x = currX; x >= minX; --x, ++leftW) {
+            ch = get(x, currY);
+            if (ch == '#') {
+                break;
+            }
+        }
+        for (int x = currX; x <= maxX; ++x, ++rightW) {
+            ch = get(x, currY);
+            if (ch == '#') {
+                break;
+            }
+        }
+    }
+
+    private static char get(int x, int y) {
+        return map[y - minY][x - minX];
+    }
+
+    private static void fill(int x, int y) {
+        assert map[y - minY][x - minX] != '#' : "forbid to fill #";
+        assert map[y - minY][x - minX] != '+' : "forbid to fill +";
+        map[y - minY][x - minX] = '~';
     }
 
     private static void print(char[][] map) {
@@ -2002,14 +2014,5 @@ public class AoC2018Day17Part1 {
             System.out.println();
         }
         System.out.println();
-    }
-
-    private static class Range {
-        int from, to;
-
-        Range(int from, int to) {
-            this.from = from;
-            this.to = to;
-        }
     }
 }
