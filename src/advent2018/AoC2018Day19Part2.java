@@ -8,44 +8,43 @@ public class AoC2018Day19Part2 {
     public static void main(String[] args) {
         int result;
 
-        result = test("addi 2 16 2\n" +//0
-                        "seti 1 1 1\n" +//1
-                        "seti 1 4 3\n" +//2
-                        "mulr 1 3 5\n" +//3+
-                        "eqrr 5 4 5\n" +//4+
-                        "addr 5 2 2\n" +//5+
-                        // "addi 2 1 2\n" +//6+
-                        // "addr 1 0 0\n" +//7
-                        "addi 3 1 3\n" +//8+
-                        "gtrr 3 4 5\n" +//9+
-                        "addr 2 5 2\n" +//10+
-                        "seti 2 4 2\n" +//11+
-                        "addi 1 1 1\n" +//12
-                        "gtrr 1 4 5\n" +//13
-                        "addr 5 2 2\n" +//14
-                        "seti 1 0 2\n" +//15
-                        "mulr 2 2 2\n" +//16
-                        "addi 4 2 4\n" +//17
-                        "mulr 4 4 4\n" +//18
-                        "mulr 2 4 4\n" +//19
-                        "muli 4 11 4\n" +//20
-                        "addi 5 1 5\n" +//21
-                        "mulr 5 2 5\n" +//22
-                        "addi 5 17 5\n" +//23
-                        "addr 4 5 4\n" +//24
-                        "addr 2 0 2\n" +//25
-                        "seti 0 9 2\n" +//26
-                        "setr 2 3 5\n" +//27
-                        "mulr 5 2 5\n" +//28
-                        "addr 2 5 5\n" +//29
-                        "mulr 2 5 5\n" +//30
-                        "muli 5 14 5\n" +//31
-                        "mulr 5 2 5\n" +//32
-                        "addr 4 5 4\n" +//33
-                        "seti 0 9 0\n" +//34
-                        "seti 0 6 2",//35
-                2);
-        // assert result ==  : "unexpected result is " + result;
+        result = test("addi 2 16 2\n" +
+                "seti 1 1 1\n" +
+                "seti 1 4 3\n" +
+                "mulr 1 3 5\n" +
+                "eqrr 5 4 5\n" +
+                "addr 5 2 2\n" +
+                "addi 2 1 2\n" +
+                "addr 1 0 0\n" +
+                "addi 3 1 3\n" +
+                "gtrr 3 4 5\n" +
+                "addr 2 5 2\n" +
+                "seti 2 4 2\n" +
+                "addi 1 1 1\n" +
+                "gtrr 1 4 5\n" +
+                "addr 5 2 2\n" +
+                "seti 1 0 2\n" +
+                "mulr 2 2 2\n" +
+                "addi 4 2 4\n" +
+                "mulr 4 4 4\n" +
+                "mulr 2 4 4\n" +
+                "muli 4 11 4\n" +
+                "addi 5 1 5\n" +
+                "mulr 5 2 5\n" +
+                "addi 5 17 5\n" +
+                "addr 4 5 4\n" +
+                "addr 2 0 2\n" +
+                "seti 0 9 2\n" +
+                "setr 2 3 5\n" +
+                "mulr 5 2 5\n" +
+                "addr 2 5 5\n" +
+                "mulr 2 5 5\n" +
+                "muli 5 14 5\n" +
+                "mulr 5 2 5\n" +
+                "addr 4 5 4\n" +
+                "seti 0 9 0\n" +
+                "seti 0 6 2", 2);
+        assert result == 14952912 : "unexpected result is " + result;
         System.out.println(result);
     }
 
