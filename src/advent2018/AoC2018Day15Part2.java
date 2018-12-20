@@ -314,8 +314,6 @@ public class AoC2018Day15Part2 {
     }
 
     private static Point bfs(Point startPoint, Set<Point> endPoints, Map<Point, Cell> cells) {
-        List<List<Point>> paths = new ArrayList<>();
-
         Map<Point, Point> closed = new HashMap<>();
         Map<Point, Point> opened = new HashMap<>();
         Map<Point, Integer> lenghts = new HashMap<>();
