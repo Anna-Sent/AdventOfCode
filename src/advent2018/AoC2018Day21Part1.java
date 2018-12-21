@@ -39,14 +39,13 @@ public class AoC2018Day21Part1 {
                 "eqrr 3 0 1\n" +
                 "addr 1 2 2\n" +
                 "seti 5 9 2", 2);
-        // assert result ==  : "unexpected result is " + result;
+        assert result == 11474091 : "unexpected result is " + result;
         System.out.println(result);
     }
 
     public static int test(String s, int ip) {
         Pattern opPattern = Pattern.compile("(.+) (\\d+) (\\d+) (\\d+)");
         int[] registers = new int[6];
-        registers[0] = 100;
         String[] tokens = s.split("\n");
         for (; registers[ip] < tokens.length; ) {
             String token = tokens[registers[ip]];
@@ -106,13 +105,12 @@ public class AoC2018Day21Part1 {
                     break;
                 case "eqrr":
                     registers = eqrr(registers, a, b, c);
-                    break;
+                    System.out.println(Arrays.toString(registers));
+                    return registers[3];
             }
             ++registers[ip];
-            System.out.println(Arrays.toString(registers));
         }
-
-        return registers[0];
+        return -1;
     }
 
     private static int[] addr(int[] registers, int a, int b, int c) {
