@@ -26,8 +26,8 @@ public class RiverCrossingPuzzleTest {
                     return count;
                 }
 
-                Set<State> set = currentState.generateNext();
-                for (State nextState : set) {
+                Set<State> next = currentState.generateNext();
+                for (State nextState : next) {
                     if (!closed.contains(nextState)) {
                         achievable.add(nextState);
                     }
