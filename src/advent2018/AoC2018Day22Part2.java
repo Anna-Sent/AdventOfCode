@@ -26,7 +26,7 @@ public class AoC2018Day22Part2 {
         AoC2018Day22Part2.targetPoint = targetPoint;
         AoC2018Day22Part2.depth = depth;
         points.clear();
-        riskLevelOfArea(new Point(targetPoint.x + 100, targetPoint.y + 100));
+        riskLevelOfArea(new Point(targetPoint.x + 1000, targetPoint.y + 1000));
         return bfs(new State(mouthPoint, Instrument.torch, 0));
     }
 
@@ -107,39 +107,33 @@ public class AoC2018Day22Part2 {
 
     private static int bfs(State initial) {
         Set<State> closed = new HashSet<>();
-        Set<State> opened = new HashSet<>();
+        Queue<State> opened = new PriorityQueue<>(stateComparator);
 
         opened.add(initial);
 
-        int minMinutes = Integer.MAX_VALUE;
-        int count = 0;
+        int i = 0;
         while (opened.size() > 0) {
-            Set<State> achievable = new HashSet<>();
-            List<State> sortedOpened = sort(opened);
-            for (State currentState : sortedOpened) {
-                if (currentState.isEnd()) {
-                    if (currentState.minutes < minMinutes) {
-                        minMinutes = currentState.minutes;
-                    }
-                    System.out.println("new solution is " + currentState.minutes
-                            + "; minimal is " + minMinutes);
-                    if (count++ > 100) {
-                        return minMinutes;
-                    }
-                }
+            State currentState = opened.poll();
 
-                Set<State> next = currentState.generateNext();
-                List<State> sortedNext = sort(next);
-                for (State nextState : sortedNext) {
-                    if (!closed.contains(nextState)) {
-                        achievable.add(nextState);
-                    }
-                }
-
-                closed.add(currentState);
+            if (closed.contains(currentState)) {
+                continue;
             }
 
-            opened = achievable;
+            if (currentState.isEnd()) {
+                return currentState.minutes;
+            }
+
+            Set<State> next = currentState.generateNext();
+            for (State nextState : next) {
+                opened.add(nextState);
+            }
+
+            closed.add(currentState);
+
+            if (i % 1000 == 0) {
+                System.out.println("i " + (i / 1000) + " " + currentState.minutes);
+            }
+            ++i;
         }
 
         return -1;
@@ -158,6 +152,11 @@ public class AoC2018Day22Part2 {
 
         private static final int[] dxs = new int[]{1, -1, 0, 0};
         private static final int[] dys = new int[]{0, 0, 1, -1};
+        private static final Map<Type, Set<Instrument>> validInstruments = new HashMap<Type, Set<Instrument>>() {{
+            put(Type.rocky, EnumSet.of(Instrument.gear, Instrument.torch));
+            put(Type.wet, EnumSet.of(Instrument.gear, Instrument.neither));
+            put(Type.narrow, EnumSet.of(Instrument.neither, Instrument.torch));
+        }};
 
         public Set<State> generateNext() {
             Set<State> next = new HashSet<>();
@@ -165,15 +164,14 @@ public class AoC2018Day22Part2 {
             for (int i = 0; i < 4; ++i) {
                 int dx = dxs[i], dy = dys[i];
                 Point nextPoint = new Point(point.x + dx, point.y + dy);
-                if (nextPoint.x < 0 || nextPoint.y < 0
-                        || points.get(nextPoint) == null) {
+                if (nextPoint.x < 0 || nextPoint.y < 0) {
                     continue;
                 }
                 Type nextType = points.get(nextPoint).type;
                 Type currentType = points.get(point).type;
                 for (Instrument nextInstrument : Instrument.values()) {
-                    if (!isInstrumentValid(nextInstrument, nextType)
-                            || !isInstrumentValid(nextInstrument, currentType)) {
+                    if (!validInstruments.get(nextType).contains(nextInstrument)
+                            || !validInstruments.get(currentType).contains(nextInstrument)) {
                         continue;
                     }
                     int nextMinutes = minutes + (nextInstrument != instrument ? 8 : 1);
@@ -182,19 +180,6 @@ public class AoC2018Day22Part2 {
             }
 
             return next;
-        }
-
-        private static boolean isInstrumentValid(Instrument instrument, Type type) {
-            switch (type) {
-
-                case rocky:
-                    return instrument == Instrument.gear || instrument == Instrument.torch;
-                case wet:
-                    return instrument == Instrument.gear || instrument == Instrument.neither;
-                case narrow:
-                    return instrument == Instrument.neither || instrument == Instrument.torch;
-            }
-            throw new RuntimeException("Unreachable");
         }
 
         public boolean isEnd() {
@@ -206,7 +191,7 @@ public class AoC2018Day22Part2 {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             State state = (State) o;
-            return point.equals(state.point) && instrument == state.instrument && minutes == state.minutes;
+            return point.equals(state.point) && instrument == state.instrument;
         }
 
         @Override
@@ -214,7 +199,6 @@ public class AoC2018Day22Part2 {
             int result = 31;
             result = 31 * result + point.hashCode();
             result = 31 * result + instrument.hashCode();
-            result = 31 * result + minutes;
             return result;
         }
     }
