@@ -58,24 +58,24 @@ public class RiverCrossingPuzzleTest {
         }
 
         public Set<State> generateNext() {
-            Set<State> set = new HashSet<>();
+            Set<State> next = new HashSet<>();
 
-            set.add(generateState(r_left - 1, s_left, r_right + 1, s_right, boat_left - 1, boat_right + 1));
-            set.add(generateState(r_left, s_left - 1, r_right, s_right + 1, boat_left - 1, boat_right + 1));
-            set.add(generateState(r_left + 1, s_left, r_right - 1, s_right, boat_left + 1, boat_right - 1));
-            set.add(generateState(r_left, s_left + 1, r_right, s_right - 1, boat_left + 1, boat_right - 1));
+            next.add(generateState(r_left - 1, s_left, r_right + 1, s_right, boat_left - 1, boat_right + 1));
+            next.add(generateState(r_left, s_left - 1, r_right, s_right + 1, boat_left - 1, boat_right + 1));
+            next.add(generateState(r_left + 1, s_left, r_right - 1, s_right, boat_left + 1, boat_right - 1));
+            next.add(generateState(r_left, s_left + 1, r_right, s_right - 1, boat_left + 1, boat_right - 1));
 
-            set.add(generateState(r_left - 2, s_left, r_right + 2, s_right, boat_left - 1, boat_right + 1));
-            set.add(generateState(r_left, s_left - 2, r_right, s_right + 2, boat_left - 1, boat_right + 1));
-            set.add(generateState(r_left + 2, s_left, r_right - 2, s_right, boat_left + 1, boat_right - 1));
-            set.add(generateState(r_left, s_left + 2, r_right, s_right - 2, boat_left + 1, boat_right - 1));
+            next.add(generateState(r_left - 2, s_left, r_right + 2, s_right, boat_left - 1, boat_right + 1));
+            next.add(generateState(r_left, s_left - 2, r_right, s_right + 2, boat_left - 1, boat_right + 1));
+            next.add(generateState(r_left + 2, s_left, r_right - 2, s_right, boat_left + 1, boat_right - 1));
+            next.add(generateState(r_left, s_left + 2, r_right, s_right - 2, boat_left + 1, boat_right - 1));
 
-            set.add(generateState(r_left - 1, s_left - 1, r_right + 1, s_right + 1, boat_left - 1, boat_right + 1));
-            set.add(generateState(r_left + 1, s_left + 1, r_right - 1, s_right - 1, boat_left + 1, boat_right - 1));
+            next.add(generateState(r_left - 1, s_left - 1, r_right + 1, s_right + 1, boat_left - 1, boat_right + 1));
+            next.add(generateState(r_left + 1, s_left + 1, r_right - 1, s_right - 1, boat_left + 1, boat_right - 1));
 
-            set = set.stream().filter(x -> x != null).collect(Collectors.toSet());
+            next = next.stream().filter(x -> x != null).collect(Collectors.toSet());
 
-            return set;
+            return next;
         }
 
         private State generateState(int r_left, int s_left, int r_right, int s_right, int boat_left, int boat_right) {
