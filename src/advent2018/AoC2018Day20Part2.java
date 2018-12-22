@@ -21,8 +21,6 @@ public class AoC2018Day20Part2 {
     }
 
     private static int bfs(Point startPoint) {
-        List<List<Point>> paths = new ArrayList<>();
-
         Map<Point, String> closed = new HashMap<>();
         Map<Point, String> opened = new HashMap<>();
 
