@@ -32,6 +32,22 @@ public class AoC2016Day23Part2Java8 {
             "jnz d -2\n" +
             "inc c\n" +
             "jnz c -5";
+    private static final Pattern cpy_reg = Pattern.compile("cpy (a|b|c|d) (a|b|c|d)");
+    private static final Pattern cpy_val = Pattern.compile("cpy (-?\\d+) (a|b|c|d)");
+    private static final Pattern inc = Pattern.compile("inc (a|b|c|d)");
+    private static final Pattern dec = Pattern.compile("dec (a|b|c|d)");
+    private static final Pattern jnz_reg_reg = Pattern.compile("jnz (a|b|c|d) (a|b|c|d)");
+    private static final Pattern jnz_val_reg = Pattern.compile("jnz (-?\\d+) (a|b|c|d)");
+    private static final Pattern jnz_reg_val = Pattern.compile("jnz (a|b|c|d) (-?\\d+)");
+    private static final Pattern jnz_val_val = Pattern.compile("jnz (\\d+) (-?\\d+)");
+    private static final Pattern tgl_reg = Pattern.compile("tgl (a|b|c|d)");
+    private static final String[] sequence = new String[]{"cpy b c",
+            "inc a",
+            "dec c",
+            "jnz c -2",
+            "dec d",
+            "jnz d -5"};
+    private static Map<String, Integer> registers = new HashMap<>();
 
     public static void main(String[] args) {
         int result;
@@ -52,25 +68,6 @@ public class AoC2016Day23Part2Java8 {
         System.out.println(result);
         assert result == 479010518;
     }
-
-    private static Map<String, Integer> registers = new HashMap<>();
-
-    private static final Pattern cpy_reg = Pattern.compile("cpy (a|b|c|d) (a|b|c|d)");
-    private static final Pattern cpy_val = Pattern.compile("cpy (-?\\d+) (a|b|c|d)");
-    private static final Pattern inc = Pattern.compile("inc (a|b|c|d)");
-    private static final Pattern dec = Pattern.compile("dec (a|b|c|d)");
-    private static final Pattern jnz_reg_reg = Pattern.compile("jnz (a|b|c|d) (a|b|c|d)");
-    private static final Pattern jnz_val_reg = Pattern.compile("jnz (-?\\d+) (a|b|c|d)");
-    private static final Pattern jnz_reg_val = Pattern.compile("jnz (a|b|c|d) (-?\\d+)");
-    private static final Pattern jnz_val_val = Pattern.compile("jnz (\\d+) (-?\\d+)");
-    private static final Pattern tgl_reg = Pattern.compile("tgl (a|b|c|d)");
-
-    private static final String[] sequence = new String[]{"cpy b c",
-            "inc a",
-            "dec c",
-            "jnz c -2",
-            "dec d",
-            "jnz d -5"};
 
     private static boolean isTheSequence(String[] instructions, int i) {
         boolean found = true;

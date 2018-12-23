@@ -1,22 +1,6 @@
 package leetcode;
 
 class Solution190 {
-    static class Solution {
-        public int reverseBits(int n) {
-            int reversed = 0, i = 1;
-            while (n != 0) {
-                reversed = (reversed << 1) + (n & 1);
-                n >>>= 1;
-                ++i;
-            }
-            while (i <= 32) {
-                reversed <<= 1;
-                ++i;
-            }
-            return reversed;
-        }
-    }
-
     public static void main(String[] args) {
         test(0);
         test(1);
@@ -50,5 +34,21 @@ class Solution190 {
         assert expected == actual : "failed with " + n + ": expected is "
                 + Integer.toBinaryString(expected) + " (" + expected + "), actual is "
                 + Integer.toBinaryString(actual) + " (" + actual + ")";
+    }
+
+    static class Solution {
+        public int reverseBits(int n) {
+            int reversed = 0, i = 1;
+            while (n != 0) {
+                reversed = (reversed << 1) + (n & 1);
+                n >>>= 1;
+                ++i;
+            }
+            while (i <= 32) {
+                reversed <<= 1;
+                ++i;
+            }
+            return reversed;
+        }
     }
 }

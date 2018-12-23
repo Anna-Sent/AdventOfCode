@@ -967,6 +967,8 @@ public class AoC2016Day22Part1Java8 {
             "/dev/grid/node-x31-y27   87T   71T    16T   81%\n" +
             "/dev/grid/node-x31-y28   93T   70T    23T   75%\n" +
             "/dev/grid/node-x31-y29   86T   72T    14T   83%";
+    private static final Pattern PATTERN = Pattern.compile("/dev/grid/node-x(\\d+)-y(\\d+)\\s+(\\d+)T\\s+(\\d+)T\\s+(\\d+)T\\s+(\\d+)%");
+    private static final int ROWS = 32, COLS = 30;
 
     public static void main(String[] args) {
         int result;
@@ -976,25 +978,10 @@ public class AoC2016Day22Part1Java8 {
         assert result == 946;
     }
 
-    private static class Node {
-        int size, used, avail, use_percent;
-
-        public Node(int size, int used, int avail, int use_percent) {
-            this.size = size;
-            this.used = used;
-            this.avail = avail;
-            this.use_percent = use_percent;
-        }
-    }
-
     private static int solve(String input) {
         Node[][] nodes = read(input);
         return countViablePairs(nodes);
     }
-
-    private static final Pattern PATTERN = Pattern.compile("/dev/grid/node-x(\\d+)-y(\\d+)\\s+(\\d+)T\\s+(\\d+)T\\s+(\\d+)T\\s+(\\d+)%");
-
-    private static final int ROWS = 32, COLS = 30;
 
     private static Node[][] read(String input) {
         Node[][] nodes = new Node[ROWS][];
@@ -1043,5 +1030,16 @@ public class AoC2016Day22Part1Java8 {
 
     private static boolean isViable(Node nodeA, Node nodeB) {
         return nodeA.used > 0 && nodeA.used <= nodeB.avail;
+    }
+
+    private static class Node {
+        int size, used, avail, use_percent;
+
+        public Node(int size, int used, int avail, int use_percent) {
+            this.size = size;
+            this.used = used;
+            this.avail = avail;
+            this.use_percent = use_percent;
+        }
     }
 }

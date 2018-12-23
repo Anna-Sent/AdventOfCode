@@ -5,6 +5,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AoC2017Day16Part2 {
+    private static final Pattern patternSpin = Pattern.compile("s(\\d+)");
+    private static final Pattern patternSwapByIndex = Pattern.compile("x(\\d+)/(\\d+)");
+    private static final Pattern patternSwapByName = Pattern.compile("p(.)/(.)");
+
     public static void main(String[] args) {
         String result;
 
@@ -51,10 +55,6 @@ public class AoC2017Day16Part2 {
         }
         return programs;
     }
-
-    private static final Pattern patternSpin = Pattern.compile("s(\\d+)");
-    private static final Pattern patternSwapByIndex = Pattern.compile("x(\\d+)/(\\d+)");
-    private static final Pattern patternSwapByName = Pattern.compile("p(.)/(.)");
 
     private static char[] process(char[] programs, String command) {
         Matcher matcher;

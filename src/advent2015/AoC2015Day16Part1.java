@@ -16,6 +16,48 @@ public class AoC2015Day16Part1 {
         System.out.println(result);
     }
 
+    public static int test(String s) {
+        Sue sue0 = new Sue();
+        sue0.children = 3;
+        sue0.cats = 7;
+        sue0.samoyeds = 2;
+        sue0.pomeranians = 3;
+        sue0.akitas = 0;
+        sue0.vizslas = 0;
+        sue0.goldfish = 5;
+        sue0.trees = 3;
+        sue0.cars = 2;
+        sue0.perfumes = 1;
+
+        List<Sue> sues = new ArrayList<>();
+        String[] parts = s.split("\r\n");
+        for (String part : parts) {
+            Pattern p = Pattern.compile("Sue (\\d+): (.*)");
+            Matcher m = p.matcher(part);
+            if (m.matches()) {
+                int num = Integer.parseInt(m.group(1));
+                Sue sue = new Sue();
+                sue.num = num;
+                String tail = m.group(2);
+                String[] tokens = tail.split(", ");
+                for (int i = 0; i < tokens.length; ++i) {
+                    String[] compound = tokens[i].split(": ");
+                    sue.addCompound(compound[0], Integer.parseInt(compound[1]));
+                }
+                sue.compare(sue0);
+                sues.add(sue);
+            }
+        }
+
+        Collections.sort(sues, new Comparator<Sue>() {
+            @Override
+            public int compare(Sue o1, Sue o2) {
+                return Integer.compare(o1.score, o2.score);
+            }
+        });
+        return sues.get(sues.size() - 1).num;
+    }
+
     static class Sue {
         Integer num;
         Integer children;
@@ -28,6 +70,7 @@ public class AoC2015Day16Part1 {
         Integer trees;
         Integer cars;
         Integer perfumes;
+        int score;
 
         void addCompound(String compound, int value) {
             if (compound.equals("children")) {
@@ -52,8 +95,6 @@ public class AoC2015Day16Part1 {
                 perfumes = Integer.valueOf(value);
             }
         }
-
-        int score;
 
         void compare(Sue other) {
             score = 0;
@@ -107,47 +148,5 @@ public class AoC2015Day16Part1 {
             System.out.println("\tcars = " + cars);
             System.out.println("\tperfumes = " + perfumes);
         }
-    }
-
-    public static int test(String s) {
-        Sue sue0 = new Sue();
-        sue0.children = 3;
-        sue0.cats = 7;
-        sue0.samoyeds = 2;
-        sue0.pomeranians = 3;
-        sue0.akitas = 0;
-        sue0.vizslas = 0;
-        sue0.goldfish = 5;
-        sue0.trees = 3;
-        sue0.cars = 2;
-        sue0.perfumes = 1;
-
-        List<Sue> sues = new ArrayList<>();
-        String[] parts = s.split("\r\n");
-        for (String part : parts) {
-            Pattern p = Pattern.compile("Sue (\\d+): (.*)");
-            Matcher m = p.matcher(part);
-            if (m.matches()) {
-                int num = Integer.parseInt(m.group(1));
-                Sue sue = new Sue();
-                sue.num = num;
-                String tail = m.group(2);
-                String[] tokens = tail.split(", ");
-                for (int i = 0; i < tokens.length; ++i) {
-                    String[] compound = tokens[i].split(": ");
-                    sue.addCompound(compound[0], Integer.parseInt(compound[1]));
-                }
-                sue.compare(sue0);
-                sues.add(sue);
-            }
-        }
-
-        Collections.sort(sues, new Comparator<Sue>() {
-            @Override
-            public int compare(Sue o1, Sue o2) {
-                return Integer.compare(o1.score, o2.score);
-            }
-        });
-        return sues.get(sues.size() - 1).num;
     }
 }

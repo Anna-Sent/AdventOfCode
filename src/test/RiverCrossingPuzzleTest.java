@@ -44,8 +44,8 @@ public class RiverCrossingPuzzleTest {
     }
 
     private static class State {
-        private State previousState;
         int r_left, s_left, r_right, s_right, boat_left, boat_right;
+        private State previousState;
 
         public State(int r_left, int s_left, int r_right, int s_right, int boat_left, int boat_right, State previousState) {
             this.previousState = previousState;

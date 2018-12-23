@@ -969,6 +969,7 @@ public class AoC2016Day22Part2Java8 {
             "/dev/grid/node-x31-y27   87T   71T    16T   81%\n" +
             "/dev/grid/node-x31-y28   93T   70T    23T   75%\n" +
             "/dev/grid/node-x31-y29   86T   72T    14T   83%";
+    private static final Pattern PATTERN = Pattern.compile("/dev/grid/node-x(\\d+)-y(\\d+)\\s+(\\d+)T\\s+(\\d+)T\\s+(\\d+)T\\s+(\\d+)%");
 
     public static void main(String[] args) {
         int result;
@@ -988,20 +989,6 @@ public class AoC2016Day22Part2Java8 {
         result = solve(32, 30, INPUT);
         System.out.println(result);
         assert result == 195;
-    }
-
-    private static class Node {
-        int size, used, avail, use_percent;
-        int x, y;
-
-        public Node(int size, int used, int avail, int use_percent, int x, int y) {
-            this.size = size;
-            this.used = used;
-            this.avail = avail;
-            this.use_percent = use_percent;
-            this.x = x;
-            this.y = y;
-        }
     }
 
     private static int solve(int ROWS, int COLS, String input) {
@@ -1041,6 +1028,84 @@ public class AoC2016Day22Part2Java8 {
         }
 
         return -1;
+    }
+
+    private static Node[][] read(int ROWS, int COLS, String input) {
+        Node[][] nodes = new Node[ROWS][];
+        for (int i = 0; i < ROWS; ++i) nodes[i] = new Node[COLS];
+
+        String[] tokens = input.split("\n");
+        for (String token : tokens) {
+            Matcher m = PATTERN.matcher(token);
+            if (m.matches()) {
+                int x = Integer.parseInt(m.group(1));
+                int y = Integer.parseInt(m.group(2));
+                int size = Integer.parseInt(m.group(3));
+                int used = Integer.parseInt(m.group(4));
+                int avail = Integer.parseInt(m.group(5));
+                int use_percent = Integer.parseInt(m.group(6));
+                assert size == used + avail;
+                int use_percent_check = (int) ((double) used / size * 100);
+                assert use_percent == use_percent_check : "use percent read " + use_percent + " calculated " + use_percent_check;
+                Node node = new Node(size, used, avail, use_percent, x, y);
+                if (nodes[x][y] != null) {
+                    throw new RuntimeException("invalid input: x=" + x + ";y=" + y + " already exists");
+                }
+                nodes[x][y] = node;
+            } else {
+                throw new RuntimeException("invalid input: " + token);
+            }
+        }
+
+        for (int i = 0; i < ROWS; ++i) for (int j = 0; j < COLS; ++j) assert nodes[i][j] != null;
+
+        return nodes;
+    }
+
+    private static State getInitialState(Node[][] nodes) {
+        char[][] table = new char[nodes.length][];
+        for (int i = 0; i < nodes.length; ++i) table[i] = new char[nodes[i].length];
+
+        List<Node> list = Arrays.stream(nodes).flatMap(row -> Arrays.stream(row)).collect(Collectors.toList());
+        int size = list.size();
+        Node emptyNode = null;
+        for (int i = 0; i < size; ++i) {
+            Node nodeA = list.get(i);
+            long count = list.stream().filter(nodeB -> nodeB != nodeA && isViable(nodeA, nodeB)).count();
+            if (count > 0) {
+                table[nodeA.x][nodeA.y] = '.';
+            } else if (nodeA.used == 0) {
+                table[nodeA.x][nodeA.y] = '_';
+                assert emptyNode == null;
+                emptyNode = nodeA;
+            } else {
+                table[nodeA.x][nodeA.y] = '#';
+            }
+        }
+
+        assert emptyNode != null;
+        assert table[nodes.length - 1][0] == '.';
+        table[nodes.length - 1][0] = 'G';
+
+        return new State(table, emptyNode.x, emptyNode.y, null);
+    }
+
+    private static boolean isViable(Node nodeA, Node nodeB) {
+        return nodeA.used > 0 && nodeA.used <= nodeB.avail;
+    }
+
+    private static class Node {
+        int size, used, avail, use_percent;
+        int x, y;
+
+        public Node(int size, int used, int avail, int use_percent, int x, int y) {
+            this.size = size;
+            this.used = used;
+            this.avail = avail;
+            this.use_percent = use_percent;
+            this.x = x;
+            this.y = y;
+        }
     }
 
     private static class State {
@@ -1135,71 +1200,5 @@ public class AoC2016Day22Part2Java8 {
                 item = item.previousState;
             } while (item != null);
         }
-    }
-
-    private static final Pattern PATTERN = Pattern.compile("/dev/grid/node-x(\\d+)-y(\\d+)\\s+(\\d+)T\\s+(\\d+)T\\s+(\\d+)T\\s+(\\d+)%");
-
-    private static Node[][] read(int ROWS, int COLS, String input) {
-        Node[][] nodes = new Node[ROWS][];
-        for (int i = 0; i < ROWS; ++i) nodes[i] = new Node[COLS];
-
-        String[] tokens = input.split("\n");
-        for (String token : tokens) {
-            Matcher m = PATTERN.matcher(token);
-            if (m.matches()) {
-                int x = Integer.parseInt(m.group(1));
-                int y = Integer.parseInt(m.group(2));
-                int size = Integer.parseInt(m.group(3));
-                int used = Integer.parseInt(m.group(4));
-                int avail = Integer.parseInt(m.group(5));
-                int use_percent = Integer.parseInt(m.group(6));
-                assert size == used + avail;
-                int use_percent_check = (int) ((double) used / size * 100);
-                assert use_percent == use_percent_check : "use percent read " + use_percent + " calculated " + use_percent_check;
-                Node node = new Node(size, used, avail, use_percent, x, y);
-                if (nodes[x][y] != null) {
-                    throw new RuntimeException("invalid input: x=" + x + ";y=" + y + " already exists");
-                }
-                nodes[x][y] = node;
-            } else {
-                throw new RuntimeException("invalid input: " + token);
-            }
-        }
-
-        for (int i = 0; i < ROWS; ++i) for (int j = 0; j < COLS; ++j) assert nodes[i][j] != null;
-
-        return nodes;
-    }
-
-    private static State getInitialState(Node[][] nodes) {
-        char[][] table = new char[nodes.length][];
-        for (int i = 0; i < nodes.length; ++i) table[i] = new char[nodes[i].length];
-
-        List<Node> list = Arrays.stream(nodes).flatMap(row -> Arrays.stream(row)).collect(Collectors.toList());
-        int size = list.size();
-        Node emptyNode = null;
-        for (int i = 0; i < size; ++i) {
-            Node nodeA = list.get(i);
-            long count = list.stream().filter(nodeB -> nodeB != nodeA && isViable(nodeA, nodeB)).count();
-            if (count > 0) {
-                table[nodeA.x][nodeA.y] = '.';
-            } else if (nodeA.used == 0) {
-                table[nodeA.x][nodeA.y] = '_';
-                assert emptyNode == null;
-                emptyNode = nodeA;
-            } else {
-                table[nodeA.x][nodeA.y] = '#';
-            }
-        }
-
-        assert emptyNode != null;
-        assert table[nodes.length - 1][0] == '.';
-        table[nodes.length - 1][0] = 'G';
-
-        return new State(table, emptyNode.x, emptyNode.y, null);
-    }
-
-    private static boolean isViable(Node nodeA, Node nodeB) {
-        return nodeA.used > 0 && nodeA.used <= nodeB.avail;
     }
 }

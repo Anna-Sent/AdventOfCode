@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public class AoC2017Day24Part1 {
+    private static Map<Integer, List<Integer>> edges = new HashMap<>();
+    private static int max = 0;
+
     public static void main(String[] args) {
         int result;
 
@@ -77,9 +80,6 @@ public class AoC2017Day24Part1 {
         assert result == 1656 : "unexpected result is " + result;
         System.out.println(result);
     }
-
-    private static Map<Integer, List<Integer>> edges = new HashMap<>();
-    private static int max = 0;
 
     public static int test(String s, boolean print) {
         edges.clear();

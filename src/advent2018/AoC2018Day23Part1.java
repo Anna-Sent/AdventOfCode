@@ -8,6 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AoC2018Day23Part1 {
+    private static final Pattern pattern = Pattern.compile("pos=<(-?\\d+),(-?\\d+),(-?\\d+)>, r=(\\d+)");
+
     public static void main(String[] args) {
         int result;
 
@@ -1026,8 +1028,6 @@ public class AoC2018Day23Part1 {
         assert result == 270 : "unexpected result is " + result;
         System.out.println(result);
     }
-
-    private static final Pattern pattern = Pattern.compile("pos=<(-?\\d+),(-?\\d+),(-?\\d+)>, r=(\\d+)");
 
     public static int test(String s) {
         String tokens[] = s.split("\n");

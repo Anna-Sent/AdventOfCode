@@ -1154,6 +1154,8 @@ public class AoC2018Day4Part2 {
         return maxMin * maxId;
     }
 
+    private enum Event {falls_asleep, wakes_up, begins_shift}
+
     private static class Record implements Comparable<Record> {
         int y, m, d, h, min, id;
         Event event;
@@ -1180,6 +1182,4 @@ public class AoC2018Day4Part2 {
             return id + " " + event + " " + h + ":" + min;
         }
     }
-
-    private enum Event {falls_asleep, wakes_up, begins_shift}
 }

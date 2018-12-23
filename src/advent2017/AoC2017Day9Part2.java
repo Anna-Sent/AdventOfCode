@@ -1,6 +1,9 @@
 package advent2017;
 
 public class AoC2017Day9Part2 {
+    private static String input;
+    private static int pos;
+
     public static void main(String[] args) {
         int result;
 
@@ -20,9 +23,6 @@ public class AoC2017Day9Part2 {
         assert result == 7284 : "unexpected result is " + result;
         System.out.println(result);
     }
-
-    private static String input;
-    private static int pos;
 
     public static int test(String s) {
         input = s;

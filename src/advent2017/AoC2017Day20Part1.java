@@ -8,6 +8,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AoC2017Day20Part1 {
+    private static final Pattern pattern = Pattern.compile("p=<(-?\\d+),(-?\\d+),(-?\\d+)>"
+            + ", v=<(-?\\d+),(-?\\d+),(-?\\d+)>"
+            + ", a=<(-?\\d+),(-?\\d+),(-?\\d+)>");
+
     public static void main(String[] args) {
         int result;
 
@@ -1019,10 +1023,6 @@ public class AoC2017Day20Part1 {
         assert result == 457 : "unexpected result is " + result;
         System.out.println(result);
     }
-
-    private static final Pattern pattern = Pattern.compile("p=<(-?\\d+),(-?\\d+),(-?\\d+)>"
-            + ", v=<(-?\\d+),(-?\\d+),(-?\\d+)>"
-            + ", a=<(-?\\d+),(-?\\d+),(-?\\d+)>");
 
     public static int test(String s) {
         String[] parts = s.split("\n");

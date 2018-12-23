@@ -22,41 +22,6 @@ public class AoC2016Day10Part2 {
         System.out.println(result);
     }
 
-    static class Bot {
-        int[] values = new int[2];
-
-        void pushValue(int value) {
-            if (values[0] == 0) {
-                values[0] = value;
-            } else {
-                throw new RuntimeException("invalid input");
-            }
-            Arrays.sort(values);
-        }
-
-        int popLow() {
-            int low = values[0];
-            values[0] = 0;
-            Arrays.sort(values);
-            return low;
-        }
-
-        int popHigh() {
-            int high = values[1];
-            values[1] = 0;
-            Arrays.sort(values);
-            return high;
-        }
-
-        boolean hasTwoMicrochips() {
-            return values[0] != 0 && values[1] != 0;
-        }
-    }
-
-    static class Output {
-        int value;
-    }
-
     public static int test(String s) {
         Map<Integer, Bot> bots = new HashMap<>();
         Map<Integer, Output> outputs = new HashMap<>();
@@ -143,5 +108,40 @@ public class AoC2016Day10Part2 {
             outputs.put(key, output);
         }
         return output;
+    }
+
+    static class Bot {
+        int[] values = new int[2];
+
+        void pushValue(int value) {
+            if (values[0] == 0) {
+                values[0] = value;
+            } else {
+                throw new RuntimeException("invalid input");
+            }
+            Arrays.sort(values);
+        }
+
+        int popLow() {
+            int low = values[0];
+            values[0] = 0;
+            Arrays.sort(values);
+            return low;
+        }
+
+        int popHigh() {
+            int high = values[1];
+            values[1] = 0;
+            Arrays.sort(values);
+            return high;
+        }
+
+        boolean hasTwoMicrochips() {
+            return values[0] != 0 && values[1] != 0;
+        }
+    }
+
+    static class Output {
+        int value;
     }
 }

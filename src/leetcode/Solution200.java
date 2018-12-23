@@ -4,20 +4,53 @@ import java.util.HashSet;
 import java.util.Set;
 
 class Solution200 {
-    static class Solution {
-        public int numIslands(char[][] grid) {
-            int count = 0;
-            for (int i = 0; i < grid.length; ++i) {
-                for (int j = 0; j < grid[i].length; ++j) {
-                    if (grid[i][j] == '1') {
-                        ++count;
-                        bfs(grid, new Point(i, j), count);
-                    }
-                }
+    private static void print(char[][] grid) {
+        System.out.println();
+        for (int i = 0; i < grid.length; ++i) {
+            for (int j = 0; j < grid[i].length; ++j) {
+                System.out.print(grid[i][j]);
             }
-            return count;
+            System.out.println();
         }
+    }
 
+    private static void test(char[][] grid, int expected) {
+        print(grid);
+        int actual = new Solution().numIslands(grid);
+        print(grid);
+        assert expected == actual : "expected is " + expected + ", actual is " + actual;
+    }
+
+    public static void main(String[] args) {
+        test(new char[][]{
+                {'0', '0', '1', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0'},
+                {'0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '0', '0', '0'},
+                {'0', '1', '1', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0'},
+                {'0', '1', '0', '0', '1', '1', '0', '0', '1', '0', '1', '0', '0'},
+                {'0', '1', '0', '0', '1', '1', '0', '0', '1', '1', '1', '0', '0'},
+                {'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0'},
+                {'0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '0', '0', '0'},
+                {'0', '0', '0', '0', '0', '0', '0', '1', '1', '0', '0', '0', '0'}
+        }, 6);
+        test(new char[][]{
+                {'0', '0', '1', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0'},
+        }, 2);
+        test(new char[][]{
+                {'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'},
+        }, 0);
+        test(new char[][]{
+                {'0', '1', '1', '1', '0', '0', '1', '0', '1', '0', '0', '1', '0'},
+                {'0', '1', '1', '1', '0', '0', '1', '0', '1', '0', '0', '1', '0'},
+                {'0', '1', '1', '1', '0', '0', '1', '0', '1', '0', '0', '1', '0'},
+                {'0', '1', '1', '1', '0', '0', '1', '0', '1', '0', '0', '1', '0'},
+                {'0', '1', '1', '1', '0', '0', '1', '0', '1', '0', '0', '1', '0'},
+                {'0', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '1', '0'},
+                {'0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0'},
+                {'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'}
+        }, 3);
+    }
+
+    static class Solution {
         private static int bfs(char[][] grid, Point start, int count) {
             Set<Point> closed = new HashSet<>();
             Set<Point> opened = new HashSet<>();
@@ -72,6 +105,19 @@ class Solution200 {
             return grid[x][y];
         }
 
+        public int numIslands(char[][] grid) {
+            int count = 0;
+            for (int i = 0; i < grid.length; ++i) {
+                for (int j = 0; j < grid[i].length; ++j) {
+                    if (grid[i][j] == '1') {
+                        ++count;
+                        bfs(grid, new Point(i, j), count);
+                    }
+                }
+            }
+            return count;
+        }
+
         private static class Point {
             int x, y;
 
@@ -98,51 +144,5 @@ class Solution200 {
                 return result;
             }
         }
-    }
-
-    private static void print(char[][] grid) {
-        System.out.println();
-        for (int i = 0; i < grid.length; ++i) {
-            for (int j = 0; j < grid[i].length; ++j) {
-                System.out.print(grid[i][j]);
-            }
-            System.out.println();
-        }
-    }
-
-    private static void test(char[][] grid, int expected) {
-        print(grid);
-        int actual = new Solution().numIslands(grid);
-        print(grid);
-        assert expected == actual : "expected is " + expected + ", actual is " + actual;
-    }
-
-    public static void main(String[] args) {
-        test(new char[][]{
-                {'0', '0', '1', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0'},
-                {'0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '0', '0', '0'},
-                {'0', '1', '1', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0'},
-                {'0', '1', '0', '0', '1', '1', '0', '0', '1', '0', '1', '0', '0'},
-                {'0', '1', '0', '0', '1', '1', '0', '0', '1', '1', '1', '0', '0'},
-                {'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0'},
-                {'0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '0', '0', '0'},
-                {'0', '0', '0', '0', '0', '0', '0', '1', '1', '0', '0', '0', '0'}
-        }, 6);
-        test(new char[][]{
-                {'0', '0', '1', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0'},
-        }, 2);
-        test(new char[][]{
-                {'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'},
-        }, 0);
-        test(new char[][]{
-                {'0', '1', '1', '1', '0', '0', '1', '0', '1', '0', '0', '1', '0'},
-                {'0', '1', '1', '1', '0', '0', '1', '0', '1', '0', '0', '1', '0'},
-                {'0', '1', '1', '1', '0', '0', '1', '0', '1', '0', '0', '1', '0'},
-                {'0', '1', '1', '1', '0', '0', '1', '0', '1', '0', '0', '1', '0'},
-                {'0', '1', '1', '1', '0', '0', '1', '0', '1', '0', '0', '1', '0'},
-                {'0', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '1', '0'},
-                {'0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0'},
-                {'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'}
-        }, 3);
     }
 }

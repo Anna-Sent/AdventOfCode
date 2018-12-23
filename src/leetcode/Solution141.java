@@ -7,6 +7,35 @@ class Solution141 {
     private static Solution solution;
     private static int testCaseNumber;
 
+    public static void main(String[] args) {
+        test(new Solution1());
+        test(new Solution2());
+        test(new Solution3());
+    }
+
+    private static void test(Solution solution) {
+        Solution141.solution = solution;
+        testCaseNumber = 1;
+        test(null, false);
+        test(ListNode.createList(new int[0]), false);
+        test(ListNode.createList(new int[]{1}), false);
+        test(ListNode.createList(new int[]{1, 1}), true);
+        test(ListNode.createList(new int[]{1, 2}), false);
+        test(ListNode.createList(new int[]{1, 2, 1}), true);
+        test(ListNode.createList(new int[]{1, 2, 2}), true);
+        test(ListNode.createList(new int[]{1, 2, 3, 2}), true);
+        test(ListNode.createList(new int[]{1, 2, 3, 4, 5, 3}), true);
+        test(ListNode.createList(new int[]{1, 2, 3, 4, 5, 6, 1}), true);
+        test(ListNode.createList(new int[]{1, 2, 3, 4, 5, 6, 7}), false);
+    }
+
+    private static void test(ListNode head, boolean expected) {
+        boolean actual = solution.hasCycle(head);
+        assert expected == actual : "failed test case " + solution + "-" + testCaseNumber
+                + ": expected is " + expected + ", actual is " + actual;
+        ++testCaseNumber;
+    }
+
     static abstract class Solution {
         public abstract boolean hasCycle(ListNode head);
 
@@ -74,34 +103,5 @@ class Solution141 {
             }
             return true;
         }
-    }
-
-    public static void main(String[] args) {
-        test(new Solution1());
-        test(new Solution2());
-        test(new Solution3());
-    }
-
-    private static void test(Solution solution) {
-        Solution141.solution = solution;
-        testCaseNumber = 1;
-        test(null, false);
-        test(ListNode.createList(new int[0]), false);
-        test(ListNode.createList(new int[]{1}), false);
-        test(ListNode.createList(new int[]{1, 1}), true);
-        test(ListNode.createList(new int[]{1, 2}), false);
-        test(ListNode.createList(new int[]{1, 2, 1}), true);
-        test(ListNode.createList(new int[]{1, 2, 2}), true);
-        test(ListNode.createList(new int[]{1, 2, 3, 2}), true);
-        test(ListNode.createList(new int[]{1, 2, 3, 4, 5, 3}), true);
-        test(ListNode.createList(new int[]{1, 2, 3, 4, 5, 6, 1}), true);
-        test(ListNode.createList(new int[]{1, 2, 3, 4, 5, 6, 7}), false);
-    }
-
-    private static void test(ListNode head, boolean expected) {
-        boolean actual = solution.hasCycle(head);
-        assert expected == actual : "failed test case " + solution + "-" + testCaseNumber
-                + ": expected is " + expected + ", actual is " + actual;
-        ++testCaseNumber;
     }
 }

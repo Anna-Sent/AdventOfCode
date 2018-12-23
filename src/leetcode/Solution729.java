@@ -5,15 +5,6 @@ import java.util.List;
 
 class Solution729 {
     static class MyCalendar {
-        private static class Pair {
-            private int min, max;
-
-            private Pair(int min, int max) {
-                this.min = min;
-                this.max = max;
-            }
-        }
-
         private final List<Pair> pairs = new ArrayList<>();
 
         public MyCalendar() {
@@ -55,6 +46,15 @@ class Solution729 {
                 }
             }
             return false;
+        }
+
+        private static class Pair {
+            private int min, max;
+
+            private Pair(int min, int max) {
+                this.min = min;
+                this.max = max;
+            }
         }
     }
 }

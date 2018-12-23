@@ -1,6 +1,37 @@
 package leetcode;
 
 class Solution233 {
+    private static void test(int n, Solution solution) {
+        int expected = new Solution1().countDigitOne(n);
+        int actual = solution.countDigitOne(n);
+        System.out.println(n + " => expected: " + expected);
+        assert expected == actual : n + " => expected: " + expected + ", actual: " + actual;
+    }
+
+    private static void test(int n, int expected, Solution solution) {
+        int actual = solution.countDigitOne(n);
+        assert expected == actual : n + " => expected: " + expected + ", actual: " + actual;
+    }
+
+    public static void main(String[] args) {
+        Solution2 solution2 = new Solution2();
+        for (int i = -1; i < 10000; ++i) {
+            test(i, solution2);
+        }
+        Solution3 solution3 = new Solution3();
+        for (int i = -1; i <= 10000; ++i) {
+            test(i, solution3);
+        }
+        test(50000, solution3);
+        test(100000, solution3);
+        test(100001, solution3);
+        test(1000000, solution3);
+        test(1000000000, 900000001, solution3);
+        test(2000000000, -1494967296, solution3);
+        test(2147483647, -1323939513, solution3);
+        test(2147483647 + 1, solution3);
+    }
+
     interface Solution {
         int countDigitOne(int n);
     }
@@ -91,36 +122,5 @@ class Solution233 {
 
             return (int) count;
         }
-    }
-
-    private static void test(int n, Solution solution) {
-        int expected = new Solution1().countDigitOne(n);
-        int actual = solution.countDigitOne(n);
-        System.out.println(n + " => expected: " + expected);
-        assert expected == actual : n + " => expected: " + expected + ", actual: " + actual;
-    }
-
-    private static void test(int n, int expected, Solution solution) {
-        int actual = solution.countDigitOne(n);
-        assert expected == actual : n + " => expected: " + expected + ", actual: " + actual;
-    }
-
-    public static void main(String[] args) {
-        Solution2 solution2 = new Solution2();
-        for (int i = -1; i < 10000; ++i) {
-            test(i, solution2);
-        }
-        Solution3 solution3 = new Solution3();
-        for (int i = -1; i <= 10000; ++i) {
-            test(i, solution3);
-        }
-        test(50000, solution3);
-        test(100000, solution3);
-        test(100001, solution3);
-        test(1000000, solution3);
-        test(1000000000, 900000001, solution3);
-        test(2000000000, -1494967296, solution3);
-        test(2147483647, -1323939513, solution3);
-        test(2147483647 + 1, solution3);
     }
 }

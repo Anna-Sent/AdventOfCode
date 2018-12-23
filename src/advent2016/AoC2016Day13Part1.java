@@ -26,64 +26,6 @@ public class AoC2016Day13Part1 {
         System.out.println(result);
     }
 
-    static class Point {
-        int x, y;
-        Point previousPoint;
-
-        public Point(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public Point(int x, int y, Point previousPoint) {
-            this.x = x;
-            this.y = y;
-            this.previousPoint = previousPoint;
-        }
-
-        Set<Point> generateNext(int favoriteNumber) {
-            Set<Point> result = new HashSet<>();
-            if (!isWall(favoriteNumber, x + 1, y)) {
-                result.add(new Point(x + 1, y, this));
-            }
-            if (!isWall(favoriteNumber, x, y + 1)) {
-                result.add(new Point(x, y + 1, this));
-            }
-            if (y - 1 >= 0 && !isWall(favoriteNumber, x, y - 1)) {
-                result.add(new Point(x, y - 1, this));
-            }
-            if (x - 1 >= 0 && !isWall(favoriteNumber, x - 1, y)) {
-                result.add(new Point(x - 1, y, this));
-            }
-            return result;
-        }
-
-        @Override
-        public int hashCode() {
-            final int prime = 31;
-            int result = 1;
-            result = prime * result + x;
-            result = prime * result + y;
-            return result;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            Point other = (Point) obj;
-            if (x != other.x)
-                return false;
-            if (y != other.y)
-                return false;
-            return true;
-        }
-    }
-
     private static int test(int favoriteNumber, int startX, int startY,
                             int endX, int endY) {
         if (isWall(favoriteNumber, startX, startY)) {
@@ -141,5 +83,63 @@ public class AoC2016Day13Part1 {
             number = number >> 1;
         }
         return countOfOne;
+    }
+
+    static class Point {
+        int x, y;
+        Point previousPoint;
+
+        public Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public Point(int x, int y, Point previousPoint) {
+            this.x = x;
+            this.y = y;
+            this.previousPoint = previousPoint;
+        }
+
+        Set<Point> generateNext(int favoriteNumber) {
+            Set<Point> result = new HashSet<>();
+            if (!isWall(favoriteNumber, x + 1, y)) {
+                result.add(new Point(x + 1, y, this));
+            }
+            if (!isWall(favoriteNumber, x, y + 1)) {
+                result.add(new Point(x, y + 1, this));
+            }
+            if (y - 1 >= 0 && !isWall(favoriteNumber, x, y - 1)) {
+                result.add(new Point(x, y - 1, this));
+            }
+            if (x - 1 >= 0 && !isWall(favoriteNumber, x - 1, y)) {
+                result.add(new Point(x - 1, y, this));
+            }
+            return result;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + x;
+            result = prime * result + y;
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Point other = (Point) obj;
+            if (x != other.x)
+                return false;
+            if (y != other.y)
+                return false;
+            return true;
+        }
     }
 }

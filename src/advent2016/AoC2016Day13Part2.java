@@ -45,6 +45,58 @@ public class AoC2016Day13Part2 {
         System.out.println(result);
     }
 
+    private static int test(int favoriteNumber, int startX, int startY) {
+        if (isWall(favoriteNumber, startX, startY)) {
+            throw new RuntimeException("invalid state");
+        }
+
+        Set<Point> closed = new HashSet<>();
+        Set<Point> opened = new HashSet<>();
+
+        int count = 0;
+        opened.add(new Point(startX, startY));
+
+        while (opened.size() > 0) {
+            Set<Point> achievable = new HashSet<>();
+            for (Point currentPoint : opened) {
+                Set<Point> set = currentPoint.generateNext(favoriteNumber);
+                for (Point nextPoint : set) {
+                    if (!closed.contains(nextPoint)) {
+                        achievable.add(nextPoint);
+                    }
+                }
+
+                closed.add(currentPoint);
+            }
+
+            ++count;
+            opened = achievable;
+
+            if (count == 51) {
+                return closed.size();
+            }
+        }
+
+        return -1;
+    }
+
+    private static boolean isWall(int favoriteNumber, int x, int y) {
+        int number = x * x + 3 * x + 2 * x * y + y + y * y + favoriteNumber;
+        int countOfOne = countOfOne(number);
+        return countOfOne % 2 != 0;
+    }
+
+    private static int countOfOne(int number) {
+        int countOfOne = 0;
+        while (number > 0) {
+            if ((number & 1) == 1) {
+                ++countOfOne;
+            }
+            number = number >>> 1;
+        }
+        return countOfOne;
+    }
+
     static class Point {
         int x, y;
         Point previousPoint;
@@ -101,57 +153,5 @@ public class AoC2016Day13Part2 {
                 return false;
             return true;
         }
-    }
-
-    private static int test(int favoriteNumber, int startX, int startY) {
-        if (isWall(favoriteNumber, startX, startY)) {
-            throw new RuntimeException("invalid state");
-        }
-
-        Set<Point> closed = new HashSet<>();
-        Set<Point> opened = new HashSet<>();
-
-        int count = 0;
-        opened.add(new Point(startX, startY));
-
-        while (opened.size() > 0) {
-            Set<Point> achievable = new HashSet<>();
-            for (Point currentPoint : opened) {
-                Set<Point> set = currentPoint.generateNext(favoriteNumber);
-                for (Point nextPoint : set) {
-                    if (!closed.contains(nextPoint)) {
-                        achievable.add(nextPoint);
-                    }
-                }
-
-                closed.add(currentPoint);
-            }
-
-            ++count;
-            opened = achievable;
-
-            if (count == 51) {
-                return closed.size();
-            }
-        }
-
-        return -1;
-    }
-
-    private static boolean isWall(int favoriteNumber, int x, int y) {
-        int number = x * x + 3 * x + 2 * x * y + y + y * y + favoriteNumber;
-        int countOfOne = countOfOne(number);
-        return countOfOne % 2 != 0;
-    }
-
-    private static int countOfOne(int number) {
-        int countOfOne = 0;
-        while (number > 0) {
-            if ((number & 1) == 1) {
-                ++countOfOne;
-            }
-            number = number >>> 1;
-        }
-        return countOfOne;
     }
 }

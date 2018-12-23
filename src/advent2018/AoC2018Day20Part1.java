@@ -10,6 +10,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AoC2018Day20Part1 {
+    private static final Map<Point, Character> directions = new HashMap<Point, Character>() {{
+        put(new Point(0, 1), 'S');
+        put(new Point(0, -1), 'N');
+        put(new Point(1, 0), 'E');
+        put(new Point(-1, 0), 'W');
+    }};
+    private static Pattern pattern;
+
     public static void main(String[] args) {
         int result;
 
@@ -125,14 +133,6 @@ public class AoC2018Day20Part1 {
         }
         return maxPath.length();
     }
-
-    private static Pattern pattern;
-    private static final Map<Point, Character> directions = new HashMap<Point, Character>() {{
-        put(new Point(0, 1), 'S');
-        put(new Point(0, -1), 'N');
-        put(new Point(1, 0), 'E');
-        put(new Point(-1, 0), 'W');
-    }};
 
     private static Character delta(Point from, Point to) {
         int dx = to.x - from.x, dy = to.y - from.y;

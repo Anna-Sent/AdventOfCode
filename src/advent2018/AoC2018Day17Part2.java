@@ -8,6 +8,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AoC2018Day17Part2 {
+    private static int minX = 500, minY = Integer.MAX_VALUE, maxX = 500, maxY = 0;
+    private static char[][] map;
+
     public static void main(String[] args) {
         int result;
 
@@ -1904,9 +1907,6 @@ public class AoC2018Day17Part2 {
         assert result == 27801 : "unexpected result is " + result;
         System.out.println(result);
     }
-
-    private static int minX = 500, minY = Integer.MAX_VALUE, maxX = 500, maxY = 0;
-    private static char[][] map;
 
     public static int test(String s) {
         Pattern xyPattern = Pattern.compile("x=(\\d+), y=(\\d+)\\.\\.(\\d+)");

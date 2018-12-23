@@ -115,6 +115,79 @@ public class AoC2015Day22Java8 {
         return spells;
     }
 
+    private static List<Spell> copy(List<Spell> spells) {
+        List<Spell> result = new ArrayList<>();
+        for (Spell spell : spells) {
+            result.add(new Spell(spell));
+        }
+        return result;
+    }
+
+    private static int solve(boolean second, Player player, Player boss) {
+        int minMana = Integer.MAX_VALUE;
+        minMana = bf(second, player, boss, 0, minMana, 0);
+        return minMana;
+    }
+
+    private static int bf(boolean second, Player player, Player boss, int manaSpent, int minMana, int lv) {
+        for (int i = 0; i < player.spells.size(); ++i) {
+            // starting new branch
+            Player playerCopy = new Player(player);
+            Player bossCopy = new Player(boss);
+
+            // player turn
+            if (second) {
+                --playerCopy.hitPoints;
+                if (playerCopy.hitPoints <= 0) {
+                    // player loses, go to next branch
+                    continue;
+                }
+            }
+
+            // cast effects if active
+            playerCopy.castAll(bossCopy);
+            if (bossCopy.hitPoints <= 0) {
+                // player wins, go to next branch
+                minMana = Math.min(minMana, manaSpent);
+                continue;
+            }
+
+            // choose spell if it's not active and we have enough money
+            Spell spell = playerCopy.spells.get(i);
+            if (!spell.isActive() && playerCopy.mana >= spell.cost) {
+                // cast the spell
+                playerCopy.cast(spell, bossCopy);
+                if (bossCopy.hitPoints <= 0) {
+                    // player wins, go to next branch
+                    minMana = Math.min(minMana, manaSpent + spell.cost);
+                    continue;
+                }
+
+                // boss turn
+                // cast effects if active
+                playerCopy.castAll(bossCopy);
+                if (bossCopy.hitPoints <= 0) {
+                    // player wins, go to next branch
+                    minMana = Math.min(minMana, manaSpent + spell.cost);
+                    continue;
+                }
+
+                // boss beats the player
+                bossCopy.beat(playerCopy);
+                if (playerCopy.hitPoints <= 0) {
+                    // player loses
+                    continue;
+                }
+
+                // cut off some branches
+                if (manaSpent + spell.cost < minMana) {
+                    minMana = bf(second, playerCopy, bossCopy, manaSpent + spell.cost, minMana, lv + 1);
+                }
+            }
+        }
+        return minMana;
+    }
+
     private static class Player {
         int hitPoints;
         int damage, armor;
@@ -226,78 +299,5 @@ public class AoC2015Day22Java8 {
                     ", timerCounter=" + timerCounter +
                     '}';
         }
-    }
-
-    private static List<Spell> copy(List<Spell> spells) {
-        List<Spell> result = new ArrayList<>();
-        for (Spell spell : spells) {
-            result.add(new Spell(spell));
-        }
-        return result;
-    }
-
-    private static int solve(boolean second, Player player, Player boss) {
-        int minMana = Integer.MAX_VALUE;
-        minMana = bf(second, player, boss, 0, minMana, 0);
-        return minMana;
-    }
-
-    private static int bf(boolean second, Player player, Player boss, int manaSpent, int minMana, int lv) {
-        for (int i = 0; i < player.spells.size(); ++i) {
-            // starting new branch
-            Player playerCopy = new Player(player);
-            Player bossCopy = new Player(boss);
-
-            // player turn
-            if (second) {
-                --playerCopy.hitPoints;
-                if (playerCopy.hitPoints <= 0) {
-                    // player loses, go to next branch
-                    continue;
-                }
-            }
-
-            // cast effects if active
-            playerCopy.castAll(bossCopy);
-            if (bossCopy.hitPoints <= 0) {
-                // player wins, go to next branch
-                minMana = Math.min(minMana, manaSpent);
-                continue;
-            }
-
-            // choose spell if it's not active and we have enough money
-            Spell spell = playerCopy.spells.get(i);
-            if (!spell.isActive() && playerCopy.mana >= spell.cost) {
-                // cast the spell
-                playerCopy.cast(spell, bossCopy);
-                if (bossCopy.hitPoints <= 0) {
-                    // player wins, go to next branch
-                    minMana = Math.min(minMana, manaSpent + spell.cost);
-                    continue;
-                }
-
-                // boss turn
-                // cast effects if active
-                playerCopy.castAll(bossCopy);
-                if (bossCopy.hitPoints <= 0) {
-                    // player wins, go to next branch
-                    minMana = Math.min(minMana, manaSpent + spell.cost);
-                    continue;
-                }
-
-                // boss beats the player
-                bossCopy.beat(playerCopy);
-                if (playerCopy.hitPoints <= 0) {
-                    // player loses
-                    continue;
-                }
-
-                // cut off some branches
-                if (manaSpent + spell.cost < minMana) {
-                    minMana = bf(second, playerCopy, bossCopy, manaSpent + spell.cost, minMana, lv + 1);
-                }
-            }
-        }
-        return minMana;
     }
 }

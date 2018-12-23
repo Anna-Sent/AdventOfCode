@@ -6,6 +6,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class AoC2016Day17Part1 {
+    private static final int SIZE = 4;
+    private static String PASSCODE;
+    private static Map<String, String> map = new HashMap<>();
+
     public static void main(String[] args) {
         String result;
 
@@ -25,6 +29,59 @@ public class AoC2016Day17Part1 {
         result = test("qtetzkpl");
         assert result.equals("RRRLDRDUDD") : "result is " + result;
         System.out.println(result);
+    }
+
+    private static String test(String passcode) {
+        map.clear();
+        PASSCODE = passcode;
+
+        Set<Point> opened = new HashSet<>();
+
+        opened.add(new Point(0, 0, ""));
+
+        while (opened.size() > 0) {
+            Set<Point> achievable = new HashSet<>();
+            for (Point currentPoint : opened) {
+                if (currentPoint.x == 3 && currentPoint.y == 3) {
+                    return currentPoint.path;
+                }
+
+                Set<Point> set = currentPoint.generateNext();
+                achievable.addAll(set);
+            }
+
+            opened = achievable;
+        }
+
+        return "";
+    }
+
+    // direction is up, down, left, and right
+    private static boolean isOpen(String path, int direction) {
+        String hash = getHash(path);
+        char ch = hash.charAt(direction);
+        return ch == 'b' || ch == 'c' || ch == 'd' || ch == 'e' || ch == 'f';
+    }
+
+    private static String getHash(String path) {
+        try {
+            String key = path;
+            if (map.containsKey(key)) {
+                return map.get(key);
+            } else {
+                String hash = PASSCODE + path;
+                MessageDigest digest = MessageDigest.getInstance("MD5");
+                digest.update(hash.getBytes());
+                byte[] bytes = digest.digest();
+                hash = String.format(Locale.US, "%032x", new BigInteger(1,
+                        bytes));
+                map.put(key, hash.substring(0, 5));
+                return hash;
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     static class Point {
@@ -82,63 +139,5 @@ public class AoC2016Day17Part1 {
                 return false;
             return true;
         }
-    }
-
-    private static final int SIZE = 4;
-    private static String PASSCODE;
-
-    private static String test(String passcode) {
-        map.clear();
-        PASSCODE = passcode;
-
-        Set<Point> opened = new HashSet<>();
-
-        opened.add(new Point(0, 0, ""));
-
-        while (opened.size() > 0) {
-            Set<Point> achievable = new HashSet<>();
-            for (Point currentPoint : opened) {
-                if (currentPoint.x == 3 && currentPoint.y == 3) {
-                    return currentPoint.path;
-                }
-
-                Set<Point> set = currentPoint.generateNext();
-                achievable.addAll(set);
-            }
-
-            opened = achievable;
-        }
-
-        return "";
-    }
-
-    // direction is up, down, left, and right
-    private static boolean isOpen(String path, int direction) {
-        String hash = getHash(path);
-        char ch = hash.charAt(direction);
-        return ch == 'b' || ch == 'c' || ch == 'd' || ch == 'e' || ch == 'f';
-    }
-
-    private static Map<String, String> map = new HashMap<>();
-
-    private static String getHash(String path) {
-        try {
-            String key = path;
-            if (map.containsKey(key)) {
-                return map.get(key);
-            } else {
-                String hash = PASSCODE + path;
-                MessageDigest digest = MessageDigest.getInstance("MD5");
-                digest.update(hash.getBytes());
-                byte[] bytes = digest.digest();
-                hash = String.format(Locale.US, "%032x", new BigInteger(1,
-                        bytes));
-                map.put(key, hash.substring(0, 5));
-                return hash;
-            }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return "";
     }
 }

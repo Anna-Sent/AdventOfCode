@@ -32,6 +32,16 @@ public class AoC2016Day23Part1Java8 {
             "jnz d -2\n" +
             "inc c\n" +
             "jnz c -5";
+    private static final Pattern cpy_reg = Pattern.compile("cpy (a|b|c|d) (a|b|c|d)");
+    private static final Pattern cpy_val = Pattern.compile("cpy (-?\\d+) (a|b|c|d)");
+    private static final Pattern inc = Pattern.compile("inc (a|b|c|d)");
+    private static final Pattern dec = Pattern.compile("dec (a|b|c|d)");
+    private static final Pattern jnz_reg_reg = Pattern.compile("jnz (a|b|c|d) (a|b|c|d)");
+    private static final Pattern jnz_val_reg = Pattern.compile("jnz (-?\\d+) (a|b|c|d)");
+    private static final Pattern jnz_reg_val = Pattern.compile("jnz (a|b|c|d) (-?\\d+)");
+    private static final Pattern jnz_val_val = Pattern.compile("jnz (\\d+) (-?\\d+)");
+    private static final Pattern tgl_reg = Pattern.compile("tgl (a|b|c|d)");
+    private static Map<String, Integer> registers = new HashMap<>();
 
     public static void main(String[] args) {
         int result;
@@ -58,18 +68,6 @@ public class AoC2016Day23Part1Java8 {
         System.out.println(result);
         assert result == 13958;
     }
-
-    private static Map<String, Integer> registers = new HashMap<>();
-
-    private static final Pattern cpy_reg = Pattern.compile("cpy (a|b|c|d) (a|b|c|d)");
-    private static final Pattern cpy_val = Pattern.compile("cpy (-?\\d+) (a|b|c|d)");
-    private static final Pattern inc = Pattern.compile("inc (a|b|c|d)");
-    private static final Pattern dec = Pattern.compile("dec (a|b|c|d)");
-    private static final Pattern jnz_reg_reg = Pattern.compile("jnz (a|b|c|d) (a|b|c|d)");
-    private static final Pattern jnz_val_reg = Pattern.compile("jnz (-?\\d+) (a|b|c|d)");
-    private static final Pattern jnz_reg_val = Pattern.compile("jnz (a|b|c|d) (-?\\d+)");
-    private static final Pattern jnz_val_val = Pattern.compile("jnz (\\d+) (-?\\d+)");
-    private static final Pattern tgl_reg = Pattern.compile("tgl (a|b|c|d)");
 
     public static int test(String s) {
         String[] instructions = s.split("\n");

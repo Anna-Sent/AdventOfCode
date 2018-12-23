@@ -6,6 +6,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AoC2017Day18Part1 {
+    private static final String REGISTER = "([a-z])";
+    private static final String REGISTER_OR_NUMBER = "([a-z]|-?\\d+)";
+    private static final Pattern snd = Pattern.compile(String.format("snd %s", REGISTER_OR_NUMBER));
+    private static final Pattern set = Pattern.compile(String.format("set %s %s", REGISTER, REGISTER_OR_NUMBER));
+    private static final Pattern add = Pattern.compile(String.format("add %s %s", REGISTER, REGISTER_OR_NUMBER));
+    private static final Pattern mul = Pattern.compile(String.format("mul %s %s", REGISTER, REGISTER_OR_NUMBER));
+    private static final Pattern mod = Pattern.compile(String.format("mod %s %s", REGISTER, REGISTER_OR_NUMBER));
+    private static final Pattern rcv = Pattern.compile(String.format("rcv %s", REGISTER_OR_NUMBER));
+    private static final Pattern jgz = Pattern.compile(String.format("jgz %s %s", REGISTER_OR_NUMBER, REGISTER_OR_NUMBER));
+    private static Map<String, Long> registers = new HashMap<>();
+
     public static void main(String[] args) {
         long result;
 
@@ -66,18 +77,6 @@ public class AoC2017Day18Part1 {
         assert result == 9423 : "unexpected result is " + result;
         System.out.println(result);
     }
-
-    private static final String REGISTER = "([a-z])";
-    private static final String REGISTER_OR_NUMBER = "([a-z]|-?\\d+)";
-    private static final Pattern snd = Pattern.compile(String.format("snd %s", REGISTER_OR_NUMBER));
-    private static final Pattern set = Pattern.compile(String.format("set %s %s", REGISTER, REGISTER_OR_NUMBER));
-    private static final Pattern add = Pattern.compile(String.format("add %s %s", REGISTER, REGISTER_OR_NUMBER));
-    private static final Pattern mul = Pattern.compile(String.format("mul %s %s", REGISTER, REGISTER_OR_NUMBER));
-    private static final Pattern mod = Pattern.compile(String.format("mod %s %s", REGISTER, REGISTER_OR_NUMBER));
-    private static final Pattern rcv = Pattern.compile(String.format("rcv %s", REGISTER_OR_NUMBER));
-    private static final Pattern jgz = Pattern.compile(String.format("jgz %s %s", REGISTER_OR_NUMBER, REGISTER_OR_NUMBER));
-
-    private static Map<String, Long> registers = new HashMap<>();
 
     public static long test(String s) {
         String[] instructions = s.split("\n");

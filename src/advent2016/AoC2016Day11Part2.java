@@ -50,6 +50,51 @@ public class AoC2016Day11Part2 {
         System.out.println("min sol is " + result);
     }
 
+    public static int test(String[][] table) {
+        State initial = new State(0, table);
+        initial.print();
+        if (!initial.isValid()) {
+            throw new RuntimeException("invalid state");
+        }
+
+        Set<State> closed = new HashSet<>();
+        Set<State> opened = new HashSet<>();
+
+        int count = 0;
+        opened.add(initial);
+
+        while (opened.size() > 0) {
+            Set<State> achievable = new HashSet<>();
+            for (State currentState : opened) {
+                if (currentState.isEnd()) {
+                    if (PRINT_SOLUTION) {
+                        State item = currentState;
+                        do {
+                            item.print();
+                            item = item.previousState;
+                        } while (item != null);
+                    }
+
+                    return count;
+                }
+
+                Set<State> set = currentState.generateNext();
+                for (State nextState : set) {
+                    if (!closed.contains(nextState)) {
+                        achievable.add(nextState);
+                    }
+                }
+
+                closed.add(currentState);
+            }
+
+            ++count;
+            opened = achievable;
+        }
+
+        return -1;
+    }
+
     static class State {
         int floor;
         String[][] table;
@@ -64,6 +109,46 @@ public class AoC2016Day11Part2 {
                     this.table[i][j] = table[i][j];
                 }
             }
+        }
+
+        static int heuristicHashCode(String[][] table) {
+            final int prime = 31;
+            int hashCode = 1;
+            for (int i = 0; i < table.length; ++i) {
+                Map<Character, Integer> map = new HashMap<>();
+                for (int j = 0; j < table[i].length; ++j) {
+                    char first = table[i][j].charAt(0);
+                    if (first != '.') {
+                        char second = table[i][j].charAt(1);
+                        Character key = Character.valueOf(first);
+                        int value = map.containsKey(key) ? map.get(key)
+                                .intValue() : 0;
+                        if (second == 'G') {
+                            ++value;
+                        } else if (second == 'M') {
+                            --value;
+                        }
+                        map.put(key, Integer.valueOf(value));
+                    }
+                }
+                int couplesCount = 0;
+                int generatorsCount = 0;
+                int microsCount = 0;
+                for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+                    int value = entry.getValue().intValue();
+                    if (value == 0) {
+                        ++couplesCount;
+                    } else if (value > 0) {
+                        ++generatorsCount;
+                    } else {
+                        ++microsCount;
+                    }
+                }
+                hashCode = prime * hashCode + couplesCount;
+                hashCode = prime * hashCode + generatorsCount;
+                hashCode = prime * hashCode + microsCount;
+            }
+            return hashCode;
         }
 
         String getKey() {
@@ -147,46 +232,6 @@ public class AoC2016Day11Part2 {
             return true;
         }
 
-        static int heuristicHashCode(String[][] table) {
-            final int prime = 31;
-            int hashCode = 1;
-            for (int i = 0; i < table.length; ++i) {
-                Map<Character, Integer> map = new HashMap<>();
-                for (int j = 0; j < table[i].length; ++j) {
-                    char first = table[i][j].charAt(0);
-                    if (first != '.') {
-                        char second = table[i][j].charAt(1);
-                        Character key = Character.valueOf(first);
-                        int value = map.containsKey(key) ? map.get(key)
-                                .intValue() : 0;
-                        if (second == 'G') {
-                            ++value;
-                        } else if (second == 'M') {
-                            --value;
-                        }
-                        map.put(key, Integer.valueOf(value));
-                    }
-                }
-                int couplesCount = 0;
-                int generatorsCount = 0;
-                int microsCount = 0;
-                for (Map.Entry<Character, Integer> entry : map.entrySet()) {
-                    int value = entry.getValue().intValue();
-                    if (value == 0) {
-                        ++couplesCount;
-                    } else if (value > 0) {
-                        ++generatorsCount;
-                    } else {
-                        ++microsCount;
-                    }
-                }
-                hashCode = prime * hashCode + couplesCount;
-                hashCode = prime * hashCode + generatorsCount;
-                hashCode = prime * hashCode + microsCount;
-            }
-            return hashCode;
-        }
-
         @Override
         public int hashCode() {
             final int prime = 31;
@@ -263,50 +308,5 @@ public class AoC2016Day11Part2 {
             }
             return opened;
         }
-    }
-
-    public static int test(String[][] table) {
-        State initial = new State(0, table);
-        initial.print();
-        if (!initial.isValid()) {
-            throw new RuntimeException("invalid state");
-        }
-
-        Set<State> closed = new HashSet<>();
-        Set<State> opened = new HashSet<>();
-
-        int count = 0;
-        opened.add(initial);
-
-        while (opened.size() > 0) {
-            Set<State> achievable = new HashSet<>();
-            for (State currentState : opened) {
-                if (currentState.isEnd()) {
-                    if (PRINT_SOLUTION) {
-                        State item = currentState;
-                        do {
-                            item.print();
-                            item = item.previousState;
-                        } while (item != null);
-                    }
-
-                    return count;
-                }
-
-                Set<State> set = currentState.generateNext();
-                for (State nextState : set) {
-                    if (!closed.contains(nextState)) {
-                        achievable.add(nextState);
-                    }
-                }
-
-                closed.add(currentState);
-            }
-
-            ++count;
-            opened = achievable;
-        }
-
-        return -1;
     }
 }

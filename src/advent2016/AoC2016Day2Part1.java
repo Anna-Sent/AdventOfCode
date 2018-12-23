@@ -1,6 +1,8 @@
 package advent2016;
 
 public class AoC2016Day2Part1 {
+    private static final int[] CODES = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
+
     public static void main(String[] args) {
         String result;
 
@@ -17,8 +19,6 @@ public class AoC2016Day2Part1 {
         assert result.equals("35749");
         System.out.println(result);
     }
-
-    private static final int[] CODES = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
 
     public static String test(String... strings) {
         String result = "";

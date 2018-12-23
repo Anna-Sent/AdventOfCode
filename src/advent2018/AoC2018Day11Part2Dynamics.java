@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AoC2018Day11Part2Dynamics {
+    private static final int SIZE = 300;
+
     private static void testPowerLevel() {
         int result;
 
@@ -54,8 +56,6 @@ public class AoC2018Day11Part2Dynamics {
         result -= 5;
         return result;
     }
-
-    private static final int SIZE = 300;
 
     public static String findLargest(int serialNumber) {
         Map<Point, Integer> sums = new HashMap<>();

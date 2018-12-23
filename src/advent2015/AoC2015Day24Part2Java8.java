@@ -33,36 +33,6 @@ public class AoC2015Day24Part2Java8 {
         return minGroup.product;
     }
 
-    private static class Group {
-        List<Integer> values = new ArrayList<>();
-        int sum;
-        long product = 1;
-        int count;
-
-        void addValue(int value) {
-            values.add(value);
-            sum += value;
-            product *= value;
-            ++count;
-        }
-
-        public Group() {
-        }
-
-        public Group(Group other) {
-            other.values.stream().forEach(x -> values.add(x));
-            this.sum = other.sum;
-            this.product = other.product;
-            this.count = other.count;
-        }
-
-        @Override
-        public String toString() {
-            return '[' + values.stream().map(x -> x.toString()).collect(Collectors.joining(", ")) + ']'
-                    + "sum=" + sum + ";product=" + product + ";count=" + count;
-        }
-    }
-
     private static Group bf(int sum, Group group, int[] packages, int n, Group minGroup) {
         for (int i = n; i >= 0; --i) {
             Group groupCopy = new Group(group);
@@ -84,5 +54,35 @@ public class AoC2015Day24Part2Java8 {
             }
         }
         return minGroup;
+    }
+
+    private static class Group {
+        List<Integer> values = new ArrayList<>();
+        int sum;
+        long product = 1;
+        int count;
+
+        public Group() {
+        }
+
+        public Group(Group other) {
+            other.values.stream().forEach(x -> values.add(x));
+            this.sum = other.sum;
+            this.product = other.product;
+            this.count = other.count;
+        }
+
+        void addValue(int value) {
+            values.add(value);
+            sum += value;
+            product *= value;
+            ++count;
+        }
+
+        @Override
+        public String toString() {
+            return '[' + values.stream().map(x -> x.toString()).collect(Collectors.joining(", ")) + ']'
+                    + "sum=" + sum + ";product=" + product + ";count=" + count;
+        }
     }
 }

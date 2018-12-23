@@ -23,6 +23,21 @@ public class AoC2016Day15Part1 {
         System.out.println(result);
     }
 
+    public static int test(Disk[] disks) {
+        for (int t = 0; t <= 1000000000; ++t) {
+            boolean all = true;
+            for (int i = 0; all && i < disks.length; ++i) {
+                Disk disk = disks[i];
+                disk.current = (disk.start + t + i + 1) % disk.count;
+                all = disk.current == 0;
+            }
+            if (all) {
+                return t;
+            }
+        }
+        return -1;
+    }
+
     static class Disk {
         int start;
         int count;
@@ -37,20 +52,5 @@ public class AoC2016Day15Part1 {
         public String toString() {
             return current + " (" + count + ")";
         }
-    }
-
-    public static int test(Disk[] disks) {
-        for (int t = 0; t <= 1000000000; ++t) {
-            boolean all = true;
-            for (int i = 0; all && i < disks.length; ++i) {
-                Disk disk = disks[i];
-                disk.current = (disk.start + t + i + 1) % disk.count;
-                all = disk.current == 0;
-            }
-            if (all) {
-                return t;
-            }
-        }
-        return -1;
     }
 }

@@ -5,6 +5,12 @@ import utils.Point;
 import java.util.*;
 
 public class AoC2018Day22Part2 {
+    private static final Point mouthPoint = new Point();
+    private static final Map<Point, Info> points = new HashMap<>();
+    private static final Comparator<State> stateComparator = (s1, s2) -> Integer.compare(s1.minutes, s2.minutes);
+    private static Point targetPoint;
+    private static int depth;
+
     public static void main(String[] args) {
         int result;
 
@@ -16,11 +22,6 @@ public class AoC2018Day22Part2 {
         assert result == 1015 : "unexpected result is " + result;
         System.out.println(result);
     }
-
-    private static final Point mouthPoint = new Point();
-    private static final Map<Point, Info> points = new HashMap<>();
-    private static Point targetPoint;
-    private static int depth;
 
     public static int test(Point targetPoint, int depth) {
         AoC2018Day22Part2.targetPoint = targetPoint;
@@ -97,8 +98,6 @@ public class AoC2018Day22Part2 {
         throw new RuntimeException("Unreachable");
     }
 
-    private static final Comparator<State> stateComparator = (s1, s2) -> Integer.compare(s1.minutes, s2.minutes);
-
     private static List<State> sort(Set<State> set) {
         List<State> sorted = new ArrayList<>(set);
         Collections.sort(sorted, stateComparator);
@@ -139,7 +138,22 @@ public class AoC2018Day22Part2 {
         return -1;
     }
 
+    private enum Type {
+        rocky, wet, narrow
+    }
+
+    private enum Instrument {
+        gear, torch, neither
+    }
+
     private static class State {
+        private static final int[] dxs = new int[]{1, -1, 0, 0};
+        private static final int[] dys = new int[]{0, 0, 1, -1};
+        private static final Map<Type, Set<Instrument>> validInstruments = new HashMap<Type, Set<Instrument>>() {{
+            put(Type.rocky, EnumSet.of(Instrument.gear, Instrument.torch));
+            put(Type.wet, EnumSet.of(Instrument.gear, Instrument.neither));
+            put(Type.narrow, EnumSet.of(Instrument.neither, Instrument.torch));
+        }};
         Point point;
         Instrument instrument;
         int minutes;
@@ -149,14 +163,6 @@ public class AoC2018Day22Part2 {
             this.instrument = instrument;
             this.minutes = minutes;
         }
-
-        private static final int[] dxs = new int[]{1, -1, 0, 0};
-        private static final int[] dys = new int[]{0, 0, 1, -1};
-        private static final Map<Type, Set<Instrument>> validInstruments = new HashMap<Type, Set<Instrument>>() {{
-            put(Type.rocky, EnumSet.of(Instrument.gear, Instrument.torch));
-            put(Type.wet, EnumSet.of(Instrument.gear, Instrument.neither));
-            put(Type.narrow, EnumSet.of(Instrument.neither, Instrument.torch));
-        }};
 
         public Set<State> generateNext() {
             Set<State> next = new HashSet<>();
@@ -208,13 +214,5 @@ public class AoC2018Day22Part2 {
         int erosionLevel;
         Type type;
         int riskLevel;
-    }
-
-    private enum Type {
-        rocky, wet, narrow
-    }
-
-    private enum Instrument {
-        gear, torch, neither
     }
 }

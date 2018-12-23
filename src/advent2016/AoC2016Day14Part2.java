@@ -8,6 +8,8 @@ import java.util.Locale;
 import java.util.Map;
 
 public class AoC2016Day14Part2 {
+    static Map<Integer, String> map = new HashMap<>();
+
     public static void main(String[] args) {
         int result;
 
@@ -49,8 +51,6 @@ public class AoC2016Day14Part2 {
 
         return -1;
     }
-
-    static Map<Integer, String> map = new HashMap<>();
 
     private static String getHash(String s, int number)
             throws NoSuchAlgorithmException {

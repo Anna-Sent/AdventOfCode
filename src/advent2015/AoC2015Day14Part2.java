@@ -19,25 +19,6 @@ public class AoC2015Day14Part2 {
         System.out.println(result);
     }
 
-    static class Reindeer {
-        String name;
-        int speed;
-        int flying, resting;
-        int points;
-        int currentDistance;
-
-        Reindeer(String s) {
-            String[] parts = s.split(" can fly ");
-            name = parts[0];
-            parts = parts[1].split(" km/s for ");
-            speed = Integer.parseInt(parts[0]);
-            parts = parts[1].split(" seconds, but then must rest for ");
-            flying = Integer.parseInt(parts[0]);
-            parts = parts[1].split(" seconds.");
-            resting = Integer.parseInt(parts[0]);
-        }
-    }
-
     public static int test(int seconds, String s) {
         List<Reindeer> reindeers = new ArrayList<>();
         String[] strings = s.split("\r\n");
@@ -74,5 +55,24 @@ public class AoC2015Day14Part2 {
         }
 
         return maxPoints;
+    }
+
+    static class Reindeer {
+        String name;
+        int speed;
+        int flying, resting;
+        int points;
+        int currentDistance;
+
+        Reindeer(String s) {
+            String[] parts = s.split(" can fly ");
+            name = parts[0];
+            parts = parts[1].split(" km/s for ");
+            speed = Integer.parseInt(parts[0]);
+            parts = parts[1].split(" seconds, but then must rest for ");
+            flying = Integer.parseInt(parts[0]);
+            parts = parts[1].split(" seconds.");
+            resting = Integer.parseInt(parts[0]);
+        }
     }
 }

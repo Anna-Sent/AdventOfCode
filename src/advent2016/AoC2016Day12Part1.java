@@ -5,6 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AoC2016Day12Part1 {
+    static Map<String, Integer> registers = new HashMap<>();
+
     public static void main(String[] args) {
         int result;
 
@@ -17,8 +19,6 @@ public class AoC2016Day12Part1 {
         assert result == 317993;
         System.out.println(result);
     }
-
-    static Map<String, Integer> registers = new HashMap<>();
 
     public static int test(String s) {
         String[] instructions = s.split("\r\n");

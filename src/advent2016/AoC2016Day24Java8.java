@@ -129,22 +129,6 @@ public class AoC2016Day24Java8 {
         }
     }
 
-    private static class Vertex {
-        char value;
-        int x, y;
-
-        public Vertex(int x, int y, char value) {
-            this.x = x;
-            this.y = y;
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return '(' + String.valueOf(x) + ',' + String.valueOf(y) + ')' + value;
-        }
-    }
-
     private static List<Vertex> readVertexes(char[][] table) {
         List<Vertex> vertexes = new ArrayList<>();
         for (int i = 0; i < table.length; ++i) {
@@ -199,6 +183,22 @@ public class AoC2016Day24Java8 {
         }
 
         return -1;
+    }
+
+    private static class Vertex {
+        char value;
+        int x, y;
+
+        public Vertex(int x, int y, char value) {
+            this.x = x;
+            this.y = y;
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return '(' + String.valueOf(x) + ',' + String.valueOf(y) + ')' + value;
+        }
     }
 
     private static class State {

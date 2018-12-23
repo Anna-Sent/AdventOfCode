@@ -1049,20 +1049,6 @@ public class AoC2016Day20Part2Java8 {
         System.out.println(result);
     }
 
-    private static class Value {
-        long value;
-        boolean start;
-
-        Value(long value, boolean start) {
-            this.value = value;
-            this.start = start;
-        }
-
-        long getValue() {
-            return value;
-        }
-    }
-
     private static long solve(long high, String s) {
         List<Value> values = new ArrayList<>();
         String[] parts = s.split("\n");
@@ -1104,5 +1090,19 @@ public class AoC2016Day20Part2Java8 {
             count += high - values.get(values.size() - 1).value;
         }
         return count;
+    }
+
+    private static class Value {
+        long value;
+        boolean start;
+
+        Value(long value, boolean start) {
+            this.value = value;
+            this.start = start;
+        }
+
+        long getValue() {
+            return value;
+        }
     }
 }

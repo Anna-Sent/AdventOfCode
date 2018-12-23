@@ -1174,6 +1174,8 @@ public class AoC2018Day4Part1 {
         return maxEntry;
     }
 
+    private enum Event {falls_asleep, wakes_up, begins_shift}
+
     private static class Record implements Comparable<Record> {
         int y, m, d, h, min, id;
         Event event;
@@ -1195,6 +1197,4 @@ public class AoC2018Day4Part1 {
             return Integer.compare(y, other.y);
         }
     }
-
-    private enum Event {falls_asleep, wakes_up, begins_shift}
 }

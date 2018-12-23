@@ -12,40 +12,6 @@ public class AoC2015Day21Part2Java8 {
         assert result == 188;
     }
 
-    private enum Type {
-        WEAPON, ARMOR, RING
-    }
-
-    private static class Item {
-        Type type;
-        String name;
-        int cost, damage, armor;
-
-        public Item(Type type, String name, int cost, int damage, int armor) {
-            this.type = type;
-            this.name = name;
-            this.cost = cost;
-            this.damage = damage;
-            this.armor = armor;
-        }
-
-        @Override
-        public String toString() {
-            return name;
-        }
-    }
-
-    private static class Player {
-        int hitPoints;
-        int damage, armor;
-
-        public Player(int hitPoints, int damage, int armor) {
-            this.hitPoints = hitPoints;
-            this.damage = damage;
-            this.armor = armor;
-        }
-    }
-
     private static int solve() {
         List<Item> weapons = new ArrayList<>();
         weapons.add(new Item(Type.WEAPON, "Dagger", 8, 4, 0));
@@ -115,5 +81,39 @@ public class AoC2015Day21Part2Java8 {
         }
 
         return maxCost;
+    }
+
+    private enum Type {
+        WEAPON, ARMOR, RING
+    }
+
+    private static class Item {
+        Type type;
+        String name;
+        int cost, damage, armor;
+
+        public Item(Type type, String name, int cost, int damage, int armor) {
+            this.type = type;
+            this.name = name;
+            this.cost = cost;
+            this.damage = damage;
+            this.armor = armor;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
+
+    private static class Player {
+        int hitPoints;
+        int damage, armor;
+
+        public Player(int hitPoints, int damage, int armor) {
+            this.hitPoints = hitPoints;
+            this.damage = damage;
+            this.armor = armor;
+        }
     }
 }

@@ -1,6 +1,44 @@
 package leetcode;
 
 class Solution680 {
+    public static void main(String[] args) {
+        test("", true);
+        test("a", true);
+        test("ab", true);
+        test("aba", true);
+        test("abba", true);
+
+        test("zabba", true);
+        test("azbba", true);
+        test("abbza", true);
+        test("abbaz", true);
+
+        test("azbbaz", false);
+        test("abbazz", false);
+        test("zzabba", false);
+
+        test("zaba", true);
+        test("azba", true);
+        test("abza", true);
+        test("abazz", false);
+
+        test("zaa", true);
+        test("aaz", true);
+        test("azaz", true);
+
+        test("cuucu", true);
+        test("ucuuc", true);
+        test("abbab", true);
+        test("babba", true);
+        test("ebcbbececabbacecbbcbe", true);
+        test("aguokepatgbnvfqmgmlcupuufxoohdfpgjdmysgvhmvffcnqxjjxqncffvmhvgsymdjgpfdhooxfuupuculmgmqfvnbgtapekouga", true);
+    }
+
+    private static void test(String s, boolean expected) {
+        boolean actual = new Solution().validPalindrome(s);
+        assert expected == actual : "failed with " + s + ": expected is " + expected + ", actual is " + actual;
+    }
+
     static class Solution {
         public boolean validPalindrome(String s) {
             if (s.length() <= 2) {
@@ -39,43 +77,5 @@ class Solution680 {
             }
             return true;
         }
-    }
-
-    public static void main(String[] args) {
-        test("", true);
-        test("a", true);
-        test("ab", true);
-        test("aba", true);
-        test("abba", true);
-
-        test("zabba", true);
-        test("azbba", true);
-        test("abbza", true);
-        test("abbaz", true);
-
-        test("azbbaz", false);
-        test("abbazz", false);
-        test("zzabba", false);
-
-        test("zaba", true);
-        test("azba", true);
-        test("abza", true);
-        test("abazz", false);
-
-        test("zaa", true);
-        test("aaz", true);
-        test("azaz", true);
-
-        test("cuucu", true);
-        test("ucuuc", true);
-        test("abbab", true);
-        test("babba", true);
-        test("ebcbbececabbacecbbcbe", true);
-        test("aguokepatgbnvfqmgmlcupuufxoohdfpgjdmysgvhmvffcnqxjjxqncffvmhvgsymdjgpfdhooxfuupuculmgmqfvnbgtapekouga", true);
-    }
-
-    private static void test(String s, boolean expected) {
-        boolean actual = new Solution().validPalindrome(s);
-        assert expected == actual : "failed with " + s + ": expected is " + expected + ", actual is " + actual;
     }
 }

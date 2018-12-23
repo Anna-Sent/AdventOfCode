@@ -3,6 +3,9 @@ package advent2015;
 import java.util.*;
 
 public class AoC2015Day13Part1 {
+    private static final Map<String, Integer> connections = new HashMap<>();
+    private static final Set<String> nodes = new HashSet<>();
+
     public static void main(String[] args) {
         int result;
 
@@ -14,9 +17,6 @@ public class AoC2015Day13Part1 {
         assert result == 733;
         System.out.println(result);
     }
-
-    private static final Map<String, Integer> connections = new HashMap<>();
-    private static final Set<String> nodes = new HashSet<>();
 
     public static int test(String s) {
         connections.clear();

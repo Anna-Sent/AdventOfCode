@@ -6,6 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AoC2018Day22Part1 {
+    private static final Point mouthPoint = new Point();
+    private static final Map<Point, Info> points = new HashMap<>();
+    private static Point targetPoint;
+    private static int depth;
+
     public static void main(String[] args) {
         int result;
 
@@ -17,11 +22,6 @@ public class AoC2018Day22Part1 {
         assert result == 11810 : "unexpected result is " + result;
         System.out.println(result);
     }
-
-    private static final Point mouthPoint = new Point();
-    private static final Map<Point, Info> points = new HashMap<>();
-    private static Point targetPoint;
-    private static int depth;
 
     public static int test(Point targetPoint, int depth) {
         AoC2018Day22Part1.targetPoint = targetPoint;
@@ -94,14 +94,14 @@ public class AoC2018Day22Part1 {
         throw new RuntimeException("Unreachable");
     }
 
+    private enum Type {
+        rocky, wet, narrow
+    }
+
     private static class Info {
         int geologicIndex;
         int erosionLevel;
         Type type;
         int riskLevel;
-    }
-
-    private enum Type {
-        rocky, wet, narrow
     }
 }

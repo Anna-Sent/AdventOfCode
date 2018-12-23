@@ -8,6 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AoC2018Day23Part2 {
+    private static final Pattern pattern = Pattern.compile("pos=<(-?\\d+),(-?\\d+),(-?\\d+)>, r=(\\d+)");
+
     public static void main(String[] args) {
         int result;
 
@@ -1024,8 +1026,6 @@ public class AoC2018Day23Part2 {
         System.out.println(result);
     }
 
-    private static final Pattern pattern = Pattern.compile("pos=<(-?\\d+),(-?\\d+),(-?\\d+)>, r=(\\d+)");
-
     public static int test(String s) {
         String tokens[] = s.split("\n");
         List<Nanobot> nanobots = new ArrayList<>();
@@ -1044,14 +1044,14 @@ public class AoC2018Day23Part2 {
             }
         }
 
-        int count = 0;
+        int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE, minZ = Integer.MAX_VALUE;
         for (Nanobot nanobot : nanobots) {
-            int distance = nanobot.point.manhattanDistance(strongest.point);
-            if (distance <= strongest.r) {
-                ++count;
-            }
+            minX = Math.min(nanobot.point.x, minX);
+            minY = Math.min(nanobot.point.y, minY);
+            minZ = Math.min(nanobot.point.z, minZ);
         }
-        return count;
+        System.out.println(String.valueOf(minX));
+        return 0;
     }
 
     private static class Nanobot {

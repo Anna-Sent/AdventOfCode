@@ -401,6 +401,10 @@ public class AoC2018Day13Part2 {
         }
     }
 
+    private enum Direction {
+        left, right, up, down
+    }
+
     private static class Cart {
         Point point;
         Direction direction;
@@ -560,9 +564,5 @@ public class AoC2018Day13Part2 {
                     assert false : "unexpected " + point + " " + ch;
             }
         }
-    }
-
-    private enum Direction {
-        left, right, up, down
     }
 }

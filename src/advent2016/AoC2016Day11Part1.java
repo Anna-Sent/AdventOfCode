@@ -50,6 +50,51 @@ public class AoC2016Day11Part1 {
         System.out.println("min sol is " + result);
     }
 
+    public static int test(String[][] table) {
+        State initial = new State(0, table);
+        initial.print();
+        if (!initial.isValid()) {
+            throw new RuntimeException("invalid state");
+        }
+
+        Set<State> closed = new HashSet<>();
+        Set<State> opened = new HashSet<>();
+
+        int count = 0;
+        opened.add(initial);
+
+        while (opened.size() > 0) {
+            Set<State> achievable = new HashSet<>();
+            for (State currentState : opened) {
+                if (currentState.isEnd()) {
+                    if (PRINT_SOLUTION) {
+                        State item = currentState;
+                        do {
+                            item.print();
+                            item = item.previousState;
+                        } while (item != null);
+                    }
+
+                    return count;
+                }
+
+                Set<State> set = currentState.generateNext();
+                for (State nextState : set) {
+                    if (!closed.contains(nextState)) {
+                        achievable.add(nextState);
+                    }
+                }
+
+                closed.add(currentState);
+            }
+
+            ++count;
+            opened = achievable;
+        }
+
+        return -1;
+    }
+
     static class State {
         int floor;
         String[][] table;
@@ -223,50 +268,5 @@ public class AoC2016Day11Part1 {
             }
             return opened;
         }
-    }
-
-    public static int test(String[][] table) {
-        State initial = new State(0, table);
-        initial.print();
-        if (!initial.isValid()) {
-            throw new RuntimeException("invalid state");
-        }
-
-        Set<State> closed = new HashSet<>();
-        Set<State> opened = new HashSet<>();
-
-        int count = 0;
-        opened.add(initial);
-
-        while (opened.size() > 0) {
-            Set<State> achievable = new HashSet<>();
-            for (State currentState : opened) {
-                if (currentState.isEnd()) {
-                    if (PRINT_SOLUTION) {
-                        State item = currentState;
-                        do {
-                            item.print();
-                            item = item.previousState;
-                        } while (item != null);
-                    }
-
-                    return count;
-                }
-
-                Set<State> set = currentState.generateNext();
-                for (State nextState : set) {
-                    if (!closed.contains(nextState)) {
-                        achievable.add(nextState);
-                    }
-                }
-
-                closed.add(currentState);
-            }
-
-            ++count;
-            opened = achievable;
-        }
-
-        return -1;
     }
 }

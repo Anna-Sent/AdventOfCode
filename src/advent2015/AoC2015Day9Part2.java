@@ -3,6 +3,9 @@ package advent2015;
 import java.util.*;
 
 public class AoC2015Day9Part2 {
+    private static final Map<String, Integer> connections = new HashMap<>();
+    private static final Set<String> nodes = new HashSet<>();
+
     public static void main(String[] args) {
         int result;
 
@@ -13,9 +16,6 @@ public class AoC2015Day9Part2 {
         result = test("Faerun to Tristram = 65\r\nFaerun to Tambi = 129\r\nFaerun to Norrath = 144\r\nFaerun to Snowdin = 71\r\nFaerun to Straylight = 137\r\nFaerun to AlphaCentauri = 3\r\nFaerun to Arbre = 149\r\nTristram to Tambi = 63\r\nTristram to Norrath = 4\r\nTristram to Snowdin = 105\r\nTristram to Straylight = 125\r\nTristram to AlphaCentauri = 55\r\nTristram to Arbre = 14\r\nTambi to Norrath = 68\r\nTambi to Snowdin = 52\r\nTambi to Straylight = 65\r\nTambi to AlphaCentauri = 22\r\nTambi to Arbre = 143\r\nNorrath to Snowdin = 8\r\nNorrath to Straylight = 23\r\nNorrath to AlphaCentauri = 136\r\nNorrath to Arbre = 115\r\nSnowdin to Straylight = 101\r\nSnowdin to AlphaCentauri = 84\r\nSnowdin to Arbre = 96\r\nStraylight to AlphaCentauri = 107\r\nStraylight to Arbre = 14\r\nAlphaCentauri to Arbre = 46");
         System.out.println(result);
     }
-
-    private static final Map<String, Integer> connections = new HashMap<>();
-    private static final Set<String> nodes = new HashSet<>();
 
     public static int test(String s) {
         connections.clear();

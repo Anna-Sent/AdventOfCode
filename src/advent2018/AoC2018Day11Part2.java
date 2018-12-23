@@ -1,6 +1,8 @@
 package advent2018;
 
 public class AoC2018Day11Part2 {
+    private static final int SIZE = 300;
+
     private static void testPowerLevel() {
         int result;
 
@@ -49,8 +51,6 @@ public class AoC2018Day11Part2 {
         result -= 5;
         return result;
     }
-
-    private static final int SIZE = 300;
 
     public static String findLargest(int serialNumber) {
         Result maxResult = null;

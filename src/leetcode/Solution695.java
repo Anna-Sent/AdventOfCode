@@ -4,23 +4,53 @@ import java.util.HashSet;
 import java.util.Set;
 
 class Solution695 {
-    static class Solution {
-        public int maxAreaOfIsland(int[][] grid) {
-            int count = 0, maxArea = 0;
-            for (int i = 0; i < grid.length; ++i) {
-                for (int j = 0; j < grid[i].length; ++j) {
-                    if (grid[i][j] == 1) {
-                        ++count;
-                        int area = bfs(grid, new Point(i, j), count);
-                        if (area > maxArea) {
-                            maxArea = area;
-                        }
-                    }
-                }
+    private static void print(int[][] grid) {
+        System.out.println();
+        for (int i = 0; i < grid.length; ++i) {
+            for (int j = 0; j < grid[i].length; ++j) {
+                System.out.print(grid[i][j]);
             }
-            return maxArea;
+            System.out.println();
         }
+    }
 
+    private static void test(int[][] grid, int expected) {
+        print(grid);
+        int actual = new Solution().maxAreaOfIsland(grid);
+        print(grid);
+        assert expected == actual : "expected is " + expected + ", actual is " + actual;
+    }
+
+    public static void main(String[] args) {
+        test(new int[][]{
+                {0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0},
+                {0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}
+        }, 6);
+        test(new int[][]{
+                {0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+        }, 1);
+        test(new int[][]{
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        }, 0);
+        test(new int[][]{
+                {0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0},
+                {0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0},
+                {0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0},
+                {0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0},
+                {0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0},
+                {0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        }, 35);
+    }
+
+    static class Solution {
         private static int bfs(int[][] grid, Point start, int count) {
             Set<Point> closed = new HashSet<>();
             Set<Point> opened = new HashSet<>();
@@ -75,6 +105,22 @@ class Solution695 {
             return grid[x][y];
         }
 
+        public int maxAreaOfIsland(int[][] grid) {
+            int count = 0, maxArea = 0;
+            for (int i = 0; i < grid.length; ++i) {
+                for (int j = 0; j < grid[i].length; ++j) {
+                    if (grid[i][j] == 1) {
+                        ++count;
+                        int area = bfs(grid, new Point(i, j), count);
+                        if (area > maxArea) {
+                            maxArea = area;
+                        }
+                    }
+                }
+            }
+            return maxArea;
+        }
+
         private static class Point {
             int x, y;
 
@@ -101,51 +147,5 @@ class Solution695 {
                 return result;
             }
         }
-    }
-
-    private static void print(int[][] grid) {
-        System.out.println();
-        for (int i = 0; i < grid.length; ++i) {
-            for (int j = 0; j < grid[i].length; ++j) {
-                System.out.print(grid[i][j]);
-            }
-            System.out.println();
-        }
-    }
-
-    private static void test(int[][] grid, int expected) {
-        print(grid);
-        int actual = new Solution().maxAreaOfIsland(grid);
-        print(grid);
-        assert expected == actual : "expected is " + expected + ", actual is " + actual;
-    }
-
-    public static void main(String[] args) {
-        test(new int[][]{
-                {0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
-                {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0},
-                {0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}
-        }, 6);
-        test(new int[][]{
-                {0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-        }, 1);
-        test(new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        }, 0);
-        test(new int[][]{
-                {0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0},
-                {0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0},
-                {0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0},
-                {0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0},
-                {0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0},
-                {0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0},
-                {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        }, 35);
     }
 }

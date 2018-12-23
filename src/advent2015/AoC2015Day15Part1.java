@@ -24,22 +24,6 @@ public class AoC2015Day15Part1 {
         System.out.println(result);
     }
 
-    static class Component {
-        String name;
-        int capacity;
-        int durability;
-        int flavor;
-        int texture;
-        int calories;
-
-        int teaspoons;
-
-        @Override
-        public String toString() {
-            return String.valueOf(teaspoons);
-        }
-    }
-
     public static int test(String s) {
         List<Component> components = new ArrayList<>();
         String[] parts = s.split("\r\n");
@@ -86,6 +70,22 @@ public class AoC2015Day15Part1 {
                     && texture > 0 ? capacity * durability * flavor * texture
                     : 0;
             return max = total > max ? total : max;
+        }
+    }
+
+    static class Component {
+        String name;
+        int capacity;
+        int durability;
+        int flavor;
+        int texture;
+        int calories;
+
+        int teaspoons;
+
+        @Override
+        public String toString() {
+            return String.valueOf(teaspoons);
         }
     }
 }
