@@ -1,19 +1,21 @@
 package utils;
 
-public class Point {
-    public int x, y;
+public class Point3D {
+    public int x, y, z;
 
-    public Point() {
+    public Point3D() {
     }
 
-    public Point(int x, int y) {
+    public Point3D(int x, int y, int z) {
         this.x = x;
         this.y = y;
+        this.z = z;
     }
 
-    public int manhattanDistance(Point point) {
+    public int manhattanDistance(Point3D point) {
         return Math.abs(x - point.x)
-                + Math.abs(y - point.y);
+                + Math.abs(y - point.y)
+                + Math.abs(z - point.z);
     }
 
     @Override
@@ -24,8 +26,8 @@ public class Point {
         if (obj == null || obj.getClass() != getClass()) {
             return false;
         }
-        Point other = (Point) obj;
-        return x == other.x && y == other.y;
+        Point3D other = (Point3D) obj;
+        return x == other.x && y == other.y && z == other.z;
     }
 
     @Override
@@ -33,11 +35,12 @@ public class Point {
         int hash = 7;
         hash = 31 * hash + x;
         hash = 31 * hash + y;
+        hash = 31 * hash + z;
         return hash;
     }
 
     @Override
     public String toString() {
-        return x + "," + y;
+        return x + "," + y + "," + z;
     }
 }
