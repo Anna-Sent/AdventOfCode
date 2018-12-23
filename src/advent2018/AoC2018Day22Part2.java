@@ -13,7 +13,7 @@ public class AoC2018Day22Part2 {
         System.out.println(result);
 
         result = test(new Point(15, 740), 3558);
-        // assert result ==  : "unexpected result is " + result;
+        assert result == 1015 : "unexpected result is " + result;
         System.out.println(result);
     }
 

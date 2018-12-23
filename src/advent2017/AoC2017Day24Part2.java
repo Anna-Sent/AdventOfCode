@@ -74,7 +74,7 @@ public class AoC2017Day24Part2 {
                 "10/35\n" +
                 "6/21\n" +
                 "14/50", false);
-        //  assert result ==  : "unexpected result is " + result;
+        assert result == 1642 : "unexpected result is " + result;
         System.out.println(result);
     }
 

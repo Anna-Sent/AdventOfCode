@@ -92,7 +92,7 @@ public class AoC2018Day15Part2 {
                 "#####.......##..########..######\n" +
                 "######....#.###########...######\n" +
                 "################################");
-        // assert result ==  : "unexpected result is " + result;
+        assert result == 88537 : "unexpected result is " + result;
         System.out.println(result);
 
         result = test("################################\n" +
@@ -127,7 +127,7 @@ public class AoC2018Day15Part2 {
                 "################.....######...##\n" +
                 "#################.#..###########\n" +
                 "################################");
-        // assert result ==  : "unexpected result is " + result;
+        assert result == 95764 : "unexpected result is " + result;
         System.out.println(result);
     }
 
