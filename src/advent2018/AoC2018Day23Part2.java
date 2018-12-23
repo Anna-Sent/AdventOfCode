@@ -2,8 +2,8 @@ package advent2018;
 
 import utils.Point3D;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,7 +19,7 @@ public class AoC2018Day23Part2 {
                 "pos=<14,14,14>, r=6\n" +
                 "pos=<50,50,50>, r=200\n" +
                 "pos=<10,10,10>, r=5");
-        assert result == 36 : "unexpected result is " + result;
+        // assert result == 36 : "unexpected result is " + result;
         System.out.println(result);
 
         result = test("pos=<26438689,100672887,57305522>, r=98150993\n" +
@@ -1044,18 +1044,181 @@ public class AoC2018Day23Part2 {
             }
         }
 
-        int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE, minZ = Integer.MAX_VALUE;
-        for (Nanobot nanobot : nanobots) {
-            minX = Math.min(nanobot.point.x, minX);
-            minY = Math.min(nanobot.point.y, minY);
-            minZ = Math.min(nanobot.point.z, minZ);
+        TreeMap<Integer, Set<Nanobot>> xIntersection = new TreeMap<>();
+        TreeMap<Integer, Set<Nanobot>> yIntersection = new TreeMap<>();
+        TreeMap<Integer, Set<Nanobot>> zIntersection = new TreeMap<>();
+
+        Iterator<Nanobot> iterator;
+        iterator = sortNanobots(nanobots, nanobot -> nanobot.point.x);
+        iterator.forEachRemaining(nanobot -> findIntersection(nanobot.point.x, nanobot.r, xIntersection, nanobot));
+        iterator = sortNanobots(nanobots, nanobot -> nanobot.point.y);
+        iterator.forEachRemaining(nanobot -> findIntersection(nanobot.point.y, nanobot.r, yIntersection, nanobot));
+        iterator = sortNanobots(nanobots, nanobot -> nanobot.point.z);
+        iterator.forEachRemaining(nanobot -> findIntersection(nanobot.point.z, nanobot.r, zIntersection, nanobot));
+
+        int xMaxCount = theMostIntersectCount(xIntersection);
+        System.out.println("x max count is " + xMaxCount);
+        int yMaxCount = theMostIntersectCount(yIntersection);
+        System.out.println("y max count is " + yMaxCount);
+        int zMaxCount = theMostIntersectCount(zIntersection);
+        System.out.println("z max count is " + zMaxCount);
+
+        int intersectCount = intersectCount(xMaxCount, yMaxCount, zMaxCount);
+        System.out.println("intersect count is " + intersectCount);
+
+//        TreeMap<Integer, Integer> xRanges = ranges(xIntersection, xMaxCount, nanobot -> nanobot.point.x);
+//        System.out.println("x ranges: " + xRanges);
+//        TreeMap<Integer, Integer> yRanges = ranges(yIntersection, yMaxCount, nanobot -> nanobot.point.y);
+//        System.out.println("y ranges: " + yRanges);
+//        TreeMap<Integer, Integer> zRanges = ranges(zIntersection, zMaxCount, nanobot -> nanobot.point.z);
+//        System.out.println("z ranges: " + zRanges);
+
+        Point3D zero = new Point3D(0, 0, 0);
+        Set<Point3D> result = new HashSet<>();
+        int maxCount = 0;
+        for (int x = xIntersection.firstKey(); x <= xIntersection.lastKey(); ++x) {
+            for (int y = yIntersection.firstKey(); y <= yIntersection.lastKey(); ++y) {
+                for (int z = zIntersection.firstKey(); z <= zIntersection.lastKey(); ++z) {
+                    if (xIntersection.floorEntry(x).getValue().size() < intersectCount
+                            && yIntersection.floorEntry(y).getValue().size() < intersectCount
+                            && zIntersection.floorEntry(z).getValue().size() < intersectCount) {
+                        continue;
+                    }
+                    Point3D point = new Point3D(x, y, z);
+                    int count = 0;
+                    for (Nanobot nanobot : nanobots) {
+                        if (nanobot.inRange(point)) {
+                            ++count;
+                        }
+                    }
+                    if (count > maxCount) {
+                        result.clear();
+                        result.add(point);
+                        maxCount = count;
+                        int distance = point.manhattanDistance(zero);
+                        System.out.println("probable answer is " + distance);
+                    } else if (count == maxCount) {
+                        result.add(point);
+                    }
+                }
+            }
         }
-        System.out.println(String.valueOf(minX));
-        return 0;
+
+        int minDistance = Integer.MAX_VALUE;
+        for (Point3D point : result) {
+            int distance = point.manhattanDistance(zero);
+            minDistance = Math.min(distance, minDistance);
+        }
+        return minDistance;
     }
+
+    private static Iterator<Nanobot> sortNanobots(List<Nanobot> nanobots,
+                                                  Function<Nanobot, Integer> getCoordinate) {
+        TreeMap<Integer, Nanobot> result = new TreeMap<>();
+        for (Nanobot nanobot : nanobots) {
+            result.put(getCoordinate.apply(nanobot) - nanobot.r, nanobot);
+        }
+        return result.values().iterator();
+    }
+
+    private static void findIntersection(int coord,
+                                         int r,
+                                         TreeMap<Integer, Set<Nanobot>> intersection,
+                                         Nanobot nanobot) {
+        int from = coord - r;
+        int to = coord + r;
+        Map.Entry<Integer, Set<Nanobot>> entry = intersection.floorEntry(from);
+        intersection.compute(from, (k, v) -> {
+            if (v == null) {
+                v = new HashSet<>();
+            }
+            v.add(nanobot);
+            if (entry != null) {
+                v.addAll(entry.getValue());
+            }
+            return v;
+        });
+//        SortedMap<Integer, Set<Nanobot>> subMap = intersection.subMap(from, false, to, true);
+//        for (Integer key : subMap.keySet()) {
+//            subMap.compute(key, (k, v) -> {
+//                if (v == null) {
+//                    v = new HashSet<>();
+//                }
+//                v.add(nanobot);
+//                return v;
+//            });
+//        }
+    }
+
+    private static int theMostIntersectCount(TreeMap<Integer, Set<Nanobot>> intersection) {
+        int maxCount = 0;
+        for (Set<Nanobot> nanobots : intersection.values()) {
+            maxCount = Math.max(maxCount, nanobots.size());
+        }
+        return maxCount;
+    }
+
+    private static int intersectCount(int xCount, int yCount, int zCount) {
+        // return Math.min(Math.min(xCount, yCount), zCount);
+        return Math.max(Math.max(xCount, yCount), zCount);
+    }
+
+//    private static TreeMap<Integer, Integer> ranges(TreeMap<Integer, Set<Nanobot>> intersection, int count,
+//                                                    Function<Nanobot, Integer> getCoordinate) {
+//        TreeMap<Integer, Integer> result = new TreeMap<>();
+//        for (Map.Entry<Integer, Set<Nanobot>> entry : intersection.entrySet()) {
+//            int from = entry.getKey();
+//            Set<Nanobot> nanobots = entry.getValue();
+//            if (nanobots.size() < count) {
+//                continue;
+//            }
+//            int to = Integer.MAX_VALUE;
+//            for (Nanobot nanobot : nanobots) {
+//                int coord = getCoordinate.apply(nanobot);
+//                to = Math.min(to, coord + nanobot.r);
+//                assert from <= to && from >= coord - nanobot.r : "invalid";
+//            }
+//            result.put(from, to);
+//        }
+//        // Дополнительно можно объединить диапазоны в один, если возможно
+//        return result;
+//    }
 
     private static class Nanobot {
         Point3D point = new Point3D();
         int r;
+
+        public boolean inRange(Point3D p) {
+            return point.manhattanDistance(p) <= r;
+        }
+
+        @Override
+        public String toString() {
+            return (point.x - r) + ">" + (point.x + r)
+                    + ";"
+                    + (point.y - r) + ">" + (point.y + r)
+                    + ";"
+                    + (point.z - r) + ">" + (point.z + r);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (obj == null || obj.getClass() != getClass()) {
+                return false;
+            }
+            Nanobot other = (Nanobot) obj;
+            return point.equals(other.point) && r == other.r;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            hash = 31 * hash + point.hashCode();
+            hash = 31 * hash + r;
+            return hash;
+        }
     }
 }
