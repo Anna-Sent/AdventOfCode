@@ -326,8 +326,7 @@ public class AoC2018Day15Part2 {
             List<Point> sortedOpened = sortPoints(opened.keySet());
             for (Point point : sortedOpened) {
                 Set<Point> next = nextPoints(point, cells);
-                List<Point> sortedNext = sortPoints(next);
-                for (Point nextPoint : sortedNext) {
+                for (Point nextPoint : next) {
                     if (!opened.containsKey(nextPoint) && !closed.containsKey(nextPoint)) {
                         opened.put(nextPoint, point);
                         lenghts.put(nextPoint, lenghts.get(point) + 1);
