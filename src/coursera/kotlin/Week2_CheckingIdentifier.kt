@@ -2,7 +2,7 @@ package coursera.kotlin
 
 fun isValidIdentifier(s: String): Boolean {
     if (s.isEmpty()) return false
-    if (isDigit(s[0])) return false
+    if (s[0].isDigit()) return false
     for (ch in s) {
         if (!isValidChar(ch))
             return false
@@ -10,9 +10,7 @@ fun isValidIdentifier(s: String): Boolean {
     return true
 }
 
-fun isValidChar(ch: Char) = ch in 'a'..'z' || ch in 'A'..'Z' || isDigit(ch) || ch == '_'
-
-fun isDigit(ch: Char) = ch in '0'..'9'
+fun isValidChar(ch: Char) = ch.isLetterOrDigit() || ch == '_'
 
 fun main() {
     println(isValidIdentifier("name"))   // true
