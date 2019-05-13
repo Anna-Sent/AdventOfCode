@@ -7,7 +7,7 @@ fun main() {
 }
 
 fun value(color: Color): String {
-    return when (color) {
+    when (color) {
         Color.BLACK -> "black"
         Color.RED -> "red"
         else -> "else"
