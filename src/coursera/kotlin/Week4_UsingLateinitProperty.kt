@@ -1,6 +1,6 @@
 package coursera.kotlin
 
-class A {
+class AA {
     private lateinit var prop: String
 
     fun setUp() {
@@ -13,7 +13,7 @@ class A {
 }
 
 fun main() {
-    val a = A()
+    val a = AA()
     a.setUp()
     a.display()
 }
