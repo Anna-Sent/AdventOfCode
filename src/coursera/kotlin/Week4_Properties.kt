@@ -1,4 +1,4 @@
-package test.kotlin
+package coursera.kotlin
 
 val foo1 = run {
     println("Calculating the answer...")
