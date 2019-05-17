@@ -1,7 +1,7 @@
 package coursera.kotlin
 
 infix fun String.eq(param: String) {
-    System.out.println(if (this == param) "OK" else "FAILED")
+    System.out.println(if (this == param) "OK" else "FAILED: '$this'")
 }
 
 fun filterNonZero(list: List<Int>) = list.filter { it != 0 }
