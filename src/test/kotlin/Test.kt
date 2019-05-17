@@ -7,6 +7,11 @@ fun main() {
 
     val test: String? = null
     test?.let { println("non null") }
+
+    val mutableList = mutableListOf(1, 2, 3)
+    val list: List<Int> = mutableList
+    mutableList.add(4)
+    println(list)
 }
 
 fun value(color: Color): String {
