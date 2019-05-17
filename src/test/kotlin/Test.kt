@@ -4,6 +4,9 @@ import java.awt.Color
 
 fun main() {
     System.out.println(value(Color.RED))
+
+    val test: String? = null
+    test?.let { println("non null") }
 }
 
 fun value(color: Color): String {
