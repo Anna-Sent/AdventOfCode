@@ -1,4 +1,4 @@
-package coursera.kotlin
+package coursera.kotlin_for_java_developers
 
 infix fun Boolean.eq(param: Boolean) {
     System.out.println(if (this == param) "OK" else "FAILED")

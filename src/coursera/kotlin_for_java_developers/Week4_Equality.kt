@@ -1,4 +1,4 @@
-package coursera.kotlin
+package coursera.kotlin_for_java_developers
 
 data class Value(val s: String)
 

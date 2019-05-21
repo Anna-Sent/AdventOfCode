@@ -1,4 +1,4 @@
-package coursera.kotlin
+package coursera.kotlin_for_java_developers
 
 interface X {
     var first: Int

@@ -1,4 +1,4 @@
-package test.kotlin;
+package coursera.kotlin_for_java_developers.test;
 
 public class JavaOverridingTest {
 

@@ -1,4 +1,4 @@
-package coursera.kotlin
+package coursera.kotlin_for_java_developers
 
 class Words {
     private val list = mutableListOf<String>()

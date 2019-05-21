@@ -1,4 +1,4 @@
-package test.kotlin
+package coursera.kotlin_for_java_developers.test
 
 open class Parent {
     open val foo = 1

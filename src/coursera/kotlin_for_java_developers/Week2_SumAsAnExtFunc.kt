@@ -1,4 +1,4 @@
-package coursera.kotlin
+package coursera.kotlin_for_java_developers
 
 fun List<Int>.sum(): Int {
     var result = 0

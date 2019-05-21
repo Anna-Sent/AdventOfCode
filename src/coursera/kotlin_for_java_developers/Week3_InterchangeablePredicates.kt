@@ -1,4 +1,4 @@
-package coursera.kotlin
+package coursera.kotlin_for_java_developers
 
 fun List<Int>.allNonZero() = all { it != 0 }
 fun List<Int>.allNonZero1() = none { it == 0 }

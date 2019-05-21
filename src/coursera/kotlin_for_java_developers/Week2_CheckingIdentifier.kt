@@ -1,4 +1,4 @@
-package coursera.kotlin
+package coursera.kotlin_for_java_developers
 
 fun isValidIdentifier(s: String): Boolean {
     if (s.isEmpty()) return false
