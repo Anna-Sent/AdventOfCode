@@ -1,5 +1,7 @@
 package coursera.kotlin_for_java_developers.test
 
+import coursera.kotlin_for_java_developers.A
+//import coursera.kotlin_for_java_developers.AA
 import java.awt.Color
 
 fun main() {
@@ -12,6 +14,13 @@ fun main() {
     val list: List<Int> = mutableList
     mutableList.add(4)
     println(list)
+
+    testVisibility()
+}
+
+fun testVisibility() {
+    println(A(""))
+//    println(AA())
 }
 
 fun value(color: Color): String {

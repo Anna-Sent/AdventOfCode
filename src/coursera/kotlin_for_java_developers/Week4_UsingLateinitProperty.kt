@@ -1,6 +1,6 @@
 package coursera.kotlin_for_java_developers
 
-class AA {
+private class AA {
     private lateinit var prop: String
 
     fun setUp() {
