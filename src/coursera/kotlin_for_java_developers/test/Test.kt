@@ -19,7 +19,9 @@ fun main() {
 }
 
 fun testVisibility() {
-    println(A(""))
+    val a = A("")
+    println(a)
+//    println(a.value)
 //    println(AA())
 }
 
