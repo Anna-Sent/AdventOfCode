@@ -1,6 +1,7 @@
 package coursera.kotlin_for_java_developers.test
 
 import coursera.kotlin_for_java_developers.A
+import coursera.kotlin_for_java_developers.create
 //import coursera.kotlin_for_java_developers.AA
 import java.awt.Color
 
@@ -19,8 +20,11 @@ fun main() {
 }
 
 fun testVisibility() {
-    val a = A("")
+    val a = A.create() // A("")
     println(a)
+    println(A.Nested.a())
+    println(A.Companion.test())
+    println(A.test())
 //    println(a.value)
 //    println(AA())
 }

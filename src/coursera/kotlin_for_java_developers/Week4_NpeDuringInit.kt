@@ -7,6 +7,10 @@ internal open class A(protected open val value: String) {
 
     fun a() {}
 
+    object Nested {
+        fun a() = this
+    }
+
     inner class B {
 
         fun b() {
@@ -24,7 +28,13 @@ internal open class A(protected open val value: String) {
             }
         }
     }
+
+    companion object {
+        fun test() {}
+    }
 }
+
+internal fun A.Companion.create(): A = A("")
 
 internal class B(override val value: String) : A(value)
 
