@@ -1022,7 +1022,7 @@ public class AoC2018Day23Part2 {
                 "pos=<15661611,49743572,57601412>, r=58294741\n" +
                 "pos=<15623327,-9407574,35287608>, r=64820029\n" +
                 "pos=<-22528476,33125197,51196641>, r=73461586");
-        // assert result == : "unexpected result is " + result;
+        // assert result == 106323091 : "unexpected result is " + result;
         System.out.println(result);
     }
 
