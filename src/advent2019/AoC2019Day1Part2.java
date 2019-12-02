@@ -6,15 +6,15 @@ public class AoC2019Day1Part2 {
         int result;
 
         result = test("14");
-        assert result == 2 : "unexpected result is" + result;
+        assert result == 2 : "unexpected result is " + result;
         System.out.println(result);
 
         result = test("1969");
-        assert result == 966 : "unexpected result is" + result;
+        assert result == 966 : "unexpected result is " + result;
         System.out.println(result);
 
         result = test("100756");
-        assert result == 50346 : "unexpected result is" + result;
+        assert result == 50346 : "unexpected result is " + result;
         System.out.println(result);
 
         result = test("120333\n" +
@@ -117,7 +117,7 @@ public class AoC2019Day1Part2 {
                 "60450\n" +
                 "103307\n" +
                 "117162");
-        assert result == 4940279 : "unexpected result is" + result;
+        assert result == 4940279 : "unexpected result is " + result;
         System.out.println(result);
     }
 

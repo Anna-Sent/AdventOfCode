@@ -6,11 +6,11 @@ public class AoC2019Day7Part2 {
         int result;
 
         result = test("1122");
-        assert result == 3 : "unexpected result is" + result;
+        assert result == 3 : "unexpected result is " + result;
         System.out.println(result);
 
         result = test("1111");
-        assert result == 4 : "unexpected result is" + result;
+        assert result == 4 : "unexpected result is " + result;
         System.out.println(result);
     }
 
