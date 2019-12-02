@@ -134,18 +134,15 @@ public class AoC2019Day1Part2 {
     }
 
     private static int totalFuel(int mass) {
-        int total = 0, fuel;
-        do {
-            fuel = fuel(mass);
-            if (fuel > 0) {
-                total += fuel;
-                mass = fuel;
-            }
-        } while (fuel > 0);
+        int total = 0;
+        while (mass > 0) {
+            mass = fuel(mass);
+            total += mass;
+        }
         return total;
     }
 
     private static int fuel(int mass) {
-        return mass / 3 - 2;
+        return Math.max(mass / 3 - 2, 0);
     }
 }
