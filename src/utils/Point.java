@@ -16,6 +16,10 @@ public class Point {
                 + Math.abs(y - point.y);
     }
 
+    public int manhattanDistance() {
+        return Math.abs(x) + Math.abs(y);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
