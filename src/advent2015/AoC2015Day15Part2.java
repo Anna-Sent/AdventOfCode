@@ -24,7 +24,7 @@ public class AoC2015Day15Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         List<Component> components = new ArrayList<>();
         String[] parts = s.split("\r\n");
         for (String part : parts) {

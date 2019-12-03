@@ -20,7 +20,7 @@ public class AoC2016Day2Part1 {
         System.out.println(result);
     }
 
-    public static String test(String... strings) {
+    private static String test(String... strings) {
         String result = "";
 
         int x = 1, y = 1;

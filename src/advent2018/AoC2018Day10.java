@@ -418,7 +418,7 @@ public class AoC2018Day10 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         List<Position> positions;
 
         positions = read(s);

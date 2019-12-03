@@ -1908,7 +1908,7 @@ public class AoC2018Day17Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         Pattern xyPattern = Pattern.compile("x=(\\d+), y=(\\d+)\\.\\.(\\d+)");
         Pattern yxPattern = Pattern.compile("y=(\\d+), x=(\\d+)\\.\\.(\\d+)");
 

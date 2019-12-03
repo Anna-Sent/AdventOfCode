@@ -16,7 +16,7 @@ public class AoC2016Day6Part1 {
         System.out.println(result);
     }
 
-    public static String test(String s) {
+    private static String test(String s) {
         List<Map<String, Integer>> list = new ArrayList<>();
 
         String[] strings = s.split("\r\n");

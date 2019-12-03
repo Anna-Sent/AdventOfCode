@@ -41,7 +41,7 @@ public class AoC2018Day24Part1 {
         System.out.println(result);
     }
 
-    public static int test(String immuneSystemString, String infectionSystemString) {
+    private static int test(String immuneSystemString, String infectionSystemString) {
         List<Group> immuneSystem = new ArrayList<>();
         parse(immuneSystem, immuneSystemString, Type.immune);
         List<Group> infectionSystem = new ArrayList<>();

@@ -1001,7 +1001,7 @@ public class AoC2018Day1Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s, String d) {
+    private static int test(String s, String d) {
         int sum = 0;
         String parts[] = s.split(d);
         for (String part : parts) {

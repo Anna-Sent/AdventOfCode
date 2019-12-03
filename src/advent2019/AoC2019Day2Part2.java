@@ -20,7 +20,7 @@ public class AoC2019Day2Part2 {
         }
     }
 
-    public static int test(int noun, int verb, String s) {
+    private static int test(int noun, int verb, String s) {
         List<Integer> values = new ArrayList<>();
 
         String[] tokens = s.split(",");

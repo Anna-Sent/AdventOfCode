@@ -220,7 +220,7 @@ public class AoC2017Day19Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String[] table = s.split("\n");
         int y = 0, x = 0;
         for (; y < table[x].length(); ++y) {

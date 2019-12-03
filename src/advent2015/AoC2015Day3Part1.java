@@ -22,7 +22,7 @@ public class AoC2015Day3Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         int x = 0, y = 0;
         HashSet<String> set = new HashSet<>();
         set.add(x + "," + y);

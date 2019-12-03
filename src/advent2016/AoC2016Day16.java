@@ -26,7 +26,7 @@ public class AoC2016Day16 {
         System.out.println(result);
     }
 
-    public static String test(int LEN, int[] initial) {
+    private static String test(int LEN, int[] initial) {
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < initial.length; ++i)
             list.add(initial[i]);
@@ -54,7 +54,7 @@ public class AoC2016Day16 {
         return s;
     }
 
-    public static String test0(int LEN, int[] initial) {
+    private static String test0(int LEN, int[] initial) {
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < initial.length; ++i)
             list.add(initial[i]);

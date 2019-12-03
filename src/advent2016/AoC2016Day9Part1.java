@@ -36,7 +36,7 @@ public class AoC2016Day9Part1 {
         System.out.println(result);
     }
 
-    public static long test(String s) {
+    private static long test(String s) {
         // return solution1(s);
         return bf(s);
     }

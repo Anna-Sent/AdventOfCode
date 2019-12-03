@@ -1023,7 +1023,7 @@ public class AoC2017Day8Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String[] instructions = s.split("\n");
 
         int max = 0;

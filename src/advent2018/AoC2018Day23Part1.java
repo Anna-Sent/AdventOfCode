@@ -1029,7 +1029,7 @@ public class AoC2018Day23Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String tokens[] = s.split("\n");
         List<Nanobot> nanobots = new ArrayList<>();
         Nanobot strongest = null;

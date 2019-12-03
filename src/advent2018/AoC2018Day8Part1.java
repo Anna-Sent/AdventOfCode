@@ -16,7 +16,7 @@ public class AoC2018Day8Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String[] tokens = s.split(" ");
         List<Integer> numbers = new ArrayList<>();
         for (String token : tokens) {

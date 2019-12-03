@@ -21,7 +21,7 @@ public class AoC2015Day4Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         for (int i = 1; i < 2000000; ++i) {
             String ss = s + i;
             try {

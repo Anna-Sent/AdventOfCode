@@ -150,7 +150,7 @@ public class AoC2018Day15Part2 {
         }
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         for (int i = 4; i < 100; ++i) {
             Result result = solve(s, i);
             if (result.elvesWin) {

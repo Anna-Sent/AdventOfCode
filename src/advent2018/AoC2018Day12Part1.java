@@ -62,7 +62,7 @@ public class AoC2018Day12Part1 {
         System.out.println(result);
     }
 
-    public static int test(String initialState, String rulesString) {
+    private static int test(String initialState, String rulesString) {
         List<Rule> rules = new ArrayList<>();
         String[] tokens = rulesString.split("\n");
         for (String token : tokens) {

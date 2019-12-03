@@ -17,7 +17,7 @@ public class AoC2015Day18Part1 {
         System.out.println(result);
     }
 
-    public static int test(int size, int STEPS, String s) {
+    private static int test(int size, int STEPS, String s) {
         char[][] table = new char[size][];
         char[][] next = new char[size][];
         for (int i = 0; i < size; ++i) {

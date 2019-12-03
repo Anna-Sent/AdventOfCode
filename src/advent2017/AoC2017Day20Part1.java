@@ -1024,7 +1024,7 @@ public class AoC2017Day20Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String[] parts = s.split("\n");
         Particle[] particles = new Particle[parts.length];
         for (int i = 0; i < particles.length; ++i) {

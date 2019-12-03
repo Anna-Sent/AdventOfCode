@@ -174,7 +174,7 @@ public class AoC2018Day13Part1 {
         System.out.println(result);
     }
 
-    public static String test(String s) {
+    private static String test(String s) {
         Map<Point, Character> points = new HashMap<>();
         List<Cart> carts = new ArrayList<>();
         String[] tokens = s.split("\n");

@@ -16,7 +16,7 @@ public class AoC2015Day16Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         Sue sue0 = new Sue();
         sue0.children = 3;
         sue0.cats = 7;

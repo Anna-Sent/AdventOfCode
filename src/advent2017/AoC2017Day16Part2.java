@@ -17,7 +17,7 @@ public class AoC2017Day16Part2 {
         System.out.println(result);
     }
 
-    public static String test(int size, String s) {
+    private static String test(int size, String s) {
         char[] programs = new char[size];
         for (int i = 0; i < size; ++i) {
             programs[i] = (char) ('a' + i);

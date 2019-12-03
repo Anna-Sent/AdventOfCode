@@ -1008,7 +1008,7 @@ public class AoC2018Day1Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s, String d) {
+    private static int test(String s, String d) {
         Set<Integer> sums = new HashSet<>();
         int sum = 0;
         sums.add(sum);

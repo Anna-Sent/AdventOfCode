@@ -1019,7 +1019,7 @@ public class AoC2017Day5Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String[] parts = s.split("\n");
         int[] commands = new int[parts.length];
         for (int i = 0; i < parts.length; ++i) {

@@ -529,7 +529,7 @@ public class AoC2017Day4Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String[] parts = s.split("\n");
         int count = 0;
         for (String part : parts) {

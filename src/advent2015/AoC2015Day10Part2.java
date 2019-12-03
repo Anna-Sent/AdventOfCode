@@ -8,7 +8,7 @@ public class AoC2015Day10Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         System.out.println(s);
         for (int i = 0; i < 50; ++i) {
             StringBuilder result = new StringBuilder();

@@ -19,7 +19,7 @@ public class AoC2016Day1Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         HashSet<String> set = new HashSet<>();
         String[] parts = s.split(", ");
         int x = 0, y = 0, deltaX = 0, deltaY = 0;

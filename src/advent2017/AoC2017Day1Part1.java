@@ -25,7 +25,7 @@ public class AoC2017Day1Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         int sum = 0;
         for (int i = 0; i < s.length(); ++i) {
             char c = s.charAt(i);

@@ -18,7 +18,7 @@ public class AoC2016Day5Part2 {
         System.out.println(result);
     }
 
-    public static String test(final String s) {
+    private static String test(final String s) {
         final char[] password = new char[8];
 
         try {

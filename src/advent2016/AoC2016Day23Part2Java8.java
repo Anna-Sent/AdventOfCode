@@ -77,7 +77,7 @@ public class AoC2016Day23Part2Java8 {
         return found;
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String[] instructions = s.split("\n");
 
         for (int i = 0; i < instructions.length; ) {

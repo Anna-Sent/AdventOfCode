@@ -123,7 +123,7 @@ public class AoC2018Day7Part1 {
         System.out.println(result);
     }
 
-    public static String test(String s) {
+    private static String test(String s) {
         Pattern pattern = Pattern.compile("Step (.) must be finished before step (.) can begin\\.");
 
         Map<String, Node> nodes = new HashMap<>();

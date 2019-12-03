@@ -9,11 +9,11 @@ public class AoC2018Day9Part2 {
         System.out.println(result);
     }
 
-    public static long test(int playersCount, int marblesCount) {
+    private static long test(int playersCount, int marblesCount) {
         return test(playersCount, marblesCount, false);
     }
 
-    public static long test(int playersCount, int marblesCount, boolean print) {
+    private static long test(int playersCount, int marblesCount, boolean print) {
         long[] scores = new long[playersCount];
         Marble rootMarble = new Marble(0);
         rootMarble.prev = rootMarble;

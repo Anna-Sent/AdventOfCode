@@ -19,7 +19,7 @@ public class AoC2015Day14Part1 {
         System.out.println(result);
     }
 
-    public static int test(int seconds, String s) {
+    private static int test(int seconds, String s) {
         List<Reindeer> reindeers = new ArrayList<>();
         String[] strings = s.split("\r\n");
         for (String string : strings) {

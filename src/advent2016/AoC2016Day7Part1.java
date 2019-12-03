@@ -30,7 +30,7 @@ public class AoC2016Day7Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         int count = 0;
 
         String[] parts = s.split("\r\n");

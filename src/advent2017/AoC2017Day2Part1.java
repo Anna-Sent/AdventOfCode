@@ -30,7 +30,7 @@ public class AoC2017Day2Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String[] rows = s.split("\n");
         int[][] table = new int[rows.length][];
         for (int i = 0; i < rows.length; ++i) {

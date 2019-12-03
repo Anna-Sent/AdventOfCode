@@ -13,7 +13,7 @@ public class AoC2017Day14Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         int count = 0;
         for (int i = 0; i < 128; ++i) {
             String hash = s + "-" + i;

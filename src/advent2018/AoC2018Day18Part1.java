@@ -75,7 +75,7 @@ public class AoC2018Day18Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s, int size) {
+    private static int test(String s, int size) {
         char[][] map = new char[size][size];
         String[] tokens = s.split("\n");
         for (int i = 0; i < size; ++i) {

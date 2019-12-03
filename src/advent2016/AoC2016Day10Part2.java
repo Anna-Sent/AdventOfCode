@@ -22,7 +22,7 @@ public class AoC2016Day10Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         Map<Integer, Bot> bots = new HashMap<>();
         Map<Integer, Output> outputs = new HashMap<>();
         Pattern p1 = Pattern.compile("value (\\d+) goes to bot (\\d+)");

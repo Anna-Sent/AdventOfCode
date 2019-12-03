@@ -9,7 +9,7 @@ public class AoC2016Day4Part2 {
         System.out.println(result);
     }
 
-    public static String test(String s) {
+    private static String test(String s) {
         String decrypted = "";
 
         String[] parts = s.split("\r\n");

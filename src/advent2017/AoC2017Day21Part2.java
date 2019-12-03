@@ -116,7 +116,7 @@ public class AoC2017Day21Part2 {
         System.out.println(result);
     }
 
-    public static int test(int iterations, String s) {
+    private static int test(int iterations, String s) {
         char[][] table = new char[][]{
                 new char[]{'.', '#', '.'},
                 new char[]{'.', '.', '#'},

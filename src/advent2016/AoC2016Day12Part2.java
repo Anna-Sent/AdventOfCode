@@ -16,7 +16,7 @@ public class AoC2016Day12Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String[] instructions = s.split("\r\n");
 
         final Pattern cpy_reg = Pattern.compile("cpy (a|b|c|d) (a|b|c|d)");

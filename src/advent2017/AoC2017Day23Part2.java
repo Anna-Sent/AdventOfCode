@@ -9,7 +9,7 @@ public class AoC2017Day23Part2 {
         System.out.println(result);
     }
 
-    public static int test() {
+    private static int test() {
         int h = 0;
 
         int b = 108100;

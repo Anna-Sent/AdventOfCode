@@ -11,7 +11,7 @@ public class AoC2015Day10Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         System.out.println(s);
         for (int i = 0; i < 40; ++i) {
             String result = "";

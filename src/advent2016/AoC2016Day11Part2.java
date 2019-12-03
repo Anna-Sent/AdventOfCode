@@ -50,7 +50,7 @@ public class AoC2016Day11Part2 {
         System.out.println("min sol is " + result);
     }
 
-    public static int test(String[][] table) {
+    private static int test(String[][] table) {
         State initial = new State(0, table);
         initial.print();
         if (!initial.isValid()) {

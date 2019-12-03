@@ -271,7 +271,7 @@ public class AoC2018Day2Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         int sum2 = 0, sum3 = 0;
         String[] parts = s.split("\n");
         for (String part : parts) {

@@ -17,7 +17,7 @@ public class AoC2016Day3Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         int result = 0;
 
         Scanner scanner;

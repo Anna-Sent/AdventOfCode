@@ -9,7 +9,7 @@ public class AoC2017Day17Part2 {
         System.out.println(result);
     }
 
-    public static int test(int steps) {
+    private static int test(int steps) {
         int count = 0;
         int index = 0;
         int result = 0;

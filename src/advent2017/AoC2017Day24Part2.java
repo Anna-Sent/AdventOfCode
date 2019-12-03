@@ -82,7 +82,7 @@ public class AoC2017Day24Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s, boolean print) {
+    private static int test(String s, boolean print) {
         edges.clear();
         maxLength = 0;
         maxStrenght = 0;

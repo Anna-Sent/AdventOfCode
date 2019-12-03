@@ -13,7 +13,7 @@ public class AoC2015Day4Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         for (int i = 9000000; i < 100000000; ++i) {
             String ss = s + i;
             try {

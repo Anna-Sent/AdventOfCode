@@ -14,7 +14,7 @@ public class AoC2019Day21Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         int sum = 0;
         return sum;
     }

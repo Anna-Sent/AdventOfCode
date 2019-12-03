@@ -22,7 +22,7 @@ public class AoC2016Day14Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s, int index) {
+    private static int test(String s, int index) {
         map.clear();
         int count = 0;
         for (int i = 0; i < 2000000; ++i) {

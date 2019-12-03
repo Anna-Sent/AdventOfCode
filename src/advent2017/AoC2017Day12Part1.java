@@ -2024,7 +2024,7 @@ public class AoC2017Day12Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         Map<Integer, Set<Integer>> programs = new HashMap<>();
         String[] parts = s.split("\n");
         for (String part : parts) {

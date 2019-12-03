@@ -20,7 +20,7 @@ public class AoC2015Day17Part2 {
                 44, 36, 31, 46, 9, 27, 38}, 17);
     }
 
-    public static void test(int total, int[] containers, int expected) {
+    private static void test(int total, int[] containers, int expected) {
         int actual1 = solve1(total, containers);
         System.out.println(actual1);
         assert actual1 == expected || expected == -1;

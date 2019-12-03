@@ -78,7 +78,7 @@ public class AoC2017Day18Part1 {
         System.out.println(result);
     }
 
-    public static long test(String s) {
+    private static long test(String s) {
         String[] instructions = s.split("\n");
 
         Long lastPlayedSound = null;

@@ -74,7 +74,7 @@ public class AoC2016Day25Java8 {
         return found;
     }
 
-    public static void test(String s) {
+    private static void test(String s) {
         String[] instructions = s.split("\n");
 
         int last = 1;

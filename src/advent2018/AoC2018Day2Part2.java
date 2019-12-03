@@ -268,7 +268,7 @@ public class AoC2018Day2Part2 {
         System.out.println(result);
     }
 
-    public static String test(String s) {
+    private static String test(String s) {
         String[] parts = s.split("\n");
         for (int i = 0; i < parts.length; ++i) {
             for (int j = i + 1; j < parts.length; ++j) {

@@ -25,7 +25,7 @@ public class AoC2018Day5Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String result = reactAll(s);
         return result.length();
     }

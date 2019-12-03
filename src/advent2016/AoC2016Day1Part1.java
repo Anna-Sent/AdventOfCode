@@ -21,7 +21,7 @@ public class AoC2016Day1Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String[] parts = s.split(", ");
         int x = 0, y = 0, deltaX = 0, deltaY = 0;
         for (int i = 0; i < parts.length; ++i) {

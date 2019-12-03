@@ -59,7 +59,7 @@ public class AoC2017Day18Part2 {
         System.out.println(result);
     }
 
-    public static long test(String s) {
+    private static long test(String s) {
         String[] instructions = s.split("\n");
         AoC2017Day18Part2VM program0 = new AoC2017Day18Part2VM(0, instructions);
         AoC2017Day18Part2VM program1 = new AoC2017Day18Part2VM(1, instructions);

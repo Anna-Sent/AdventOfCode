@@ -14,7 +14,7 @@ public class AoC2017Day25 {
         System.out.println(result);
     }
 
-    public static int test() {
+    private static int test() {
         Map<Integer, Integer> tape = new HashMap<>();
         State state = A;
         int cursor = 0;

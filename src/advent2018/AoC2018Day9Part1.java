@@ -33,11 +33,11 @@ public class AoC2018Day9Part1 {
         System.out.println(result);
     }
 
-    public static int test(int playersCount, int marblesCount) {
+    private static int test(int playersCount, int marblesCount) {
         return test(playersCount, marblesCount, false);
     }
 
-    public static int test(int playersCount, int marblesCount, boolean print) {
+    private static int test(int playersCount, int marblesCount, boolean print) {
         int[] scores = new int[playersCount];
         Marble rootMarble = new Marble(0);
         rootMarble.prev = rootMarble;

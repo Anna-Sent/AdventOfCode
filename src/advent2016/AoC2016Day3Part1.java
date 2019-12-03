@@ -15,7 +15,7 @@ public class AoC2016Day3Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         int result = 0;
 
         String[] parts = s.split("\r\n");

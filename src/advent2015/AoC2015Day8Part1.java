@@ -12,7 +12,7 @@ public class AoC2015Day8Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String[] strings = s.split("\r\n");
 
         int countOfCharsOfCode = 0, countOfCharsInMemory = 0;

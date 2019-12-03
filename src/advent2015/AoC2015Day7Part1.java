@@ -18,7 +18,7 @@ public class AoC2015Day7Part1 {
         System.out.println(result);
     }
 
-    public static String test(String s) {
+    private static String test(String s) {
         final String ASSIGNMENT = " -> ";
         final String AND = " AND ";
         final String OR = " OR ";

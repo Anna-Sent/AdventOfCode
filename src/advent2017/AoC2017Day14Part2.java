@@ -13,7 +13,7 @@ public class AoC2017Day14Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         char[][] table = new char[128][];
         for (int i = 0; i < 128; ++i) {
             table[i] = new char[128];

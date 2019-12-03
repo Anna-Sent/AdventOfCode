@@ -38,7 +38,7 @@ public class AoC2019Day2Part1 {
         System.out.println(result);
     }
 
-    public static String test(String s) {
+    private static String test(String s) {
         List<Integer> values = new ArrayList<>();
 
         String[] tokens = s.split(",");

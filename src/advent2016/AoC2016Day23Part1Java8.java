@@ -69,7 +69,7 @@ public class AoC2016Day23Part1Java8 {
         assert result == 13958;
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String[] instructions = s.split("\n");
 
         for (int i = 0; i < instructions.length; ) {

@@ -4307,7 +4307,7 @@ public class AoC2018Day16Part2 {
         System.out.println(result);
     }
 
-    public static int test(String part1Input, String part2Input) {
+    private static int test(String part1Input, String part2Input) {
         Pattern beforePattern = Pattern.compile("Before: \\[(\\d), (\\d), (\\d), (\\d)\\]");
         Pattern opPattern = Pattern.compile("(\\d+) (\\d) (\\d) (\\d)");
         Pattern afterPattern = Pattern.compile("After:\\s+\\[(\\d), (\\d), (\\d), (\\d)\\]");

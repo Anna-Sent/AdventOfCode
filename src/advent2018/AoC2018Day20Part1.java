@@ -99,7 +99,7 @@ public class AoC2018Day20Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         pattern = Pattern.compile(s);
         return bfs(new Point(0, 0));
     }

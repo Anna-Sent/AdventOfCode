@@ -15,7 +15,7 @@ public class AoC2015Day23Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String[] instructions = s.split("\r\n");
 
         final Pattern hlf = Pattern.compile("hlf (a|b)");

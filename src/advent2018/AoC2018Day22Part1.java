@@ -23,7 +23,7 @@ public class AoC2018Day22Part1 {
         System.out.println(result);
     }
 
-    public static int test(Point targetPoint, int depth) {
+    private static int test(Point targetPoint, int depth) {
         AoC2018Day22Part1.targetPoint = targetPoint;
         AoC2018Day22Part1.depth = depth;
         points.clear();

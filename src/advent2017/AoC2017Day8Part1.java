@@ -1023,7 +1023,7 @@ public class AoC2017Day8Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         String[] instructions = s.split("\n");
 
         for (String instruction : instructions) {

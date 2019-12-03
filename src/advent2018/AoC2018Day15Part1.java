@@ -160,7 +160,7 @@ public class AoC2018Day15Part1 {
         }
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         Map<Point, Cell> cells = new HashMap<>();
         Map<Point, Unit> units = new HashMap<>();
         String[] tokens = s.split("\n");

@@ -58,7 +58,7 @@ public class AoC2018Day19Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s, int ip) {
+    private static int test(String s, int ip) {
         Pattern opPattern = Pattern.compile("(.+) (\\d+) (\\d+) (\\d+)");
         int[] registers = new int[6];
         String[] tokens = s.split("\n");

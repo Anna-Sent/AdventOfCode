@@ -16,7 +16,7 @@ public class AoC2017Day17Part1 {
         System.out.println(result);
     }
 
-    public static int test(int steps) {
+    private static int test(int steps) {
         List<Integer> list = new ArrayList<>();
         int count = 0;
         int index = 0;

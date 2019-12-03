@@ -56,7 +56,7 @@ public class AoC2015Day12Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         int sum = 0;
         try {
             JSONObject jsonObj = new JSONObject(s);

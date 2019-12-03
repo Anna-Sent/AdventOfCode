@@ -36,7 +36,7 @@ public class AoC2017Day9Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         input = s;
         pos = 0;
         return readGroup(1);

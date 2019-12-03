@@ -69,7 +69,7 @@ public class AoC2017Day3Part1 {
         System.out.println(result);
     }
 
-    public static int test(int from) {
+    private static int test(int from) {
         int side = (int) Math.ceil(Math.sqrt(from));
         side = side % 2 == 1 ? side : side + 1;
         int n = side * side;

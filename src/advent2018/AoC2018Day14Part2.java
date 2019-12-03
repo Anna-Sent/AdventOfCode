@@ -29,7 +29,7 @@ public class AoC2018Day14Part2 {
         System.out.println(result);
     }
 
-    public static int test(String substring) {
+    private static int test(String substring) {
         List<Integer> recipes = new ArrayList<>(Arrays.asList(3, 7));
         int first = 0, second = 1;
         int len = substring.length();

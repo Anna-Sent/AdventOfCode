@@ -1072,7 +1072,7 @@ public class AoC2018Day4Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         Pattern pattern = Pattern.compile("\\[(\\d+)-(\\d+)-(\\d+) (\\d+):(\\d+)\\] (.+)");
         Pattern guardPattern = Pattern.compile("Guard #(\\d+) begins shift");
         List<Record> records = new ArrayList<>();

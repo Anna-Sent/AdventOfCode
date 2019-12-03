@@ -40,7 +40,7 @@ public class AoC2016Day9Part2 {
         System.out.println(result);
     }
 
-    public static long test(String s) {
+    private static long test(String s) {
         return bf(s);
     }
 

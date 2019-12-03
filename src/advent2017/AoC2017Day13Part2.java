@@ -59,7 +59,7 @@ public class AoC2017Day13Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s, int max) {
+    private static int test(String s, int max) {
         int[] layers = new int[max + 1];
         String[] parts = s.split("\n");
         for (String part : parts) {

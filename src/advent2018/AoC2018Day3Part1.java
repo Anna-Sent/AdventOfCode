@@ -1417,7 +1417,7 @@ public class AoC2018Day3Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         Pattern pattern = Pattern.compile("#(\\d+) @ (\\d+),(\\d+): (\\d+)x(\\d+)");
         String[] parts = s.split("\n");
         Map<Point, Integer> map = new HashMap<>();

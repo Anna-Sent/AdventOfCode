@@ -14,7 +14,7 @@ public class AoC2015Day13Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         connections.clear();
         nodes.clear();
 

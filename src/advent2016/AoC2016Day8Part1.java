@@ -19,7 +19,7 @@ public class AoC2016Day8Part1 {
         System.out.println(result);
     }
 
-    public static int test(int W, int H, String s) {
+    private static int test(int W, int H, String s) {
         char[][] table = new char[W][H];
         for (int x = 0; x < W; ++x) {
             for (int y = 0; y < H; ++y) {

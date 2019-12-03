@@ -127,7 +127,7 @@ public class AoC2018Day6Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s, int delta) {
+    private static int test(String s, int delta) {
         Pattern pattern = Pattern.compile("(\\d+), (\\d+)");
         String[] parts = s.split("\n");
         List<Point> points = new ArrayList<>();

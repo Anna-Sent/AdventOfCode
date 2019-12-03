@@ -48,7 +48,7 @@ public class AoC2017Day22Part2 {
         System.out.println(result);
     }
 
-    public static int test(int iterations, String s) {
+    private static int test(int iterations, String s) {
         Map<String, NodeType> map = new HashMap<>();
         String[] rows = s.split("\n");
         for (int i = 0; i < rows.length; ++i) {

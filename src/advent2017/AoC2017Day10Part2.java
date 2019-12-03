@@ -25,7 +25,7 @@ public class AoC2017Day10Part2 {
         System.out.println(result);
     }
 
-    public static String test(String input) {
+    private static String test(String input) {
         int[] sparseHash = new int[256];
         for (int i = 0; i < sparseHash.length; ++i) {
             sparseHash[i] = i;

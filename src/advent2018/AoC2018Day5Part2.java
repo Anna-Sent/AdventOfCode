@@ -13,7 +13,7 @@ public class AoC2018Day5Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         int min = Integer.MAX_VALUE;
         for (char ch1 = 'a'; ch1 <= 'z'; ++ch1) {
             char ch2 = (char) ('A' + ch1 - 'a');

@@ -21,7 +21,7 @@ public class AoC2016Day2Part2 {
         System.out.println(result);
     }
 
-    public static String test(String... strings) {
+    private static String test(String... strings) {
         String result = "";
 
         int x = 0, y = 2;

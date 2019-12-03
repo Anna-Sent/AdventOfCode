@@ -16,7 +16,7 @@ public class AoC2015Day11Part1 {
         System.out.println(result);
     }
 
-    public static String test(String s) {
+    private static String test(String s) {
         System.out.println(s);
         char[] result = s.toCharArray();
         boolean found = false;

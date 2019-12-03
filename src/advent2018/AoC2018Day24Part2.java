@@ -41,7 +41,7 @@ public class AoC2018Day24Part2 {
         System.out.println(result);
     }
 
-    public static int test(String immuneSystemString, String infectionSystemString) {
+    private static int test(String immuneSystemString, String infectionSystemString) {
         for (int i = 1; i < 10000; ++i) {
             Result result = test(immuneSystemString, infectionSystemString, i);
             if (result.immuneWin) {
@@ -51,7 +51,7 @@ public class AoC2018Day24Part2 {
         return -1;
     }
 
-    public static Result test(String immuneSystemString, String infectionSystemString, int boost) {
+    private static Result test(String immuneSystemString, String infectionSystemString, int boost) {
         List<Group> immuneSystem = new ArrayList<>();
         parse(immuneSystem, immuneSystemString, Type.immune, boost);
         List<Group> infectionSystem = new ArrayList<>();

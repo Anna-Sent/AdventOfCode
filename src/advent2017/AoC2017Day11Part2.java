@@ -9,7 +9,7 @@ public class AoC2017Day11Part2 {
         System.out.println(result);
     }
 
-    public static int test(String str) {
+    private static int test(String str) {
         String[] parts = str.split(",");
         int x = 0, y = 0, z = 0;
         int max = 0;

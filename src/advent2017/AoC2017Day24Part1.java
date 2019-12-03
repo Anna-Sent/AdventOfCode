@@ -81,7 +81,7 @@ public class AoC2017Day24Part1 {
         System.out.println(result);
     }
 
-    public static int test(String s, boolean print) {
+    private static int test(String s, boolean print) {
         edges.clear();
         max = 0;
         String[] parts = s.split("\n");

@@ -13,7 +13,7 @@ public class AoC2017Day10Part1 {
         System.out.println(result);
     }
 
-    public static int test(final String lengthsStr, final int length) {
+    private static int test(final String lengthsStr, final int length) {
         int[] elements = new int[length];
         for (int i = 0; i < length; ++i) {
             elements[i] = i;

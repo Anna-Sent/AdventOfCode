@@ -13,7 +13,7 @@ public class AoC2017Day15Part2 {
         System.out.println(result);
     }
 
-    public static int test(long a, long b) {
+    private static int test(long a, long b) {
         int count = 0;
         for (int i = 0; i < 5000000; ++i) {
             a = generateA(a);

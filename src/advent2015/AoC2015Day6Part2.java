@@ -24,7 +24,7 @@ public class AoC2015Day6Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         final int[][] lights = new int[1000][1000];
         final String TURN_ON = "turn on ";
         final String TURN_OFF = "turn off ";

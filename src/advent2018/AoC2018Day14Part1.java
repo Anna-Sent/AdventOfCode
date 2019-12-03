@@ -29,7 +29,7 @@ public class AoC2018Day14Part1 {
         System.out.println(result);
     }
 
-    public static String test(int number) {
+    private static String test(int number) {
         List<Integer> recipes = new ArrayList<>(Arrays.asList(3, 7));
         int first = 0, second = 1;
         while (recipes.size() < number + 10) {

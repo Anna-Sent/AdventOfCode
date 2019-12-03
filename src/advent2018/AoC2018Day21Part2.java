@@ -46,7 +46,7 @@ public class AoC2018Day21Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s, int ip) {
+    private static int test(String s, int ip) {
         List<ConcreteCommand> commands = readCommands(s);
         int[] registers = new int[6];
         Set<Integer> results = new HashSet<>();

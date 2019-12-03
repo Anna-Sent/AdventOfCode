@@ -29,7 +29,7 @@ public class AoC2017Day1Part2 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         int sum = 0;
         int len = s.length();
         for (int i = 0; i < len; ++i) {

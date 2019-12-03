@@ -1484,7 +1484,7 @@ public class AoC2018Day25 {
         System.out.println(result);
     }
 
-    public static int test(String s) {
+    private static int test(String s) {
         Pattern pattern = Pattern.compile("(-?\\d+),(-?\\d+),(-?\\d+),(-?\\d+)");
         String[] tokens = s.split("\n");
         List<Point4D> points = new ArrayList<>();

@@ -23,7 +23,7 @@ public class AoC2016Day15Part1 {
         System.out.println(result);
     }
 
-    public static int test(Disk[] disks) {
+    private static int test(Disk[] disks) {
         for (int t = 0; t <= 1000000000; ++t) {
             boolean all = true;
             for (int i = 0; all && i < disks.length; ++i) {

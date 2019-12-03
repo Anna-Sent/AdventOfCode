@@ -30,7 +30,7 @@ public class AoC2019Day3Part1 {
         System.out.println(result);
     }
 
-    public static int test(String p1, String p2) {
+    private static int test(String p1, String p2) {
         Set<Point> s1 = points(p1);
         Set<Point> s2 = points(p2);
 

@@ -25,7 +25,7 @@ public class AoC2016Day10Part1 {
         System.out.println(result);
     }
 
-    public static int test(int low0, int high0, String s) {
+    private static int test(int low0, int high0, String s) {
         Map<Integer, Bot> bots = new HashMap<>();
         Map<Integer, Output> outputs = new HashMap<>();
         Pattern p1 = Pattern.compile("value (\\d+) goes to bot (\\d+)");

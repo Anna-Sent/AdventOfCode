@@ -1449,7 +1449,7 @@ public class AoC2017Day7Part1 {
         System.out.println(result);
     }
 
-    public static String test(String s) {
+    private static String test(String s) {
         Pattern pattern = Pattern.compile("([a-z]+) \\((\\d+)\\)( -> ([[a-z]+| |,]+))?");
         String[] parts = s.split("\n");
         Map<String, Node> nodes = new HashMap<>();

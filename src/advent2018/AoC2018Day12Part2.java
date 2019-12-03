@@ -44,7 +44,7 @@ public class AoC2018Day12Part2 {
         System.out.println(result);
     }
 
-    public static long test(String initialState, String rulesString) {
+    private static long test(String initialState, String rulesString) {
         List<Rule> rules = new ArrayList<>();
         String[] tokens = rulesString.split("\n");
         for (String token : tokens) {
