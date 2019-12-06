@@ -1741,48 +1741,44 @@ public class AoC2019Day6Part2 {
     }
 
     private static int test(String s) {
-        Map<String, List<String>> from = new HashMap<>();
-        Map<String, List<String>> to = new HashMap<>();
+        Map<String, List<String>> map = new HashMap<>();
 
         for (String token : s.split("\n")) {
             String[] parts = token.split("\\)");
             assert parts.length == 2 : "invalid input " + token;
             String object = parts[0];
             String orbit = parts[1];
-            if (from.containsKey(object)) {
-                List<String> orbits = from.get(object);
-                orbits.add(orbit);
-            } else {
-                List<String> orbits = new ArrayList<>();
-                from.put(object, orbits);
-                orbits.add(orbit);
-            }
-            if (to.containsKey(orbit)) {
-                List<String> objects = to.get(orbit);
-                objects.add(object);
-            } else {
-                List<String> objects = new ArrayList<>();
-                to.put(orbit, objects);
-                objects.add(object);
-            }
+            putRelation(map, object, orbit);
+            putRelation(map, orbit, object);
         }
 
-        return bfs("YOU", from, to) - 2;
+        return bfs(map) - 2;
     }
 
-    private static int bfs(String start, Map<String, List<String>> from, Map<String, List<String>> to) {
+    private static void putRelation(Map<String, List<String>> map, String parent, String child) {
+        if (map.containsKey(parent)) {
+            List<String> connected = map.get(parent);
+            connected.add(child);
+        } else {
+            List<String> connected = new ArrayList<>();
+            map.put(parent, connected);
+            connected.add(child);
+        }
+    }
+
+    private static int bfs(Map<String, List<String>> map) {
         Set<String> closed = new HashSet<>();
         Set<String> opened = new HashSet<>();
 
         int count = 0;
-        opened.add(start);
+        opened.add("YOU");
         while (opened.size() > 0) {
             Set<String> achievable = new HashSet<>();
             for (String current : opened) {
                 if (current.equals("SAN")) {
                     return count;
                 }
-                Set<String> set = generateNext(current, from, to);
+                Set<String> set = generateNext(current, map);
                 for (String next : set) {
                     if (!closed.contains(next)) {
                         achievable.add(next);
@@ -1798,14 +1794,12 @@ public class AoC2019Day6Part2 {
         return count;
     }
 
-    private static Set<String> generateNext(String start, Map<String, List<String>> from, Map<String, List<String>> to) {
+    private static Set<String> generateNext(String start, Map<String, List<String>> map) {
         Set<String> next = new HashSet<>();
-        List<String> orbits = from.get(start);
-        if (orbits != null)
-            next.addAll(orbits);
-        List<String> objects = to.get(start);
-        if (objects != null)
-            next.addAll(objects);
+        List<String> connected = map.get(start);
+        if (connected != null) {
+            next.addAll(connected);
+        }
         return next;
     }
 }

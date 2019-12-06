@@ -1749,14 +1749,7 @@ public class AoC2019Day6Part1 {
             assert parts.length == 2 : "invalid input " + token;
             String object = parts[0];
             String orbit = parts[1];
-            if (map.containsKey(object)) {
-                List<String> orbits = map.get(object);
-                orbits.add(orbit);
-            } else {
-                List<String> orbits = new ArrayList<>();
-                map.put(object, orbits);
-                orbits.add(orbit);
-            }
+            putRelation(map, object, orbit);
         }
 
         Map<String, Integer> dist = new HashMap<>();
@@ -1768,17 +1761,25 @@ public class AoC2019Day6Part1 {
         return count;
     }
 
+    private static void putRelation(Map<String, List<String>> map, String parent, String child) {
+        if (map.containsKey(parent)) {
+            List<String> connected = map.get(parent);
+            connected.add(child);
+        } else {
+            List<String> connected = new ArrayList<>();
+            map.put(parent, connected);
+            connected.add(child);
+        }
+    }
+
     private static int count(Map<String, List<String>> map, String object,
                              Map<String, Integer> dist) {
-        List<String> orbits = map.get(object);
-        if (orbits == null) {
-            System.out.println(0 + " for " + object);
-            dist.put(object, 0);
-            return 0;
-        }
         int count = 0;
-        for (String orbit : orbits) {
-            count += count(map, orbit, dist) + 1;
+        List<String> orbits = map.get(object);
+        if (orbits != null) {
+            for (String orbit : orbits) {
+                count += count(map, orbit, dist) + 1;
+            }
         }
         System.out.println(count + " for " + object);
         dist.put(object, count);
