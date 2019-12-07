@@ -50,24 +50,28 @@ public class AoC2019Day7Part2 {
         }
     }
 
-    private static int test(String program, List<Integer> phases) {
+    private static int test(String input, List<Integer> phases) {
         List<Integer> values = new ArrayList<>();
-        String[] tokens = program.split(",");
+        String[] tokens = input.split(",");
         for (String token : tokens) {
             values.add(Integer.parseInt(token));
         }
 
         List<ProgramState> programs = new ArrayList<>();
         for (int i = 0; i < phases.size(); ++i) {
-            ProgramState state = new ProgramState(String.valueOf((char) ('A' + i)), false, 0, new ArrayList<>(values), 0);
-            programs.add(state);
+            ProgramState program = new ProgramState(String.valueOf((char) ('A' + i)), new ArrayList<>(values));
+            program.inputs.add(phases.get(i));
+            programs.add(program);
         }
 
         int prevOutput = 0;
         for (int i = 0; ; ++i) {
             int j = i % phases.size();
-            run(programs.get(j), Arrays.asList(phases.get(j), prevOutput));
-            prevOutput = programs.get(j).lastOutput;
+            ProgramState program = programs.get(j);
+            program.inputs.add(prevOutput);
+            run(program);
+            List<Integer> outputs = program.outputs;
+            prevOutput = outputs.get(outputs.size() - 1);
             if (isCompleted(programs)) {
                 break;
             }
@@ -84,7 +88,7 @@ public class AoC2019Day7Part2 {
         return true;
     }
 
-    private static void run(ProgramState state, List<Integer> inputs) {
+    private static void run(ProgramState state) {
         for (; !state.completed; ) {
             int cmd = state.values.get(state.i);
 
@@ -117,11 +121,10 @@ public class AoC2019Day7Part2 {
                 }
 
                 case 3: {
-                    if (state.inputCounter == inputs.size()) {
-                        state.inputCounter = 1;
+                    if (state.inputCounter == state.inputs.size()) {
                         return;
                     }
-                    int input = inputs.get(state.inputCounter);
+                    int input = state.inputs.get(state.inputCounter);
                     ++state.inputCounter;
                     System.out.println(state.name + " in: " + input);
                     assert A == 0 : "a not 0";
@@ -137,7 +140,7 @@ public class AoC2019Day7Part2 {
                     assert B == 0 : "b not 0";
                     int result = getParamValue(state.values, state.i + 1, C);
                     System.out.println(state.name + " out: " + result);
-                    state.lastOutput = result;
+                    state.outputs.add(result);
                     state.i += 2;
                     break;
                 }
@@ -214,19 +217,19 @@ public class AoC2019Day7Part2 {
 
     private static class ProgramState {
 
-        ProgramState(String name, boolean completed, int i, List<Integer> values, int inputCounter) {
-            this.name = name;
-            this.completed = completed;
-            this.i = i;
-            this.values = values;
-            this.inputCounter = inputCounter;
-        }
+        final List<Integer> inputs = new ArrayList<>();
+        final List<Integer> outputs = new ArrayList<>();
 
-        String name;
+        final String name;
+        final List<Integer> values;
+
         boolean completed;
         int i;
-        List<Integer> values;
         int inputCounter;
-        int lastOutput;
+
+        ProgramState(String name, List<Integer> values) {
+            this.name = name;
+            this.values = values;
+        }
     }
 }

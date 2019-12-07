@@ -55,10 +55,10 @@ public class AoC2019Day7Part1 {
         }
     }
 
-    private static int test(String program, List<Integer> phases) {
+    private static int test(String input, List<Integer> phases) {
         int prevOutput = 0;
         for (int i = 0; i < phases.size(); ++i) {
-            prevOutput = run(String.valueOf((char) ('A' + i)), program,
+            prevOutput = run(String.valueOf((char) ('A' + i)), input,
                     Arrays.asList(phases.get(i), prevOutput));
         }
         return prevOutput;
