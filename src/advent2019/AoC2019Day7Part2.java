@@ -146,6 +146,7 @@ public class AoC2019Day7Part2 {
                 }
 
                 case 5: {
+                    assert A == 0 : "a not 0";
                     int first = getParamValue(state.values, state.i + 1, C);
                     int second = getParamValue(state.values, state.i + 2, B);
                     if (first == 0) {
@@ -157,6 +158,7 @@ public class AoC2019Day7Part2 {
                 }
 
                 case 6: {
+                    assert A == 0 : "a not 0";
                     int first = getParamValue(state.values, state.i + 1, C);
                     int second = getParamValue(state.values, state.i + 2, B);
                     if (first == 0) {

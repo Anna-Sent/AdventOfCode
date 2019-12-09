@@ -87,6 +87,7 @@ public class AoC2019Day5Part2 {
                 }
 
                 case 5: {
+                    assert A == 0 : "a not 0";
                     int first = getParamValue(i + 1, C);
                     int second = getParamValue(i + 2, B);
                     if (first == 0) {
@@ -98,6 +99,7 @@ public class AoC2019Day5Part2 {
                 }
 
                 case 6: {
+                    assert A == 0 : "a not 0";
                     int first = getParamValue(i + 1, C);
                     int second = getParamValue(i + 2, B);
                     if (first == 0) {
