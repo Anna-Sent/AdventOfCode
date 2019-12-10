@@ -11,6 +11,10 @@ public class Point {
         this.y = y;
     }
 
+    public double distance(Point point) {
+        return Math.sqrt((x - point.x) * (x - point.x) + (y - point.y) * (y - point.y));
+    }
+
     public int manhattanDistance(Point point) {
         return Math.abs(x - point.x)
                 + Math.abs(y - point.y);
@@ -43,5 +47,9 @@ public class Point {
     @Override
     public String toString() {
         return x + "," + y;
+    }
+
+    public Point revert() {
+        return new Point(y, x);
     }
 }
