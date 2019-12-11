@@ -5,7 +5,7 @@ public class AoC2017Day23Part2 {
         int result;
 
         result = test();
-        //assert result ==  : "unexpected result is " + result;
+        assert result == 909 : "unexpected result is " + result;
         System.out.println(result);
     }
 
