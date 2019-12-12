@@ -12,6 +12,12 @@ public class Point3D {
         this.z = z;
     }
 
+    public Point3D(Point3D p) {
+        this.x = p.x;
+        this.y = p.y;
+        this.z = p.z;
+    }
+
     public int manhattanDistance(Point3D point) {
         return Math.abs(x - point.x)
                 + Math.abs(y - point.y)
