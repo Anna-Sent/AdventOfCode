@@ -27,13 +27,13 @@ public class AoC2019Day11Part2 {
         while (true) {
             Integer color = mapColors.getOrDefault(currentPoint, 0);
             program.inputs.add((long) color);
-            program.outputs.clear();
-            run(program);
             List<Long> outputs = program.outputs;
+            outputs.clear();
+            run(program);
             if (outputs.isEmpty()) {
                 break;
             }
-            for (int i = 0; i < program.outputs.size(); ++i) {
+            for (int i = 0; i < outputs.size(); ++i) {
                 maxx = Math.max(maxx, currentPoint.x);
                 minx = Math.min(minx, currentPoint.x);
                 maxy = Math.max(maxy, currentPoint.y);
