@@ -55,12 +55,9 @@ public class AoC2019Day16Part2 {
     private static int calculate(int[] input, int d) {
         int sum = 0;
         for (int i = d; i < input.length; ) {
-            for (int j = 0; j < pattern.length && i < input.length; ++j) {
-                for (int k = 0; k < d + 1 && i < input.length; ++k) {
-                    sum += input[i] * pattern[j];
-                    ++i;
-                }
-            }
+            int j = (i - d) / (d + 1) % pattern.length;
+            sum += input[i] * pattern[j];
+            ++i;
         }
         return Math.abs(sum) % 10;
     }

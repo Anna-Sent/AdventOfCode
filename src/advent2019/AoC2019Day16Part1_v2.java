@@ -1,6 +1,6 @@
 package advent2019;
 
-public class AoC2019Day16Part1_v1 {
+public class AoC2019Day16Part1_v2 {
 
     public static void main(String[] args) {
         int result;
@@ -68,13 +68,9 @@ public class AoC2019Day16Part1_v1 {
 
     private static int calculate(int[] input, int d) {
         int sum = 0;
-        for (int i = d; i < input.length; ) {
-            for (int j = 0; j < pattern.length && i < input.length; ++j) {
-                for (int k = 0; k < d + 1 && i < input.length; ++k) {
-                    sum += input[i] * pattern[j];
-                    ++i;
-                }
-            }
+        for (int i = d; i < input.length; ++i) {
+            int j = (i - d) / (d + 1) % pattern.length;
+            sum += input[i] * pattern[j];
         }
         return Math.abs(sum) % 10;
     }
