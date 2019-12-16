@@ -18,7 +18,7 @@ public class AoC2019Day16Part2 {
         System.out.println(result);
 
         result = test("59734319985939030811765904366903137260910165905695158121249344919210773577393954674010919824826738360814888134986551286413123711859735220485817087501645023012862056770562086941211936950697030938202612254550462022980226861233574193029160694064215374466136221530381567459741646888344484734266467332251047728070024125520587386498883584434047046536404479146202115798487093358109344892308178339525320609279967726482426508894019310795012241745215724094733535028040247643657351828004785071021308564438115967543080568369816648970492598237916926533604385924158979160977915469240727071971448914826471542444436509363281495503481363933620112863817909354757361550");
-        // assert result ==  : "unexpected result is " + result;
+        assert result == 60592199 : "unexpected result is " + result;
         System.out.println(result);
     }
 
@@ -29,18 +29,20 @@ public class AoC2019Day16Part2 {
             input[i] = chars[i % chars.length] - '0';
         }
 
-        for (int i = 0; i < 100; ++i) {
-            for (int j = 0; j < input.length; ++j) {
-                input[j] = calculate(input, j);
-            }
-        }
-
         int shift = 0;
         int t = 1;
         for (int i = 6; i >= 0; --i) {
             shift += input[i] * t;
             t *= 10;
         }
+
+        for (int i = 0; i < 100; ++i) {
+            for (int j = input.length - 2; j >= shift; --j) {
+                input[j] += input[j + 1];
+                input[j] = Math.abs(input[j]) % 10;
+            }
+        }
+
         int result = 0;
         t = 1;
         for (int i = 7; i >= 0; --i) {
@@ -48,17 +50,5 @@ public class AoC2019Day16Part2 {
             t *= 10;
         }
         return result;
-    }
-
-    private static final int[] pattern = new int[]{1, 0, -1, 0};
-
-    private static int calculate(int[] input, int d) {
-        int sum = 0;
-        for (int i = d; i < input.length; ) {
-            int j = (i - d) / (d + 1) % pattern.length;
-            sum += input[i] * pattern[j];
-            ++i;
-        }
-        return Math.abs(sum) % 10;
     }
 }
