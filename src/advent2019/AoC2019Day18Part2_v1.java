@@ -192,7 +192,7 @@ public class AoC2019Day18Part2_v1 {
         map.put(next, '@');
         initialPoints.add(next);
 
-        List<Set<Character>> allKeys = new ArrayList<>();
+        List<Set<Character>> allKeysList = new ArrayList<>();
         Set<Character> set;
 
         set = new HashSet<>();
@@ -204,7 +204,7 @@ public class AoC2019Day18Part2_v1 {
                 }
             }
         }
-        allKeys.add(set);
+        allKeysList.add(set);
 
         set = new HashSet<>();
         for (int i = initialPoint.y; i < h; ++i) {
@@ -215,7 +215,7 @@ public class AoC2019Day18Part2_v1 {
                 }
             }
         }
-        allKeys.add(set);
+        allKeysList.add(set);
 
         set = new HashSet<>();
         for (int i = 0; i < initialPoint.y; ++i) {
@@ -226,7 +226,7 @@ public class AoC2019Day18Part2_v1 {
                 }
             }
         }
-        allKeys.add(set);
+        allKeysList.add(set);
 
         set = new HashSet<>();
         for (int i = initialPoint.y; i < h; ++i) {
@@ -237,7 +237,7 @@ public class AoC2019Day18Part2_v1 {
                 }
             }
         }
-        allKeys.add(set);
+        allKeysList.add(set);
 
         int[] solutions = new int[4];
         while (!solved(solutions)) {
@@ -248,10 +248,10 @@ public class AoC2019Day18Part2_v1 {
                 Set<Character> collected = new HashSet<>();
                 for (int j = 0; j < solutions.length; ++j) {
                     if (solutions[j] > 0) {
-                        collected.addAll(allKeys.get(j));
+                        collected.addAll(allKeysList.get(j));
                     }
                 }
-                Set<Character> allKeysCollected = new HashSet<>(allKeys.get(i));
+                Set<Character> allKeysCollected = new HashSet<>(allKeysList.get(i));
                 allKeysCollected.addAll(collected);
                 // System.out.println(number + " input " + i + " all keys: " + allKeysCollected);
                 // System.out.println(number + " input " + i + " initial point: " + initialPoints.get(i));

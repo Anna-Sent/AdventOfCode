@@ -4,7 +4,7 @@ import utils.Point;
 
 import java.util.*;
 
-public class AoC2019Day18Part2 {
+public class AoC2019Day18Part2_v2 {
 
     public static void main(String[] args) {
         int result;
@@ -132,6 +132,8 @@ public class AoC2019Day18Part2 {
         Point initialPoint = null;
 
         String[] tokens = s.split("\n");
+        int h = tokens.length;
+        int w = tokens[0].length();
         for (int i = 0; i < tokens.length; ++i) {
             char[] token = tokens[i].toCharArray();
             for (int j = 0; j < token.length; ++j) {
@@ -148,7 +150,7 @@ public class AoC2019Day18Part2 {
         }
         assert initialPoint != null : "invalid input";
 
-        Set<Point> initialPoints = new HashSet<>();
+        List<Point> initialPoints = new ArrayList<>();
 
         map.put(initialPoint, '#');
         Point next;
@@ -170,6 +172,12 @@ public class AoC2019Day18Part2 {
         map.put(next, '#');
 
         next = new Point(initialPoint);
+        --next.x;
+        --next.y;
+        map.put(next, '@');
+        initialPoints.add(next);
+
+        next = new Point(initialPoint);
         ++next.x;
         ++next.y;
         map.put(next, '@');
@@ -187,16 +195,58 @@ public class AoC2019Day18Part2 {
         map.put(next, '@');
         initialPoints.add(next);
 
-        next = new Point(initialPoint);
-        --next.x;
-        --next.y;
-        map.put(next, '@');
-        initialPoints.add(next);
+        List<Set<Character>> allKeysList = new ArrayList<>();
+        Set<Character> set;
 
-        return bfs(map, allKeys, new State(initialPoints, Collections.emptySet()));
+        set = new HashSet<>();
+        for (int i = 0; i < initialPoint.y; ++i) {
+            for (int j = 0; j < initialPoint.x; ++j) {
+                char ch = map.get(new Point(j, i));
+                if ('a' <= ch && ch <= 'z') {
+                    set.add(ch);
+                }
+            }
+        }
+        allKeysList.add(set);
+
+        set = new HashSet<>();
+        for (int i = initialPoint.y; i < h; ++i) {
+            for (int j = initialPoint.x; j < w; ++j) {
+                char ch = map.get(new Point(j, i));
+                if ('a' <= ch && ch <= 'z') {
+                    set.add(ch);
+                }
+            }
+        }
+        allKeysList.add(set);
+
+        set = new HashSet<>();
+        for (int i = 0; i < initialPoint.y; ++i) {
+            for (int j = initialPoint.x; j < w; ++j) {
+                char ch = map.get(new Point(j, i));
+                if ('a' <= ch && ch <= 'z') {
+                    set.add(ch);
+                }
+            }
+        }
+        allKeysList.add(set);
+
+        set = new HashSet<>();
+        for (int i = initialPoint.y; i < h; ++i) {
+            for (int j = 0; j < initialPoint.x; ++j) {
+                char ch = map.get(new Point(j, i));
+                if ('a' <= ch && ch <= 'z') {
+                    set.add(ch);
+                }
+            }
+        }
+        allKeysList.add(set);
+
+        return bfs(map, allKeys, new State(initialPoints, Collections.emptySet()), allKeysList);
     }
 
-    private static int bfs(Map<Point, Character> map, Set<Character> allKeys, State initialState) {
+    private static int bfs(Map<Point, Character> map, Set<Character> allKeys, State initialState,
+                           List<Set<Character>> allKeysList) {
         Set<State> closed = new HashSet<>();
         Set<State> opened = new HashSet<>();
 
@@ -209,7 +259,7 @@ public class AoC2019Day18Part2 {
                     System.out.println("closed: " + closed.size());
                     return count;
                 }
-                Set<State> set = generateNext(current, map);
+                Set<State> set = generateNext(current, map, allKeysList);
                 for (State next : set) {
                     if (!closed.contains(next)) {
                         achievable.add(next);
@@ -225,39 +275,43 @@ public class AoC2019Day18Part2 {
         return -1;
     }
 
-    private static Set<State> generateNext(State current, Map<Point, Character> map) {
+    private static Set<State> generateNext(State current, Map<Point, Character> map,
+                                           List<Set<Character>> allKeysList) {
         Set<State> set = new HashSet<>();
 
-        for (Point currentPoint : current.currentPoints) {
-            Set<Point> currentPoints;
+        for (int i = 0; i < current.currentPoints.size(); ++i) {
+            Point currentPoint = current.currentPoints.get(i);
+
+            Set<Character> allKeysIth = allKeysList.get(i);
+            if (current.collected.containsAll(allKeysIth)) {
+                continue;
+            }
+
+            List<Point> currentPoints;
             Point nextPoint;
 
             nextPoint = new Point(currentPoint);
             ++nextPoint.x;
-            currentPoints = new HashSet<>(current.currentPoints);
-            currentPoints.remove(currentPoint);
-            currentPoints.add(nextPoint);
+            currentPoints = new ArrayList<>(current.currentPoints);
+            currentPoints.set(i, nextPoint);
             putState(map, set, nextPoint, currentPoints, current.collected);
 
             nextPoint = new Point(currentPoint);
             --nextPoint.x;
-            currentPoints = new HashSet<>(current.currentPoints);
-            currentPoints.remove(currentPoint);
-            currentPoints.add(nextPoint);
+            currentPoints = new ArrayList<>(current.currentPoints);
+            currentPoints.set(i, nextPoint);
             putState(map, set, nextPoint, currentPoints, current.collected);
 
             nextPoint = new Point(currentPoint);
             ++nextPoint.y;
-            currentPoints = new HashSet<>(current.currentPoints);
-            currentPoints.remove(currentPoint);
-            currentPoints.add(nextPoint);
+            currentPoints = new ArrayList<>(current.currentPoints);
+            currentPoints.set(i, nextPoint);
             putState(map, set, nextPoint, currentPoints, current.collected);
 
             nextPoint = new Point(currentPoint);
             --nextPoint.y;
-            currentPoints = new HashSet<>(current.currentPoints);
-            currentPoints.remove(currentPoint);
-            currentPoints.add(nextPoint);
+            currentPoints = new ArrayList<>(current.currentPoints);
+            currentPoints.set(i, nextPoint);
             putState(map, set, nextPoint, currentPoints, current.collected);
         }
 
@@ -267,7 +321,7 @@ public class AoC2019Day18Part2 {
     private static void putState(Map<Point, Character> map,
                                  Set<State> set,
                                  Point nextPoint,
-                                 Set<Point> currentPoints,
+                                 List<Point> currentPoints,
                                  Set<Character> collected) {
         if (!map.containsKey(nextPoint)) {
             return;
@@ -292,10 +346,10 @@ public class AoC2019Day18Part2 {
 
     private static class State {
 
-        Set<Point> currentPoints;
+        List<Point> currentPoints;
         Set<Character> collected;
 
-        State(Set<Point> currentPoints, Set<Character> collected) {
+        State(List<Point> currentPoints, Set<Character> collected) {
             this.currentPoints = currentPoints;
             this.collected = collected;
         }
