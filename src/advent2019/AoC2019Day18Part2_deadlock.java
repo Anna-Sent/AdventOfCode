@@ -4,7 +4,7 @@ import utils.Point;
 
 import java.util.*;
 
-public class AoC2019Day18Part2_v1 {
+public class AoC2019Day18Part2_deadlock {
 
     public static void main(String[] args) {
         int result;
@@ -122,7 +122,7 @@ public class AoC2019Day18Part2_v1 {
                 "#.#############.###.#.###.#.#.#.#.###############.#.###.#.#######.#.#.#####.#.#.#\n" +
                 "#...............J...#.....#...#.........#...........#...#.........M.#..p......#.#\n" +
                 "#################################################################################");
-        // assert result ==  : "unexpected result is " + result;
+        assert result == 1992 : "unexpected result is " + result;
         System.out.println(result);
     }
 
@@ -378,6 +378,14 @@ public class AoC2019Day18Part2_v1 {
         @Override
         public int hashCode() {
             return Objects.hash(currentPoint, collected);
+        }
+
+        @Override
+        public String toString() {
+            return "State{" +
+                    "currentPoint=" + currentPoint +
+                    ", collected=" + collected +
+                    '}';
         }
     }
 }
