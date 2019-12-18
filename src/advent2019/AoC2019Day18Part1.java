@@ -152,6 +152,7 @@ public class AoC2019Day18Part1 {
                 if ('a' <= ch && ch <= 'z') {
                     allKeys.add(ch);
                 } else if (ch == '@') {
+                    assert initialPoint == null : "invalid input";
                     initialPoint = point;
                 }
             }
