@@ -38,10 +38,10 @@ public class AoC2019Day18Part2_invalid_but_correct {
                 "#M###N#H###.#\n" +
                 "#o#m..#i#jk.#\n" +
                 "#############");
-        // assert result == 72 : "unexpected result is " + result;
         if (result != 72) {
             System.err.println("unexpected result is " + result);
         }
+        assert result == 54 : "unexpected result is " + result;
         System.out.println(result);
 
         result = test(3, "#################################################################################\n" +
