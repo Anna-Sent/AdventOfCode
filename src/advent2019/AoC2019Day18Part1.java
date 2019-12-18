@@ -187,7 +187,7 @@ public class AoC2019Day18Part1 {
             ++count;
             opened = achievable;
         }
-        return count;
+        return -1;
     }
 
     private static Set<State> generateNext(State current, Map<Point, Character> map) {
@@ -195,43 +195,43 @@ public class AoC2019Day18Part1 {
 
         Point nextPoint;
 
-        nextPoint = new Point(current.current);
+        nextPoint = new Point(current.currentPoint);
         ++nextPoint.x;
         putState(map, set, nextPoint, current.collected);
 
-        nextPoint = new Point(current.current);
+        nextPoint = new Point(current.currentPoint);
         --nextPoint.x;
         putState(map, set, nextPoint, current.collected);
 
-        nextPoint = new Point(current.current);
+        nextPoint = new Point(current.currentPoint);
         ++nextPoint.y;
         putState(map, set, nextPoint, current.collected);
 
-        nextPoint = new Point(current.current);
+        nextPoint = new Point(current.currentPoint);
         --nextPoint.y;
         putState(map, set, nextPoint, current.collected);
 
         return set;
     }
 
-    private static void putState(Map<Point, Character> map, Set<State> set, Point point, Set<Character> collected) {
-        if (!map.containsKey(point)) {
+    private static void putState(Map<Point, Character> map,
+                                 Set<State> set,
+                                 Point nextPoint,
+                                 Set<Character> collected) {
+        if (!map.containsKey(nextPoint)) {
             return;
         }
-        char charAtPoint = map.get(point);
+        char charAtPoint = map.get(nextPoint);
         if (charAtPoint == '#') {
             return;
         }
-        if (charAtPoint == '.' || charAtPoint == '@') {
-            set.add(new State(point, collected));
-        }
-        if ('a' <= charAtPoint && charAtPoint <= 'z') {
+        if (charAtPoint == '.' || charAtPoint == '@'
+                || 'A' <= charAtPoint && charAtPoint <= 'Z' && collected.contains((char) (charAtPoint - 'A' + 'a'))) {
+            set.add(new State(nextPoint, collected));
+        } else if ('a' <= charAtPoint && charAtPoint <= 'z') {
             Set<Character> newCollected = new HashSet<>(collected);
             newCollected.add(charAtPoint);
-            set.add(new State(point, newCollected));
-        }
-        if ('A' <= charAtPoint && charAtPoint <= 'Z' && collected.contains((char) (charAtPoint - 'A' + 'a'))) {
-            set.add(new State(point, collected));
+            set.add(new State(nextPoint, newCollected));
         }
     }
 
@@ -241,11 +241,11 @@ public class AoC2019Day18Part1 {
 
     private static class State {
 
-        Point current;
+        Point currentPoint;
         Set<Character> collected;
 
-        State(Point current, Set<Character> collected) {
-            this.current = current;
+        State(Point currentPoint, Set<Character> collected) {
+            this.currentPoint = currentPoint;
             this.collected = collected;
         }
 
@@ -254,13 +254,13 @@ public class AoC2019Day18Part1 {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             State state = (State) o;
-            return Objects.equals(current, state.current) &&
+            return Objects.equals(currentPoint, state.currentPoint) &&
                     Objects.equals(collected, state.collected);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(current, collected);
+            return Objects.hash(currentPoint, collected);
         }
     }
 }

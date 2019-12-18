@@ -9,6 +9,38 @@ public class AoC2019Day18Part2 {
     public static void main(String[] args) {
         int result;
 
+        result = test("#######\n" +
+                "#a.#Cd#\n" +
+                "##...##\n" +
+                "##.@.##\n" +
+                "##...##\n" +
+                "#cB#Ab#\n" +
+                "#######");
+        assert result == 8 : "unexpected result is " + result;
+        System.out.println(result);
+
+        result = test("###############\n" +
+                "#d.ABC.#.....a#\n" +
+                "######...######\n" +
+                "######.@.######\n" +
+                "######...######\n" +
+                "#b.....#.....c#\n" +
+                "###############");
+        assert result == 24 : "unexpected result is " + result;
+        System.out.println(result);
+
+        result = test("#############\n" +
+                "#g#f.D#..h#l#\n" +
+                "#F###e#E###.#\n" +
+                "#dCba...BcIJ#\n" +
+                "#####.@.#####\n" +
+                "#nK.L...G...#\n" +
+                "#M###N#H###.#\n" +
+                "#o#m..#i#jk.#\n" +
+                "#############");
+        assert result == 72 : "unexpected result is " + result;
+        System.out.println(result);
+
         result = test("#################################################################################\n" +
                 "#.....#...............#.....#.A.#.......#.....#e..............#.....#...........#\n" +
                 "#.###.#########.#####.###.#.###.#.###.#.###.#.###.###########.#.#.###.#####.#####\n" +
@@ -189,64 +221,67 @@ public class AoC2019Day18Part2 {
             ++count;
             opened = achievable;
         }
-        return count;
+        return -1;
     }
 
     private static Set<State> generateNext(State current, Map<Point, Character> map) {
         Set<State> set = new HashSet<>();
 
-        for (Point currentPoint : current.current) {
-            Set<Point> currentPoints = new HashSet<>(current.current);
-            currentPoints.remove(currentPoint);
-
+        for (Point currentPoint : current.currentPoints) {
+            Set<Point> currentPoints;
             Point nextPoint;
 
             nextPoint = new Point(currentPoint);
             ++nextPoint.x;
+            currentPoints = new HashSet<>(current.currentPoints);
+            currentPoints.remove(currentPoint);
+            currentPoints.add(nextPoint);
             putState(map, set, nextPoint, currentPoints, current.collected);
 
             nextPoint = new Point(currentPoint);
             --nextPoint.x;
+            currentPoints = new HashSet<>(current.currentPoints);
+            currentPoints.remove(currentPoint);
+            currentPoints.add(nextPoint);
             putState(map, set, nextPoint, currentPoints, current.collected);
 
             nextPoint = new Point(currentPoint);
             ++nextPoint.y;
+            currentPoints = new HashSet<>(current.currentPoints);
+            currentPoints.remove(currentPoint);
+            currentPoints.add(nextPoint);
             putState(map, set, nextPoint, currentPoints, current.collected);
 
             nextPoint = new Point(currentPoint);
             --nextPoint.y;
+            currentPoints = new HashSet<>(current.currentPoints);
+            currentPoints.remove(currentPoint);
+            currentPoints.add(nextPoint);
             putState(map, set, nextPoint, currentPoints, current.collected);
         }
 
         return set;
     }
 
-    private static void putState(Map<Point, Character> map, Set<State> set, Point point,
+    private static void putState(Map<Point, Character> map,
+                                 Set<State> set,
+                                 Point nextPoint,
                                  Set<Point> currentPoints,
                                  Set<Character> collected) {
-        if (!map.containsKey(point)) {
+        if (!map.containsKey(nextPoint)) {
             return;
         }
-        char charAtPoint = map.get(point);
+        char charAtPoint = map.get(nextPoint);
         if (charAtPoint == '#') {
             return;
         }
-        if (charAtPoint == '.' || charAtPoint == '@') {
-            Set<Point> newCurrent = new HashSet<>(currentPoints);
-            newCurrent.add(point);
-            set.add(new State(newCurrent, collected));
-        }
-        if ('a' <= charAtPoint && charAtPoint <= 'z') {
+        if (charAtPoint == '.' || charAtPoint == '@'
+                || 'A' <= charAtPoint && charAtPoint <= 'Z' && collected.contains((char) (charAtPoint - 'A' + 'a'))) {
+            set.add(new State(currentPoints, collected));
+        } else if ('a' <= charAtPoint && charAtPoint <= 'z') {
             Set<Character> newCollected = new HashSet<>(collected);
             newCollected.add(charAtPoint);
-            Set<Point> newCurrent = new HashSet<>(currentPoints);
-            newCurrent.add(point);
-            set.add(new State(newCurrent, newCollected));
-        }
-        if ('A' <= charAtPoint && charAtPoint <= 'Z' && collected.contains((char) (charAtPoint - 'A' + 'a'))) {
-            Set<Point> newCurrent = new HashSet<>(currentPoints);
-            newCurrent.add(point);
-            set.add(new State(newCurrent, collected));
+            set.add(new State(currentPoints, newCollected));
         }
     }
 
@@ -256,11 +291,11 @@ public class AoC2019Day18Part2 {
 
     private static class State {
 
-        Set<Point> current;
+        Set<Point> currentPoints;
         Set<Character> collected;
 
-        State(Set<Point> current, Set<Character> collected) {
-            this.current = current;
+        State(Set<Point> currentPoints, Set<Character> collected) {
+            this.currentPoints = currentPoints;
             this.collected = collected;
         }
 
@@ -269,13 +304,21 @@ public class AoC2019Day18Part2 {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             State state = (State) o;
-            return Objects.equals(current, state.current) &&
+            return Objects.equals(currentPoints, state.currentPoints) &&
                     Objects.equals(collected, state.collected);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(current, collected);
+            return Objects.hash(currentPoints, collected);
+        }
+
+        @Override
+        public String toString() {
+            return "State{" +
+                    "currentPoints=" + currentPoints +
+                    ", collected=" + collected +
+                    '}';
         }
     }
 }
