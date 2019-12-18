@@ -1,6 +1,6 @@
 package advent2019;
 
-public class AoC2019Day4Part2_v2 {
+public class AoC2019Day4Part2_v1 {
 
     public static void main(String[] args) {
         int result;

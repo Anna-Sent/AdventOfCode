@@ -7,32 +7,13 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AoC2019Day14Part1_v2 {
+public class AoC2019Day14Part2_v1 {
 
     public static void main(String[] args) {
-        int result;
-
-        result = test("10 ORE => 10 A\n" +
-                "1 ORE => 1 B\n" +
-                "7 A, 1 B => 1 C\n" +
-                "7 A, 1 C => 1 D\n" +
-                "7 A, 1 D => 1 E\n" +
-                "7 A, 1 E => 1 FUEL");
-        assert result == 31 : "unexpected result is " + result;
-        System.out.println(result);
-
-        result = test("9 ORE => 2 A\n" +
-                "8 ORE => 3 B\n" +
-                "7 ORE => 5 C\n" +
-                "3 A, 4 B => 1 AB\n" +
-                "5 B, 7 C => 1 BC\n" +
-                "4 C, 1 A => 1 CA\n" +
-                "2 AB, 3 BC, 4 CA => 1 FUEL");
-        assert result == 165 : "unexpected result is " + result;
-        System.out.println(result);
+        long result;
 
         //noinspection SpellCheckingInspection
-        result = test("157 ORE => 5 NZVS\n" +
+        result = test(1, "157 ORE => 5 NZVS\n" +
                 "165 ORE => 6 DCFZ\n" +
                 "44 XJWVT, 5 KHKGT, 1 QDVJ, 29 NZVS, 9 GPVTF, 48 HKGWZ => 1 FUEL\n" +
                 "12 HKGWZ, 1 GPVTF, 8 PSHF => 9 QDVJ\n" +
@@ -41,11 +22,11 @@ public class AoC2019Day14Part1_v2 {
                 "7 DCFZ, 7 PSHF => 2 XJWVT\n" +
                 "165 ORE => 2 GPVTF\n" +
                 "3 DCFZ, 7 NZVS, 5 HKGWZ, 10 PSHF => 8 KHKGT");
-        assert result == 13312 : "unexpected result is " + result;
+        assert result == 82892753 : "unexpected result is " + result;
         System.out.println(result);
 
         //noinspection SpellCheckingInspection
-        result = test("2 VPVL, 7 FWMGM, 2 CXFTF, 11 MNCFX => 1 STKFG\n" +
+        result = test(2, "2 VPVL, 7 FWMGM, 2 CXFTF, 11 MNCFX => 1 STKFG\n" +
                 "17 NVRVD, 3 JNWZP => 8 VPVL\n" +
                 "53 STKFG, 6 MNCFX, 46 VJHF, 81 HVMC, 68 CXFTF, 25 GNMV => 1 FUEL\n" +
                 "22 VJHF, 37 MNCFX => 5 FWMGM\n" +
@@ -57,11 +38,11 @@ public class AoC2019Day14Part1_v2 {
                 "1 NVRVD => 8 CXFTF\n" +
                 "1 VJHF, 6 MNCFX => 4 RFSQX\n" +
                 "176 ORE => 6 VJHF");
-        assert result == 180697 : "unexpected result is " + result;
+        assert result == 5586022 : "unexpected result is " + result;
         System.out.println(result);
 
         //noinspection SpellCheckingInspection
-        result = test("171 ORE => 8 CNZTR\n" +
+        result = test(3, "171 ORE => 8 CNZTR\n" +
                 "7 ZLQW, 3 BMBT, 9 XCVML, 26 XMNCP, 1 WPTQ, 2 MZWV, 1 RJRHP => 4 PLWSL\n" +
                 "114 ORE => 4 BHXH\n" +
                 "14 VRPVC => 6 BMBT\n" +
@@ -78,11 +59,11 @@ public class AoC2019Day14Part1_v2 {
                 "121 ORE => 7 VRPVC\n" +
                 "7 XCVML => 6 RJRHP\n" +
                 "5 BHXH, 4 VRPVC => 5 LTCX");
-        assert result == 2210736 : "unexpected result is " + result;
+        assert result == 460664 : "unexpected result is " + result;
         System.out.println(result);
 
         //noinspection SpellCheckingInspection
-        result = test("11 TDFGK, 1 LKTZ => 5 DMLM\n" +
+        result = test(4, "11 TDFGK, 1 LKTZ => 5 DMLM\n" +
                 "2 PLWS, 10 CQRWX, 1 DQRM, 1 DXDTM, 1 GBNH, 5 FKPL, 1 JCSDM => 4 LMPH\n" +
                 "2 FXBZT, 1 VRZND => 5 QKCQW\n" +
                 "3 VRZND => 4 LKTZ\n" +
@@ -140,46 +121,91 @@ public class AoC2019Day14Part1_v2 {
                 "162 ORE => 3 QFBZN\n" +
                 "18 WCHD => 5 MLPH\n" +
                 "13 LJQGC, 1 SDQK => 9 MWQTH");
-        assert result == 522031 : "unexpected result is " + result;
+        assert result == 3566577 : "unexpected result is " + result;
         System.out.println(result);
     }
 
     private static final Pattern pattern = Pattern.compile("(\\d+) ([A-Z]+)");
 
-    private static int test(String s) {
+    private static long test(int i, String s) {
         Map<String, Chemical> chemicals = readChemicals(s);
-        Map<String, Integer> remains = new HashMap<>();
-        return calculateOre(chemicals, "FUEL", 1, remains);
+        Map<String, Long> remains = new HashMap<>();
+
+        long availableOre = 1000000000000L;
+
+        long orePeriod = 0;
+        long fuelPeriod = 0;
+        while (true) {
+            long orePerOneFuel = calculateOre(chemicals, "FUEL", 1, remains);
+            orePeriod += orePerOneFuel;
+            ++fuelPeriod;
+            if (orePeriod > availableOre) {
+                return fuelPeriod - 1;
+            } else if (orePeriod == availableOre) {
+                return fuelPeriod;
+            }
+            if (remains.isEmpty()) {
+                break;
+            }
+        }
+
+        long totalFuel = availableOre / orePeriod * fuelPeriod;
+        long rest = availableOre % orePeriod;
+
+        long step = fuelPeriod / 2;
+        while (step > 0) {
+            while (true) {
+                Map<String, Long> remainsCopy = new HashMap<>(remains);
+                long orePerOneFuel = calculateOre(chemicals, "FUEL", step, remains);
+                if (orePerOneFuel <= rest) {
+                    rest -= orePerOneFuel;
+                    totalFuel += step;
+                } else {
+                    remains = remainsCopy;
+                    break;
+                }
+            }
+            step /= 2;
+        }
+        return totalFuel;
     }
 
-    private static int calculateOre(Map<String, Chemical> chemicals,
-                                    String name,
-                                    int requiredCount,
-                                    Map<String, Integer> remains) {
+    private static long calculateOre(Map<String, Chemical> chemicals,
+                                     String name,
+                                     long requiredCount,
+                                     Map<String, Long> remains) {
         if (name.equals("ORE")) {
             return requiredCount;
         }
 
-        int remain = remains.getOrDefault(name, 0);
+        long remain = remains.getOrDefault(name, 0L);
         if (remain >= requiredCount) {
-            remains.put(name, remain - requiredCount);
+            put(remains, name, remain - requiredCount);
             return 0;
         } else if (remain != 0) {
-            remains.put(name, 0);
+            put(remains, name, 0);
             requiredCount = requiredCount - remain;
         }
 
         Chemical chemical = chemicals.get(name);
-        int total = 0;
-        int multiplier = requiredCount / chemical.count + (requiredCount % chemical.count == 0 ? 0 : 1);
+        long total = 0;
+        long multiplier = requiredCount / chemical.count + (requiredCount % chemical.count == 0 ? 0 : 1);
         for (Chemical ingredient : chemical.ingredients) {
             total += calculateOre(chemicals, ingredient.name, ingredient.count * multiplier, remains);
         }
-        int producedCount = chemical.count * multiplier;
+        long producedCount = chemical.count * multiplier;
         if (producedCount > requiredCount) {
-            remains.put(name, remains.getOrDefault(name, 0) + producedCount - requiredCount);
+            put(remains, name, remains.getOrDefault(name, 0L) + producedCount - requiredCount);
         }
         return total;
+    }
+
+    private static void put(Map<String, Long> remains, String name, long value) {
+        if (value == 0) {
+            remains.remove(name);
+        } else {
+            remains.put(name, value);
+        }
     }
 
     private static Map<String, Chemical> readChemicals(String s) {
