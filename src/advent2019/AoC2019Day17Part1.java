@@ -129,7 +129,7 @@ public class AoC2019Day17Part1 {
                     assert A == 0 : "a not 0";
                     assert B == 0 : "b not 0";
                     long result = getParamValue(state.values, state.i + 1, C, state.relativeBase);
-                    System.out.println(state.name + " out: " + result);
+                    System.out.print((char) result);
                     state.outputs.add(result);
                     state.i += 2;
                     break;
