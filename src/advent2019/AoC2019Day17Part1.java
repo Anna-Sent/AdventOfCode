@@ -116,7 +116,6 @@ public class AoC2019Day17Part1 {
                     }
                     long input = state.inputs.get(state.inputCounter);
                     ++state.inputCounter;
-                    System.out.println(state.name + " in: " + input);
                     assert A == 0 : "a not 0";
                     assert B == 0 : "b not 0";
                     long result = getParamValue(state.values, state.i + 1, C, state.relativeBase, true);
