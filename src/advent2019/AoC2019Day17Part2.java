@@ -71,7 +71,7 @@ public class AoC2019Day17Part2 {
         }
 
         System.out.println();
-        addInput(program, 'y');
+        addInput(program, 'n');
         addInput(program, 10L);
 
         run(program);
@@ -591,6 +591,7 @@ public class AoC2019Day17Part2 {
 
                 case 99:
                     state.completed = true;
+                    System.out.println();
                     break;
 
                 default:

@@ -193,6 +193,7 @@ public class AoC2019Day17Part1 {
 
                 case 99:
                     state.completed = true;
+                    System.out.println();
                     break;
 
                 default:
