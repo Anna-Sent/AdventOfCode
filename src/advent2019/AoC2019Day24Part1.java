@@ -25,30 +25,31 @@ public class AoC2019Day24Part1 {
         System.out.println(result);
     }
 
+    private static final int SIZE = 5;
+    private static final int LAST = SIZE - 1;
+
     private static int test(String s) {
-        char[][] state = new char[5][];
-        for (int i = 0; i < 5; ++i) {
-            state[i] = new char[5];
+        char[][] state = new char[SIZE][];
+        for (int i = 0; i < SIZE; ++i) {
+            state[i] = new char[SIZE];
         }
-        int i = 0;
-        for (String token : s.split("\n")) {
-            int j = 0;
-            for (char ch : token.toCharArray()) {
-                state[i][j] = ch;
-                ++j;
+        String[] tokens = s.split("\n");
+        for (int i = 0; i < SIZE; ++i) {
+            char[] chars = tokens[i].toCharArray();
+            for (int j = 0; j < SIZE; ++j) {
+                state[i][j] = chars[j];
             }
-            ++i;
         }
 
         Set<State> states = new HashSet<>();
         states.add(new State(state));
-        for (int min = 0; ; ++min) {
-            char[][] stateCopy = new char[5][];
-            for (i = 0; i < 5; ++i) {
-                stateCopy[i] = new char[5];
+        for (; ; ) {
+            char[][] stateCopy = new char[SIZE][];
+            for (int i = 0; i < SIZE; ++i) {
+                stateCopy[i] = new char[SIZE];
             }
-            for (i = 0; i < 5; ++i) {
-                for (int j = 0; j < 5; ++j) {
+            for (int i = 0; i < SIZE; ++i) {
+                for (int j = 0; j < SIZE; ++j) {
                     char[] adjacents = adjacents(state, i, j);
                     int bugsCount = bugsCount(adjacents);
                     if (state[i][j] == '#') {
@@ -75,8 +76,8 @@ public class AoC2019Day24Part1 {
         }
 
         int sum = 0, k = 1;
-        for (i = 0; i < 5; ++i) {
-            for (int j = 0; j < 5; ++j) {
+        for (int i = 0; i < SIZE; ++i) {
+            for (int j = 0; j < SIZE; ++j) {
                 if (state[i][j] == '#') {
                     sum += k;
                 }
@@ -98,8 +99,8 @@ public class AoC2019Day24Part1 {
 
     private static char[] adjacents(char[][] state, int i, int j) {
         char[] result = new char[4];
-        result[0] = i < 4 ? state[i + 1][j] : 0;
-        result[1] = j < 4 ? state[i][j + 1] : 0;
+        result[0] = i < LAST ? state[i + 1][j] : 0;
+        result[1] = j < LAST ? state[i][j + 1] : 0;
         result[2] = i > 0 ? state[i - 1][j] : 0;
         result[3] = j > 0 ? state[i][j - 1] : 0;
         return result;
@@ -118,8 +119,8 @@ public class AoC2019Day24Part1 {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             State state = (State) o;
-            for (int i = 0; i < 5; ++i) {
-                for (int j = 0; j < 5; ++j) {
+            for (int i = 0; i < SIZE; ++i) {
+                for (int j = 0; j < SIZE; ++j) {
                     if (chars[i][j] != state.chars[i][j]) {
                         return false;
                     }
@@ -132,8 +133,8 @@ public class AoC2019Day24Part1 {
         public int hashCode() {
             int result = 1;
 
-            for (int i = 0; i < 5; ++i) {
-                for (int j = 0; j < 5; ++j) {
+            for (int i = 0; i < SIZE; ++i) {
+                for (int j = 0; j < SIZE; ++j) {
                     result = 31 * result + Character.hashCode(chars[i][j]);
                 }
             }
