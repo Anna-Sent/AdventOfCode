@@ -22,30 +22,40 @@ public class AoC2019Day24Part2 {
                 ".###.");
         assert result == 1953 : "unexpected result is " + result;
         System.out.println(result);
+
+        result = test(false, 200, ".....\n" +
+                "...#.\n" +
+                ".#..#\n" +
+                ".#.#.\n" +
+                "...##");
+        assert result == 2040 : "unexpected result is " + result;
+        System.out.println(result);
     }
+
+    private static final int SIZE = 5;
+    private static final int LAST = SIZE - 1;
+    private static final int MID = SIZE / 2;
 
     private static int test(boolean print, int minutes, String s) {
         Map<Coord, Character> state = new HashMap<>();
-        int i = 0;
-        for (String token : s.split("\n")) {
-            int j = 0;
-            for (char ch : token.toCharArray()) {
-                if (i == 2 && j == 2) {
+        String[] tokens = s.split("\n");
+        for (int i = 0; i < SIZE; ++i) {
+            char[] chars = tokens[i].toCharArray();
+            for (int j = 0; j < SIZE; ++j) {
+                if (i == MID && j == MID) {
                     continue;
                 }
-                state.put(new Coord(i, j, 0), ch);
-                ++j;
+                state.put(new Coord(i, j, 0), chars[j]);
             }
-            ++i;
         }
 
         int minLevel = -1, maxLevel = 1;
         for (int min = 0; min < minutes; ++min) {
             Map<Coord, Character> newState = new HashMap<>();
             for (int level = minLevel; level <= maxLevel; ++level) {
-                for (i = 0; i < 5; ++i) {
-                    for (int j = 0; j < 5; ++j) {
-                        if (i == 2 && j == 2) {
+                for (int i = 0; i < SIZE; ++i) {
+                    for (int j = 0; j < SIZE; ++j) {
+                        if (i == MID && j == MID) {
                             continue;
                         }
                         List<Character> adjacents = adjacents(state, i, j, level);
@@ -76,8 +86,8 @@ public class AoC2019Day24Part2 {
         if (print) {
             for (int level = minLevel; level <= maxLevel; ++level) {
                 System.out.println(level);
-                for (i = 0; i < 5; ++i) {
-                    for (int j = 0; j < 5; ++j) {
+                for (int i = 0; i < SIZE; ++i) {
+                    for (int j = 0; j < SIZE; ++j) {
                         Character ch = state.get(new Coord(i, j, level));
                         System.out.print(ch == null ? '.' : ch);
                     }
@@ -110,49 +120,49 @@ public class AoC2019Day24Part2 {
     private static List<Character> adjacents(Map<Coord, Character> state, int i, int j, int level) {
         List<Character> result = new ArrayList<>();
 
-        if (i < 4) {
-            if (i == 1 && j == 2) {
-                for (int k = 0; k < 5; ++k) {
+        if (i < LAST) {
+            if (i == MID - 1 && j == MID) {
+                for (int k = 0; k < SIZE; ++k) {
                     result.add(state.get(new Coord(0, k, level - 1)));
                 }
             } else {
                 result.add(state.get(new Coord(i + 1, j, level)));
             }
         } else {
-            result.add(state.get(new Coord(3, 2, level + 1)));
+            result.add(state.get(new Coord(MID + 1, MID, level + 1)));
         }
         if (i > 0) {
-            if (i == 3 && j == 2) {
-                for (int k = 0; k < 5; ++k) {
-                    result.add(state.get(new Coord(4, k, level - 1)));
+            if (i == MID + 1 && j == MID) {
+                for (int k = 0; k < SIZE; ++k) {
+                    result.add(state.get(new Coord(LAST, k, level - 1)));
                 }
             } else {
                 result.add(state.get(new Coord(i - 1, j, level)));
             }
         } else {
-            result.add(state.get(new Coord(1, 2, level + 1)));
+            result.add(state.get(new Coord(MID - 1, MID, level + 1)));
         }
-        if (j < 4) {
-            if (j == 1 && i == 2) {
-                for (int k = 0; k < 5; ++k) {
+        if (j < LAST) {
+            if (j == MID - 1 && i == MID) {
+                for (int k = 0; k < SIZE; ++k) {
                     result.add(state.get(new Coord(k, 0, level - 1)));
                 }
             } else {
                 result.add(state.get(new Coord(i, j + 1, level)));
             }
         } else {
-            result.add(state.get(new Coord(2, 3, level + 1)));
+            result.add(state.get(new Coord(MID, MID + 1, level + 1)));
         }
         if (j > 0) {
-            if (j == 3 && i == 2) {
-                for (int k = 0; k < 5; ++k) {
-                    result.add(state.get(new Coord(k, 4, level - 1)));
+            if (j == MID + 1 && i == MID) {
+                for (int k = 0; k < SIZE; ++k) {
+                    result.add(state.get(new Coord(k, LAST, level - 1)));
                 }
             } else {
                 result.add(state.get(new Coord(i, j - 1, level)));
             }
         } else {
-            result.add(state.get(new Coord(2, 1, level + 1)));
+            result.add(state.get(new Coord(MID, MID - 1, level + 1)));
         }
 
         assert result.size() == 8 || result.size() == 4 : "invalid adjacents " + result.size();
