@@ -7,7 +7,7 @@ public class AoC2019Day24Part2 {
     public static void main(String[] args) {
         int result;
 
-        result = test(10, "....#\n" +
+        result = test(true, 10, "....#\n" +
                 "#..#.\n" +
                 "#..##\n" +
                 "..#..\n" +
@@ -15,7 +15,7 @@ public class AoC2019Day24Part2 {
         assert result == 99 : "unexpected result is " + result;
         System.out.println(result);
 
-        result = test(200, ".##.#\n" +
+        result = test(false, 200, ".##.#\n" +
                 "###..\n" +
                 "#...#\n" +
                 "##.#.\n" +
@@ -24,7 +24,7 @@ public class AoC2019Day24Part2 {
         System.out.println(result);
     }
 
-    private static int test(int minutes, String s) {
+    private static int test(boolean print, int minutes, String s) {
         Map<Coord, Character> state = new HashMap<>();
         int i = 0;
         for (String token : s.split("\n")) {
@@ -71,6 +71,20 @@ public class AoC2019Day24Part2 {
             state = newState;
             --minLevel;
             ++maxLevel;
+        }
+
+        if (print) {
+            for (int level = minLevel; level <= maxLevel; ++level) {
+                System.out.println(level);
+                for (i = 0; i < 5; ++i) {
+                    for (int j = 0; j < 5; ++j) {
+                        Character ch = state.get(new Coord(i, j, level));
+                        System.out.print(ch == null ? '.' : ch);
+                    }
+                    System.out.println();
+                }
+                System.out.println();
+            }
         }
 
         int count = 0;
