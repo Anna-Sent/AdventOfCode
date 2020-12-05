@@ -6,7 +6,33 @@ private fun test(input: String): Int {
 }
 
 private fun seatId(entry: String): Int {
-    return 0
+    val row = binSearch(entry.substring(0, 7), 'F', 'B', 128)
+    println("row is $row")
+    val column = binSearch(entry.substring(7, 10), 'L', 'R', 8)
+    println("column is $column")
+    return row * 8 + column
+}
+
+private fun binSearch(entry: String, lowerHalf: Char, upperHalf: Char, count: Int): Int {
+    var min = 0
+    var max = count - 1
+    var middle = -1
+    var countHalf = count
+    for (letter in entry) {
+        countHalf /= 2
+        when (letter) {
+            lowerHalf -> {
+                middle = min + countHalf - 1
+                max = middle
+            }
+            upperHalf -> {
+                middle = max - countHalf + 1
+                min = middle
+            }
+        }
+        println("$letter: $min to $max -> $middle")
+    }
+    return middle
 }
 
 fun main() {
@@ -819,5 +845,5 @@ private fun test() {
         FFBFFBBLRR
         FBBFFBFLLR
     """.trimIndent())
-    check(0, result)
+    check(864, result)
 }
