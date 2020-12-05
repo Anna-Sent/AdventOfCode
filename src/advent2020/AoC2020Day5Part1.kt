@@ -17,16 +17,14 @@ private fun binSearch(entry: String, lowerHalf: Char, upperHalf: Char, count: In
     var min = 0
     var max = count - 1
     var middle = -1
-    var countHalf = count
     for (letter in entry) {
-        countHalf /= 2
         when (letter) {
             lowerHalf -> {
-                middle = min + countHalf - 1
+                middle = min + (max - min + 1) / 2 - 1
                 max = middle
             }
             upperHalf -> {
-                middle = max - countHalf + 1
+                middle = max - (max - min + 1) / 2 + 1
                 min = middle
             }
         }
