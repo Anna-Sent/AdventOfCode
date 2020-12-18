@@ -49,13 +49,9 @@ private fun evaluate(expression: String): Long {
 }
 
 private fun calc(expression: String): Long {
-    val sums = expression.split("*")
+    return expression.split("*")
             .map { calcSum(it) }
-    var result = 1L
-    for (sum in sums) {
-        result *= sum
-    }
-    return result
+            .reduce { acc, l -> acc * l }
 }
 
 private fun calcSum(expression: String): Long {
