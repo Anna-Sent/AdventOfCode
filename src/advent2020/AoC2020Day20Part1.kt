@@ -9,8 +9,8 @@ private fun test(input: String): Long {
     for (token in tokens) {
         val (tileName, tileInput) = token.split(":\n")
         val tileId = tileName.substring("Tile ".length, tileName.length).toLong()
-        val tileRect = tileInput.split("\n")
-        tiles += generate(tileId, tileRect)
+        val tileRect = tileInput.split("\n").map { it.toCharArray() }
+        tiles += tileRect.generate().map { Tile1(tileId, it) }
     }
 
     val squareSize = sqrt((tiles.size / 8).toDouble()).toInt()
@@ -81,7 +81,7 @@ private fun isValid(squareSize: Int, list: List<Tile1>): Boolean {
         val up = tile.up
         val adjacent = list[(i - 1) * squareSize + j]
         val down = adjacent.down
-        if (up != down) {
+        if (!up.contentEquals(down)) {
             return false
         }
     }
@@ -90,43 +90,58 @@ private fun isValid(squareSize: Int, list: List<Tile1>): Boolean {
         val left = tile.left
         val adjacent = list[i * squareSize + j - 1]
         val right = adjacent.right
-        if (left != right) {
+        if (!left.contentEquals(right)) {
             return false
         }
     }
     return true
 }
 
-private fun generate(id: Long, rect: List<String>): Set<Tile1> {
-    val result = mutableSetOf<Tile1>()
+private fun List<CharArray>.generate(): Set<List<CharArray>> {
+    val result = mutableSetOf<List<CharArray>>()
 
-    val up = rect[0]
-    val down = rect[9]
-    val left = String(CharArray(10) {
-        rect[it][0]
-    })
-    val right = String(CharArray(10) {
-        rect[it][9]
-    })
-
-    result += Tile1(id, up, down, left, right)
-    result += Tile1(id, down, up, left.reversed(), right.reversed())
-    result += Tile1(id, up.reversed(), down.reversed(), right, left)
-    result += Tile1(id, left.reversed(), right.reversed(), down, up)
-    result += Tile1(id, down.reversed(), up.reversed(), right.reversed(), left.reversed())
-    result += Tile1(id, right, left, up.reversed(), down.reversed())
-    result += Tile1(id, right.reversed(), left.reversed(), down.reversed(), up.reversed())
-    result += Tile1(id, left, right, up, down)
+    var r = this
+    for (i in 1..4) {
+        result += r
+        r = r.rotate()
+    }
+    r = r.flip()
+    for (i in 1..4) {
+        result += r
+        r = r.rotate()
+    }
 
     return result
 }
 
+private fun List<CharArray>.flip(): List<CharArray> {
+    val result = mutableListOf<CharArray>()
+    for (i in 0 until size) {
+        result += this[i].reversedArray()
+    }
+    return result
+}
+
+private fun List<CharArray>.rotate(): List<CharArray> {
+    val result = mutableListOf<CharArray>()
+    for (i in 0 until size) {
+        result += col(i).reversedArray()
+    }
+    return result
+}
+
+private fun List<CharArray>.col(j: Int): CharArray {
+    return CharArray(size) { this[it][j] }
+}
+
 private data class Tile1(val id: Long,
-                         val up: String,
-                         val down: String,
-                         val left: String,
-                         val right: String
-)
+                         val rect: List<CharArray>
+) {
+    val up = rect[0]
+    val down = rect[rect.lastIndex]
+    val left = rect.col(0)
+    val right = rect.col(rect.lastIndex)
+}
 
 fun main() {
     test()
