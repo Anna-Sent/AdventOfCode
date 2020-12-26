@@ -12,7 +12,7 @@ private class Solution313 {
             while (count < n) {
                 ++count
                 for (element in primes) {
-                    numbers += i * element.toLong()
+                    numbers += i * element
                 }
                 i = numbers.higher(i)!!
             }
