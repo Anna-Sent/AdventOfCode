@@ -27,7 +27,7 @@ public class AoC2016Day7Part2 {
         assert result == 1;
         System.out.println(result);
 
-        result = test(FileUtils.readToString("C:\\Users\\Anna\\workspace\\AdventOfCode\\src\\advent2016\\AoC2016Day7Input.txt"));
+        result = test(FileUtils.readToString("advent2016", "AoC2016Day7_input.txt"));
         assert result == 260;
         System.out.println(result);
     }
