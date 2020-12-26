@@ -8,7 +8,7 @@ class Solution477 {
     public static void main(String[] args) {
         try {
             int[][] inputs;
-            String s = FileUtils.readToString("C:\\Users\\annas\\Documents\\AdventOfCode\\src\\leetcode\\Solution477Input.txt");
+            String s = FileUtils.readToString("C:\\Users\\annas\\Documents\\AdventOfCode\\src\\leetcode\\Solution477_input.txt");
             String[] lines = s.split("\r\n");
             inputs = new int[lines.length][];
             for (int j = 0; j < lines.length; ++j) {
