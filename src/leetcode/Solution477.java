@@ -2,13 +2,20 @@ package leetcode;
 
 import utils.FileUtils;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 class Solution477 {
     public static void main(String[] args) {
         try {
             int[][] inputs;
-            String s = FileUtils.readToString("C:\\Users\\annas\\Documents\\AdventOfCode\\src\\leetcode\\Solution477_input.txt");
+            String path = Paths.get(".").toAbsolutePath().normalize() + File.separator +
+                    "src" + File.separator +
+                    "leetcode" + File.separator +
+                    "Solution477_input.txt";
+            System.out.println(path);
+            String s = FileUtils.readToString(path);
             String[] lines = s.split("\r\n");
             inputs = new int[lines.length][];
             for (int j = 0; j < lines.length; ++j) {
