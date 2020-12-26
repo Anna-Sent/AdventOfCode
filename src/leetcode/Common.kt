@@ -8,5 +8,5 @@ fun String.toIntArray(): IntArray =
                 .toIntArray()
 
 infix fun <T> T.eq(param: T) {
-    System.out.println(if (this == param) "OK" else "FAILED: expected '$this', but actual '$param'")
+    println(if (this == param) "OK" else "FAILED: expected '$param', but actual '$this'")
 }
