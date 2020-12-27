@@ -3,14 +3,14 @@ package leetcode;
 import java.util.HashMap;
 import java.util.Map;
 
-class ListNode {
+public class ListNode {
 
     private static final Map<Integer, ListNode> NODES = new HashMap<>();
 
-    int val;
-    ListNode next;
+    public int val;
+    public ListNode next;
 
-    ListNode(int x) {
+    public ListNode(int x) {
         val = x;
     }
 
