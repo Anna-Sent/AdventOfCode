@@ -3,8 +3,9 @@ package leetcode
 fun String.toIntArray(): IntArray =
         removeSurrounding("[", "]")
                 .replace(" ", "")
+                .replace("\n", "")
                 .split(",")
-                .map { it.toInt() }
+                .mapNotNull { it.toIntOrNull() }
                 .toIntArray()
 
 infix fun <T> T.eq(param: T) {
