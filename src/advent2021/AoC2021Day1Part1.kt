@@ -2029,9 +2029,8 @@ fun main() {
 private fun test(input: String): Int {
     val measurements = input.split("\n").map { it.toInt() }
     var count = 0
-    for (i in measurements.indices) {
-        val prev = if (i > 0) measurements[i - 1] else continue
-        if (measurements[i] > prev) ++count
+    for (i in 1 until measurements.size) {
+        if (measurements[i] > measurements[i - 1]) ++count
     }
     return count
 }
