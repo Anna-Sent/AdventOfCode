@@ -7,7 +7,7 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AoC2018Day23Part2 {
+public class AoC2018Day23Part2_blocker {
     private static final Pattern pattern = Pattern.compile("pos=<(-?\\d+),(-?\\d+),(-?\\d+)>, r=(\\d+)");
 
     public static void main(String[] args) {
