@@ -5,13 +5,13 @@ import kotlin.math.max
 private var result = 0
 
 fun main() {
-    result = test(INPUT_1)
+    result = test(INPUT_2021_19_1)
     check(3621, result)
 
-    result = test(INPUT_2)
+    result = test(INPUT_2021_19_2)
     check(12166, result)
 
-    result = test(INPUT_3)
+    result = test(INPUT_2021_19_3)
     check(15672, result)
 }
 

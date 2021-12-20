@@ -5,13 +5,13 @@ import utils.Point3D
 private var result = 0
 
 fun main() {
-    result = test(INPUT_1)
+    result = test(INPUT_2021_19_1)
     check(79, result)
 
-    result = test(INPUT_2)
+    result = test(INPUT_2021_19_2)
     check(318, result)
 
-    result = test(INPUT_3)
+    result = test(INPUT_2021_19_3)
     check(447, result)
 }
 

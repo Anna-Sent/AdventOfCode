@@ -3,7 +3,7 @@ package advent2021
 import utils.Point3D
 import java.util.*
 
-val INPUT_1 = """
+val INPUT_2021_19_1 = """
             --- scanner 0 ---
             404,-588,-901
             528,-643,409
@@ -142,7 +142,7 @@ val INPUT_1 = """
             30,-46,-14
     """.trimIndent()
 
-val INPUT_2 = """
+val INPUT_2021_19_2 = """
             --- scanner 0 ---
             878,-830,-633
             -654,579,583
@@ -862,7 +862,7 @@ val INPUT_2 = """
             -3,-97,-140
     """.trimIndent()
 
-val INPUT_3 = """
+val INPUT_2021_19_3 = """
             --- scanner 0 ---
             417,597,-659
             -781,-790,-526
