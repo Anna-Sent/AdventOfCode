@@ -4,20 +4,30 @@ private var result = 0
 
 fun main() {
     result = test(
-        """
-    """.trimIndent()
+        """#############
+#...........#
+###B#C#B#D###
+  #A#D#C#A#  
+  #########  """
     )
-    check(0, result)
+    check(12521, result)
 
     result = test(
-        """
-    """.trimIndent()
+        """#############
+#...........#
+###B#C#C#B###
+  #D#D#A#A#  
+  #########  """
     )
-    check(0, result)
+    check(18051, result)
 }
 
+private val endStateConfiguration = """#############
+#...........#
+###A#B#C#D###
+  #A#B#C#D#  
+  #########  """
+
 private fun test(input: String): Int {
-    val commands = input.split("\n")
-    var count = 0
-    return count
+    return State(input, 0).findPath(endStateConfiguration)!!.energy
 }
