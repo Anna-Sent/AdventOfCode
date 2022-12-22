@@ -248,15 +248,15 @@ private fun test(input: String): Int {
         ++row
     }
     var currentPos = startPos!!
-    var currentDirection = Direction.RIGHT
+    var currentDirection = Direction1.RIGHT
 
     fun makeSteps(count: Int) {
         for (i in 1..count) {
             val candidate = when (currentDirection) {
-                Direction.RIGHT -> Point(currentPos.x, currentPos.y + 1)
-                Direction.LEFT -> Point(currentPos.x, currentPos.y - 1)
-                Direction.UP -> Point(currentPos.x - 1, currentPos.y)
-                Direction.DOWN -> Point(currentPos.x + 1, currentPos.y)
+                Direction1.RIGHT -> Point(currentPos.x, currentPos.y + 1)
+                Direction1.LEFT -> Point(currentPos.x, currentPos.y - 1)
+                Direction1.UP -> Point(currentPos.x - 1, currentPos.y)
+                Direction1.DOWN -> Point(currentPos.x + 1, currentPos.y)
             }
             var value = map[candidate]
             if (value == '.') {
@@ -265,7 +265,7 @@ private fun test(input: String): Int {
                 // leave currentPos same
             } else {
                 val candidate = when (currentDirection) {
-                    Direction.RIGHT -> {
+                    Direction1.RIGHT -> {
                         var currentY = currentPos.y
                         while (map[Point(currentPos.x, currentY)] != null) {
                             --currentY
@@ -274,7 +274,7 @@ private fun test(input: String): Int {
                         Point(currentPos.x, currentY)
                     }
 
-                    Direction.LEFT -> {
+                    Direction1.LEFT -> {
                         var currentY = currentPos.y
                         while (map[Point(currentPos.x, currentY)] != null) {
                             ++currentY
@@ -283,7 +283,7 @@ private fun test(input: String): Int {
                         Point(currentPos.x, currentY)
                     }
 
-                    Direction.UP -> {
+                    Direction1.UP -> {
                         var currentX = currentPos.x
                         while (map[Point(currentX, currentPos.y)] != null) {
                             ++currentX
@@ -292,7 +292,7 @@ private fun test(input: String): Int {
                         Point(currentX, currentPos.y)
                     }
 
-                    Direction.DOWN -> {
+                    Direction1.DOWN -> {
                         var currentX = currentPos.x
                         while (map[Point(currentX, currentPos.y)] != null) {
                             --currentX
@@ -313,20 +313,20 @@ private fun test(input: String): Int {
         }
     }
 
-    fun turnTo(direction: Direction) {
+    fun turnTo(direction: Direction1) {
         currentDirection = when (direction) {
-            Direction.RIGHT -> when (currentDirection) {
-                Direction.RIGHT -> Direction.DOWN
-                Direction.LEFT -> Direction.UP
-                Direction.UP -> Direction.RIGHT
-                Direction.DOWN -> Direction.LEFT
+            Direction1.RIGHT -> when (currentDirection) {
+                Direction1.RIGHT -> Direction1.DOWN
+                Direction1.LEFT -> Direction1.UP
+                Direction1.UP -> Direction1.RIGHT
+                Direction1.DOWN -> Direction1.LEFT
             }
 
-            Direction.LEFT -> when (currentDirection) {
-                Direction.RIGHT -> Direction.UP
-                Direction.LEFT -> Direction.DOWN
-                Direction.UP -> Direction.LEFT
-                Direction.DOWN -> Direction.RIGHT
+            Direction1.LEFT -> when (currentDirection) {
+                Direction1.RIGHT -> Direction1.UP
+                Direction1.LEFT -> Direction1.DOWN
+                Direction1.UP -> Direction1.LEFT
+                Direction1.DOWN -> Direction1.RIGHT
             }
 
             else -> throw IllegalArgumentException("invalid direction")
@@ -345,7 +345,7 @@ private fun test(input: String): Int {
                     makeSteps(buffer.toString().toInt())
                     buffer.clear()
                 }
-                turnTo(Direction.LEFT)
+                turnTo(Direction1.LEFT)
             }
 
             char == 'R' -> {
@@ -353,7 +353,7 @@ private fun test(input: String): Int {
                     makeSteps(buffer.toString().toInt())
                     buffer.clear()
                 }
-                turnTo(Direction.RIGHT)
+                turnTo(Direction1.RIGHT)
             }
 
             else -> {
@@ -368,6 +368,6 @@ private fun test(input: String): Int {
     return currentPos.x * 1000 + currentPos.y * 4 + currentDirection.value
 }
 
-enum class Direction(val value: Int) {
+private enum class Direction1(val value: Int) {
     RIGHT(0), DOWN(1), LEFT(2), UP(3)
 }
