@@ -90,10 +90,12 @@ private fun test(input: String): Int {
         valvesMap[name] = valve
     }
 
+    val shouldOpenValveSize = valvesMap.values.count { it.flowRate > 0 }
+
     fun State161.generateNext(): Set<State161> {
         val next = mutableSetOf<State161>()
 
-        if (openedValves.size == valvesMap.size) {
+        if (openedValves.size >= shouldOpenValveSize) {
             val pressure = totalPressure + openedValves.map { valvesMap[it]!!.flowRate }.sum()
             next += State161(openedValves, Action161.Staying(action.valve()), pressure)
         } else {
@@ -115,7 +117,7 @@ private fun test(input: String): Int {
                     newOpenedValves += openedValves
                     newOpenedValves += action.valve
                     val pressure = totalPressure + newOpenedValves.map { valvesMap[it]!!.flowRate }.sum()
-                    if (newOpenedValves.size == valvesMap.size) {
+                    if (newOpenedValves.size >= shouldOpenValveSize) {
                         next += State161(newOpenedValves, Action161.Staying(action.valve()), pressure)
                     } else {
                         val canMoveTo = valvesMap[action.valve]!!.names
