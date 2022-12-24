@@ -118,7 +118,7 @@ private fun test(input: String): Int {
                     newOpenedValves += action.valve
                     val pressure = totalPressure + newOpenedValves.map { valvesMap[it]!!.flowRate }.sum()
                     if (newOpenedValves.size >= shouldOpenValveSize) {
-                        next += State161(newOpenedValves, Action161.Staying(action.valve()), pressure)
+                        next += State161(newOpenedValves, Action161.Staying(action.valve), pressure)
                     } else {
                         val canMoveTo = valvesMap[action.valve]!!.names
                         for (nextValveName in canMoveTo) {
