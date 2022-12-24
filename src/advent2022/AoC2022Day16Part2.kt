@@ -164,9 +164,9 @@ private fun test(input: String): Int {
 
         if (this == initialState) {
             val canMoveTo = valvesMap["AA"]!!.names
-            for (nextValveName1 in canMoveTo) {
-                for (nextValveName2 in canMoveTo) {
-                    next += State162(emptyList(), Action162.Moving(nextValveName1), Action162.Moving(nextValveName2), 0)
+            for (i in 0..canMoveTo.lastIndex - 1) {
+                for (j in i + 1..canMoveTo.lastIndex) {
+                    next += State162(emptyList(), Action162.Moving(canMoveTo[i]), Action162.Moving(canMoveTo[j]), 0)
                 }
             }
             return next
@@ -179,6 +179,8 @@ private fun test(input: String): Int {
         val next1 = generateNext1()
         val next2 = generateNext2()
 
+        val pairs = mutableSetOf<Pair<Action162, Action162>>()
+
         for (nextState1 in next1) {
             for (nextState2 in next2) {
                 val newOpenedValves = mutableSetOf<String>()
@@ -188,7 +190,13 @@ private fun test(input: String): Int {
                 if (nextState1.action1 is Action162.Staying || nextState2.action2 is Action162.Staying) {
                     next += State162(newOpenedValves.toList(), Action162.Staying(action1.valve()), Action162.Staying(action2.valve()), pressure)
                 } else if (nextState1.action1 != nextState2.action2) {
-                    next += State162(newOpenedValves.toList(), nextState1.action1, nextState2.action2, pressure)
+                    if (nextState1.action1 to nextState2.action2 !in pairs) {
+                        if (!(nextState1.action1 is Action162.Moving && nextState2.action2 is Action162.Moving && nextState1.action1.valve == nextState2.action2.valve || nextState1.action1 is Action162.Opening && nextState2.action2 is Action162.Opening && nextState1.action1.valve == nextState2.action2.valve)) {
+                            next += State162(newOpenedValves.toList(), nextState1.action1, nextState2.action2, pressure)
+                        }
+                        pairs += nextState1.action1 to nextState2.action2
+                        pairs += nextState2.action2 to nextState1.action1
+                    }
                 }
             }
         }
