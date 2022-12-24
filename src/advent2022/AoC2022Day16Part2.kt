@@ -191,7 +191,7 @@ private fun test(input: String): Int {
                     next += State162(newOpenedValves.toList(), Action162.Staying(action1.valve()), Action162.Staying(action2.valve()), pressure)
                 } else if (nextState1.action1 != nextState2.action2) {
                     if (nextState1.action1 to nextState2.action2 !in pairs) {
-                        if (!(nextState1.action1 is Action162.Moving && nextState2.action2 is Action162.Moving && nextState1.action1.valve == nextState2.action2.valve || nextState1.action1 is Action162.Opening && nextState2.action2 is Action162.Opening && nextState1.action1.valve == nextState2.action2.valve)) {
+                        if (nextState1.action1.valve() != nextState2.action2.valve()) {
                             next += State162(newOpenedValves.toList(), nextState1.action1, nextState2.action2, pressure)
                         }
                         pairs += nextState1.action1 to nextState2.action2
