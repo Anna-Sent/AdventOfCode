@@ -82,10 +82,10 @@ fun main() {
 }
 
 private fun test(input: String): Int {
-    val regEx = """Valve ([A-Z]{2}) has flow rate=(\d+); tunnels? leads? to valves? (.+)""".toRegex()
+    val regex = """Valve ([A-Z]{2}) has flow rate=(\d+); tunnels? leads? to valves? (.+)""".toRegex()
     val valvesMap = mutableMapOf<String, Valve162>()
     for (line in input.split("\n")) {
-        val result = regEx.find(line)
+        val result = regex.find(line)
         val (name, flowRateStr, namesStr) = result!!.destructured
         val names = namesStr.split(", ")
         val valve = Valve162(flowRateStr.toInt(), names)
