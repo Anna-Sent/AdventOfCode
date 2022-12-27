@@ -109,7 +109,7 @@ private fun test(input: String): Int {
                     s = s?.prevState
                 }
                 if (s != null) {
-                    if (s.geodes > 0 && s.geodes - state.geodes > 1) return
+                    if (s.geodes - state.geodes > 1) return
                 }
             }
             if (state.ore >= blueprint.oreRobotOre) {
