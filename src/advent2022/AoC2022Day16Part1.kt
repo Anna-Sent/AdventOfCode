@@ -132,6 +132,15 @@ private fun test(input: String): Int {
                     state.minutes + 1
             ).apply { prevState = state })
         }
+        if (valves.filter { it.value.flowRate > 0 }.count { it.key !in state.openedValves } == 0) {
+            dfs(State(
+                    state.currentValve,
+                    state.openedValves,
+                    state.pressure + state.openedValves.map { valves[it]!!.flowRate }.sum(),
+                    state.minutes + 1
+            ).apply { prevState = state })
+            return
+        }
         val whereToGo = valves[state.currentValve]!!.valves
         for (valve in whereToGo) {
             dfs(State(
