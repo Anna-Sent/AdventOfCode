@@ -1,5 +1,6 @@
 package advent2023
 
+import utils.Direction
 import utils.Point
 
 private var result = 0
@@ -138,19 +139,17 @@ fun main() {
     check(7517, result)
 }
 
-private enum class Direction1 { R, U, D, L }
-
 private fun test(input: String): Int {
     val map = input.split("\n")
     val width = map[0].length
     val height = map.size
 
-    var positions = mutableListOf<Pair<Point, Direction1>>()
-    val pairs = mutableSetOf<Pair<Point, Direction1>>()
+    var positions = mutableListOf<Pair<Point, Direction>>()
+    val pairs = mutableSetOf<Pair<Point, Direction>>()
     val points = mutableSetOf<Point>()
 
     val startPoint = Point(0, 0)
-    val startDirection = Direction1.R
+    val startDirection = Direction.R
     positions += startPoint to startDirection
     pairs += startPoint to startDirection
     points += Point(0, 0)
@@ -158,9 +157,9 @@ private fun test(input: String): Int {
     fun Point.isValid() = x in 0 until width && y in 0 until height
 
     while (positions.isNotEmpty()) {
-        val newPositions = mutableListOf<Pair<Point, Direction1>>()
+        val newPositions = mutableListOf<Pair<Point, Direction>>()
 
-        fun Pair<Point, Direction1>.add() {
+        fun Pair<Point, Direction>.add() {
             if (this.first.isValid() && this !in pairs) {
                 newPositions += this
                 pairs += this
@@ -170,7 +169,7 @@ private fun test(input: String): Int {
 
         for (position in positions) {
             when (position.second) {
-                Direction1.R -> {
+                Direction.R -> {
                     when (map[position.first.y][position.first.x]) {
                         '.' -> {
                             (Point(position.first.x + 1, position.first.y) to position.second).add()
@@ -181,21 +180,21 @@ private fun test(input: String): Int {
                         }
 
                         '|' -> {
-                            (Point(position.first.x, position.first.y - 1) to Direction1.U).add()
-                            (Point(position.first.x, position.first.y + 1) to Direction1.D).add()
+                            (Point(position.first.x, position.first.y - 1) to Direction.U).add()
+                            (Point(position.first.x, position.first.y + 1) to Direction.D).add()
                         }
 
                         '\\' -> {
-                            (Point(position.first.x, position.first.y + 1) to Direction1.D).add()
+                            (Point(position.first.x, position.first.y + 1) to Direction.D).add()
                         }
 
                         '/' -> {
-                            (Point(position.first.x, position.first.y - 1) to Direction1.U).add()
+                            (Point(position.first.x, position.first.y - 1) to Direction.U).add()
                         }
                     }
                 }
 
-                Direction1.L -> {
+                Direction.L -> {
                     when (map[position.first.y][position.first.x]) {
                         '.' -> {
                             (Point(position.first.x - 1, position.first.y) to position.second).add()
@@ -206,29 +205,29 @@ private fun test(input: String): Int {
                         }
 
                         '|' -> {
-                            (Point(position.first.x, position.first.y - 1) to Direction1.U).add()
-                            (Point(position.first.x, position.first.y + 1) to Direction1.D).add()
+                            (Point(position.first.x, position.first.y - 1) to Direction.U).add()
+                            (Point(position.first.x, position.first.y + 1) to Direction.D).add()
                         }
 
                         '\\' -> {
-                            (Point(position.first.x, position.first.y - 1) to Direction1.U).add()
+                            (Point(position.first.x, position.first.y - 1) to Direction.U).add()
                         }
 
                         '/' -> {
-                            (Point(position.first.x, position.first.y + 1) to Direction1.D).add()
+                            (Point(position.first.x, position.first.y + 1) to Direction.D).add()
                         }
                     }
                 }
 
-                Direction1.D -> {
+                Direction.D -> {
                     when (map[position.first.y][position.first.x]) {
                         '.' -> {
                             (Point(position.first.x, position.first.y + 1) to position.second).add()
                         }
 
                         '-' -> {
-                            (Point(position.first.x - 1, position.first.y) to Direction1.L).add()
-                            (Point(position.first.x + 1, position.first.y) to Direction1.R).add()
+                            (Point(position.first.x - 1, position.first.y) to Direction.L).add()
+                            (Point(position.first.x + 1, position.first.y) to Direction.R).add()
                         }
 
                         '|' -> {
@@ -236,24 +235,24 @@ private fun test(input: String): Int {
                         }
 
                         '\\' -> {
-                            (Point(position.first.x + 1, position.first.y) to Direction1.R).add()
+                            (Point(position.first.x + 1, position.first.y) to Direction.R).add()
                         }
 
                         '/' -> {
-                            (Point(position.first.x - 1, position.first.y) to Direction1.L).add()
+                            (Point(position.first.x - 1, position.first.y) to Direction.L).add()
                         }
                     }
                 }
 
-                Direction1.U -> {
+                Direction.U -> {
                     when (map[position.first.y][position.first.x]) {
                         '.' -> {
                             (Point(position.first.x, position.first.y - 1) to position.second).add()
                         }
 
                         '-' -> {
-                            (Point(position.first.x - 1, position.first.y) to Direction1.L).add()
-                            (Point(position.first.x + 1, position.first.y) to Direction1.R).add()
+                            (Point(position.first.x - 1, position.first.y) to Direction.L).add()
+                            (Point(position.first.x + 1, position.first.y) to Direction.R).add()
                         }
 
                         '|' -> {
@@ -261,11 +260,11 @@ private fun test(input: String): Int {
                         }
 
                         '\\' -> {
-                            (Point(position.first.x - 1, position.first.y) to Direction1.L).add()
+                            (Point(position.first.x - 1, position.first.y) to Direction.L).add()
                         }
 
                         '/' -> {
-                            (Point(position.first.x + 1, position.first.y) to Direction1.R).add()
+                            (Point(position.first.x + 1, position.first.y) to Direction.R).add()
                         }
                     }
                 }
