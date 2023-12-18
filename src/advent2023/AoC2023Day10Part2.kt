@@ -643,7 +643,6 @@ private fun test(input: String): Int {
         val closed = mutableSetOf<Point>()
 
         opened += startPoint
-        var steps = 0
 
         while (opened.size > 0) {
             val achievable = mutableSetOf<Point>()
@@ -655,7 +654,6 @@ private fun test(input: String): Int {
                 closed += current
             }
             opened = achievable
-            ++steps
         }
 
         return closed
