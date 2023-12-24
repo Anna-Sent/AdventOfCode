@@ -1,3 +1,3 @@
-package advent2023
+package utils
 
 val SPACES = Regex(" +")

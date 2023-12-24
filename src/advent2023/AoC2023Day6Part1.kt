@@ -1,5 +1,7 @@
 package advent2023
 
+import utils.SPACES
+
 private var result = 0
 
 fun main() {
