@@ -1,7 +1,5 @@
 package advent2023
 
-import utils.Point
-
 private var result = 0L
 
 fun main() {
@@ -2042,6 +2040,8 @@ fun main() {
     check(28606137449920, result)
 }
 
+private data class Container(var result: Long)
+
 private fun test(input: String, times: Int): Long {
     val lines = input.split("\n")
     val patterns = mutableListOf<Pair<String, List<Int>>>()
@@ -2058,39 +2058,96 @@ private fun test(input: String, times: Int): Long {
         patterns += newPattern to newCounts
     }
 
-    fun matches(pattern: String, prefix: String) = prefix
-        .filterIndexed { index, c -> c == pattern[index] || pattern[index] == '?' }
-        .count() == prefix.length
+    fun isValid(s: CharArray, counts: List<Int>): Boolean {
+        var brokenCount = 0
+        var index = 0
+        for (ch in s) {
+            when (ch) {
+                '.' -> {
+                    if (brokenCount > 0) {
+                        if (brokenCount == counts[index]) {
+                            ++index
+                        } else {
+                            return false
+                        }
+                    }
+                    brokenCount = 0
+                }
 
-    val cache = mutableMapOf<Point, Long>()
-    fun matches(pattern: String, sizes: List<Int>, prefix: String = "", group: Int = 0): Long {
-        if (prefix.length > pattern.length) {
-            return 0
-        }
-        val key = Point(prefix.length, group)
-        if (key in cache) return cache[key]!!
-        if (group == sizes.size) {
-            return if (matches(pattern, prefix + ".".repeat(pattern.length - prefix.length))) 1 else 0
-        }
-        var result = 0L
-        for (i in 0 until pattern.length - sizes[group]) {
-            var newPrefix = prefix
-            if (group > 0) {
-                newPrefix += "."
-            }
-            newPrefix += ".".repeat(i) + "#".repeat(sizes[group])
-            if (newPrefix.length <= pattern.length && matches(pattern, newPrefix)) {
-                result += matches(pattern, sizes, newPrefix, group + 1)
+                '#' -> {
+                    ++brokenCount
+                }
+
+                else -> {
+                    throw IllegalStateException("illegal pattern $s")
+                }
             }
         }
-        cache[key] = result
-        return result
+        if (brokenCount > 0) {
+            if (brokenCount == counts[index]) {
+                // nothing
+            } else {
+                return false
+            }
+        }
+        return true
     }
 
-    var sum = 0L
+    fun permutations(
+        result: CharArray, remainingA: Int, remainingB: Int, index: Int,
+        container: Container, counts: List<Int>, pattern: String
+    ) {
+        if (index == result.size) {
+            val newString = CharArray(pattern.length)
+            var i = 0
+            var j = 0
+            for (ch in pattern) {
+                if (ch == '?') {
+                    newString[j] = result[i]
+                    ++j
+                    ++i
+                } else {
+                    newString[j] = ch
+                    ++j
+                }
+            }
+            if (isValid(newString, counts)) {
+                ++container.result
+            }
+            return
+        }
+
+        if (remainingA > 0) {
+            result[index] = '.'
+            permutations(result, remainingA - 1, remainingB, index + 1, container, counts, pattern)
+        }
+
+        if (remainingB > 0) {
+            result[index] = '#'
+            permutations(result, remainingA, remainingB - 1, index + 1, container, counts, pattern)
+        }
+    }
+
+    fun permutations(
+        n: Int, m: Int,
+        counts: List<Int>, pattern: String, container: Container
+    ) {
+        val result = CharArray(n + m)
+        permutations(result, n, m, 0, container, counts, pattern)
+    }
+
+    val sum = Container(0)
     for (pattern in patterns) {
-        cache.clear()
-        sum += matches(pattern.first, pattern.second)
+        val (s, counts) = pattern
+        val operationalCount = s.count { it == '.' }
+        val damagedCount = s.count { it == '#' }
+        val supposedDamagedCount = counts.sum()
+        val addDamaged = supposedDamagedCount - damagedCount
+        val addOperational = s.length - operationalCount - damagedCount - addDamaged
+        println("$s $counts dam $addDamaged op $addOperational")
+        permutations(addOperational, addDamaged, counts, s, sum)
+        println("valid count $sum")
     }
-    return sum
+
+    return sum.result
 }
