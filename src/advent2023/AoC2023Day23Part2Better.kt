@@ -210,26 +210,68 @@ private fun test(input: String): Int {
         return result
     }
 
-    var max = 0
-    fun dfs(currentPath: List<Point>) {
-        if (currentPath.last() == endPoint) {
-            max = kotlin.math.max(max, currentPath.size - 1)
+    data class Edge(val from: Point, val to: Point, val size: Int)
 
-            println("path ${currentPath.size} steps long")
-            println("current max is $max")
+    val edges = mutableMapOf<Point, MutableSet<Edge>>()
+    fun putNewEdgeAtomic(currentEdge: List<Point>) {
+        edges.putIfAbsent(currentEdge[0], mutableSetOf())
+        edges[currentEdge[0]]!! += Edge(currentEdge.first(), currentEdge.last(), currentEdge.size - 1)
+    }
+
+    fun putNewEdge(currentEdge: List<Point>) {
+        putNewEdgeAtomic(currentEdge)
+        putNewEdgeAtomic(currentEdge.reversed())
+    }
+
+    fun findEdges(currentEdge: MutableList<Point>, closed: MutableSet<Point>) {
+        var next = currentEdge.last().next(currentEdge)
+        while (next.size == 1) {
+            currentEdge += next.first()
+            next = currentEdge.last().next(currentEdge)
+        }
+        if (next.isEmpty()) {
+            putNewEdge(currentEdge)
         } else {
-            val next = currentPath.last().next(currentPath)
-            for (nextPoint in next) {
-                val newPath = mutableListOf<Point>()
-                newPath += currentPath
-                newPath += nextPoint
-                dfs(newPath)
+            putNewEdge(currentEdge)
+            if (currentEdge.last() !in closed) {
+                closed += currentEdge.last()
+                for (nextPoint in next) {
+                    val newEdge = mutableListOf<Point>().apply {
+                        this += currentEdge.last()
+                        this += nextPoint
+                    }
+                    if (nextPoint == endPoint) {
+                        putNewEdge(newEdge)
+                    } else {
+                        findEdges(newEdge, closed)
+                    }
+                }
             }
         }
     }
 
-    val currentPath = mutableListOf<Point>()
-    currentPath += startPoint
+    findEdges(mutableListOf<Point>().apply { this += startPoint }, mutableSetOf<Point>().apply { this += startPoint })
+    edges.forEach { println(it) }
+
+    var max = 0
+    fun dfs(currentPath: List<Edge>) {
+        if (currentPath.last().to == endPoint) {
+            val length = currentPath.map { it.size }.sum()
+            if (length > max) {
+                max = length
+                println("path ${currentPath.size} edges long")
+                println("current max is $max")
+            }
+        } else {
+            val next = edges[currentPath.last().to] ?: emptyList()
+            for (nextEdge in next) {
+                if (currentPath.any { it.from == nextEdge.to || it.to == nextEdge.to }) continue
+                dfs(mutableListOf<Edge>().apply { this += currentPath; this += nextEdge })
+            }
+        }
+    }
+
+    val currentPath = listOf(edges[startPoint]!!.first())
     dfs(currentPath)
     return max
 }
