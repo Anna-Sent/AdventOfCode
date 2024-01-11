@@ -1,21 +1,23 @@
+package advent2016;
+
 public class AoC2016Day18Java8 {
     public static void main(String[] args) {
         long result;
 
         result = test(3, "..^^.");
-        assert (result == 6);
+        assert result == 6;
         System.out.println(result);
 
         result = test(10, ".^^.^.^^^^");
-        assert (result == 38);
+        assert result == 38;
         System.out.println(result);
 
         result = test(40, "......^.^^.....^^^^^^^^^...^.^..^^.^^^..^.^..^.^^^.^^^^..^^.^.^.....^^^^^..^..^^^..^^.^.^..^^..^^^..");
-        assert (result == 1963);
+        assert result == 1963;
         System.out.println(result);
 
         result = test(400000, "......^.^^.....^^^^^^^^^...^.^..^^.^^^..^.^..^.^^^.^^^^..^^.^.^.....^^^^^..^..^^^..^^.^.^..^^..^^^..");
-        assert (result == 20009568);
+        assert result == 20009568;
         System.out.println(result);
     }
 
