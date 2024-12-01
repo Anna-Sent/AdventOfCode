@@ -1030,8 +1030,6 @@ private fun test(input: String): Int {
         ids += id
         values += value
     }
-    ids.sort()
-    values.sort()
     var t = 0
     for (id in ids) {
         val value = values.count { it == id }
