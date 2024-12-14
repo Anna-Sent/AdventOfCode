@@ -533,6 +533,30 @@ private fun test(input: String, width: Int, height: Int): Int {
         val vy = result.groups[4]!!.value.toInt()
         robots += Robot(Point(px, py), Point(vx, vy))
     }
+
+    fun safetyFactor(): Int {
+        var q1 = 0
+        var q2 = 0
+        var q3 = 0
+        var q4 = 0
+        for (robot in robots) {
+            if (robot.p.x < width / 2) {
+                if (robot.p.y < height / 2) {
+                    ++q1
+                } else if (robot.p.y > height / 2) {
+                    ++q3
+                }
+            } else if (robot.p.x > width / 2) {
+                if (robot.p.y < height / 2) {
+                    ++q2
+                } else if (robot.p.y > height / 2) {
+                    ++q4
+                }
+            }
+        }
+        return q1 * q2 * q3 * q4
+    }
+
     var i = 1
     while (i <= 10000) {
         val map = mutableMapOf<Point, Int>()
@@ -541,8 +565,9 @@ private fun test(input: String, width: Int, height: Int): Int {
             map.putIfAbsent(robot.p, 0)
             map[robot.p] = map[robot.p]!! + 1
         }
-        if ((i - 16) % 103 == 0 && (i - 71) % 101 == 0) {
-            println(i)
+
+        fun printRobots() {
+            println("==$i")
             for (y in 0..<height) {
                 for (x in 0..<width) {
                     val p = Point(x, y)
@@ -554,7 +579,23 @@ private fun test(input: String, width: Int, height: Int): Int {
                 }
                 println()
             }
-            println(i)
+            println("==$i")
+        }
+
+        println("$i ${safetyFactor()}")
+        // found visually horizontal line anomaly:
+        // 16 69009444
+        // 119 66570224
+        // horizontal period 119-16=103
+        // found visually vertical line anomaly:
+        // 71 167745598
+        // 172 166472280
+        // vertical period 172-71=101
+        if (i == 16 || i == 119 || i == 71 || i == 172) {
+            printRobots()
+        }
+        if ((i - 16) % 103 == 0 && (i - 71) % 101 == 0) {
+            printRobots()
             break
         }
         ++i
