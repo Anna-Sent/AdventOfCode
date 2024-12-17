@@ -141,17 +141,17 @@ private fun test(input: String): Long {
         return out
     }
 
+    fun runIteration(a: Long): Long {
+        return (a % 8 xor 3 xor 5) xor (a shr ((a % 8).toInt() xor 3)) % 8
+    }
+
     fun runSimplifiedProgram3(): List<Long> {
         val out = mutableListOf<Long>()
         while (a != 0L) {
-            out += ((((a % 8) xor 3) xor 5) xor (a shr ((a % 8).toInt() xor 3))) % 8
+            out += runIteration(a)
             a /= 8
         }
         return out
-    }
-
-    fun runIteration(a: Long): Long {
-        return ((((a % 8) xor 3) xor 5) xor (a shr ((a % 8).toInt() xor 3))) % 8
     }
 
     fun findA(index: Int, A: Long): Long {
