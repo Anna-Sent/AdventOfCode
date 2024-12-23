@@ -2033,8 +2033,8 @@ fun main() {
 private fun test(input: String): Int {
     val numbers = input.split("\n").map(String::toLong).toList()
 
-    val differencesCache = mutableMapOf<Long, List<Int>>()
-    val pricesCache = mutableMapOf<Long, List<Int>>()
+    val possibleSequences = mutableSetOf<List<Int>>()
+    val numberSequenceToPrice = mutableMapOf<Pair<Long, List<Int>>, Int>()
     for (number in numbers) {
         var secret = number
         var prevPrice = (secret % 10).toInt()
@@ -2049,38 +2049,30 @@ private fun test(input: String): Int {
             prices += newPrice
             prevPrice = newPrice
         }
-        differencesCache[number] = differences
-        pricesCache[number] = prices
+
+        var i = 0
+        while (i < differences.size - 3) {
+            val sequence = listOf(differences[i], differences[i + 1], differences[i + 2], differences[i + 3])
+            possibleSequences += sequence
+            if (number to sequence !in numberSequenceToPrice) {
+                numberSequenceToPrice[number to sequence] = prices[i + 3]
+            }
+            ++i
+        }
     }
 
     var maxBananas = 0
-    for (d1 in -9..9) {
-        for (d2 in -9..9) {
-            for (d3 in -9..9) {
-                for (d4 in -9..9) {
-                    var bananas = 0
-                    for (number in numbers) {
-                        val differences = differencesCache[number]!!
-                        var i = 0
-                        while (i < differences.size - 3) {
-                            if (differences[i] == d1 &&
-                                differences[i + 1] == d2 &&
-                                differences[i + 2] == d3 &&
-                                differences[i + 3] == d4
-                            ) {
-                                bananas += pricesCache[number]!![i + 3]
-                                break
-                            }
-                            ++i
-                        }
-                    }
-                    val prevMaxBananas = maxBananas
-                    maxBananas = max(bananas, maxBananas)
-                    if (prevMaxBananas != maxBananas) {
-                        println("max bananas for sequence $d1,$d2,$d3,$d4 is $maxBananas")
-                    }
-                }
+    for (sequence in possibleSequences) {
+        var bananas = 0
+        for (number in numbers) {
+            if (number to sequence in numberSequenceToPrice) {
+                bananas += numberSequenceToPrice[number to sequence]!!
             }
+        }
+        val prevMaxBananas = maxBananas
+        maxBananas = max(bananas, maxBananas)
+        if (prevMaxBananas != maxBananas) {
+            println("max bananas for sequence ${sequence.joinToString(",")} is $maxBananas")
         }
     }
 
